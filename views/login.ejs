@@ -3,18 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="static/css/login.css" rel="stylesheet" />
 	<title>로그인</title>
 </head>
 <body>
-	<a href="/">HOME으로</a><br>
-	<a href="/signup">회원가입</a><br>
-	<form name="login">
-		<label for="id">ID</label>
-		<input type="text" id="id" name="id"><br>
-		<label for="pw">Password</label>
-		<input type="password" id="pw" name="pw"><br>
 
-		<button type="button">Sign In</button>
-	</form>
+	<div class="left">
+		<h1>Log In</h1><br>
+		<form name="login">
+	
+			<label for="id">ID</label><br>
+			<input class="user-input" placeholder="Enter your ID" type="text" id="id" name="id"><br>
+	
+			<label for="pw">Password</label><br>
+			<input class="user-input" placeholder="Enter your password" type="password" id="pw" name="pw"></input><br><br>
+	
+			<button type="button">Sign In</button><br>
+		
+		<p>Don't have an account? <a href="/signup">Sign Up</a><br> </p>
+			
+		</form>
+	</div>
+	<div class="right"></div>
 </body>
 </html>
