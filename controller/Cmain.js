@@ -1,11 +1,11 @@
 const { User } = require('../models/index');
 
 exports.main = (req, res) => {
-	res.render('/');
+	res.render('index');
 }
-exports.login = (req, res) => {
+exports.signin = (req, res) => {
 	res.render('login');
 }
-exports.main = (req, res) => {
+exports.signup = (req, res) => {
 	res.render('signup');
 }

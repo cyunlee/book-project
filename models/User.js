@@ -24,12 +24,12 @@ const UserModel = (sequelize, DataTypes) => {
         },
 		u_profile: {
             type: DataTypes.STRING(30),
-            allowNull: ture
+            allowNull: true
         },
     }, {
         freezeTableName: true
     });
-    return Player;
+    return User;
 }
 
 module.exports = UserModel;
