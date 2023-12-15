@@ -21,7 +21,7 @@ app.get('*', (req, res) => {
 
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {
-        console.log(`http://ourNameHere:${PORT}`);
+        console.log(`http://localhost:${PORT}`);
     })
 }).catch((err) => {
     console.log(err);
