@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require('../controller/Cmain')
 
 router.get('/', controller.main);
-router.get('/login', controller.main);
-router.get('/signup', controller.main);
+router.get('/login', controller.signin);
+router.get('/signup', controller.signup);
 
 module.exports = router;
