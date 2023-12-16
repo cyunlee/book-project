@@ -5,6 +5,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link href="static/css/signup.css" rel="stylesheet" />
+	<script src="static/js/signup.js"></script>
+	<!-- axios cdn -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<title>회원가입</title>
 </head>
 <body>
@@ -23,7 +26,7 @@
 			<label class="title" for="pw">Password</label><br>
 			<input class="user-input" placeholder="Enter your password" type="password" id="pw" name="pw"></input><br><br>
 	
-			<button type="button">Create Account</button><br>
+			<button type="button" onclick="signUp()">Create Account</button><br>
 		
 		<p>Already have an account? <a href="/login">Login Here</a><br> </p>
 			
