@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <!-- jQuery CDN -->
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+      <!-- axios CDN -->
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <style>
+        #result{
+            width:500px;
+            height:500px;
+        }
+      </style>
+</head>
+<body>
+    <input type="text" id="title" name="title">
+    <button type="button" onclick="search();">검색</button>
+    <button id="best" onclick="best();">BestSeller</button>
+    <button id="brendNew" onclick="brendNew();">신간추천</button>
+    <div id="result"></div>
+    <script>
+        function removeAllChildren(element) {
+            while (element.firstChild) {
+                removeAllChildren(element.firstChild);
+                element.removeChild(element.firstChild);
+            }
+        }
+
+
+        function search() {
+            // const title={};
+            const resultBox = document.getElementById('result');
+
+            $.ajax({
+            method: 'get',
+            url: '/search', // 서버에 요청을 보내는 주소로 변경
+            data:{
+                title:document.getElementById('title').value,
+            }
+            }).done((res) => {
+                console.log('res >' , res);
+                // console.log('object >', JSON.parse(res));
+                res.forEach(a => {
+                    let div = document.createElement('div');
+                    div.textContent=a.title;
+                    resultBox.appendChild(div);
+                    console.log('a>',a.title);
+                });
+            });
+            removeAllChildren(resultBox);
+            // console.log('title> ',title)
+            // document.getElementById('result').value=title;
+        }
+
+       function best(){
+        const resultBox = document.getElementById('result');
+        $.ajax({
+            method:'get',
+            url:'/bestSeller',
+         }).done((res) => {
+                console.log('res >' , res);
+                // console.log('object >', JSON.parse(res));
+                res.forEach(a => {
+                    console.log('cover >',a.cover[0]);
+                    let div = document.createElement('div');
+                    let img = document.createElement('img');
+                    div.textContent=a.title;
+                    img.src=a.cover[0];
+                    resultBox.appendChild(div);
+                    resultBox.appendChild(img);
+                    // console.log('a>',a.title);
+                });
+            });
+            removeAllChildren(resultBox);
+       }
+
+       function brendNew(){
+        const resultBox = document.getElementById('result');
+        $.ajax({
+            method:'get',
+            url:'/brendNew',
+         }).done((res) => {
+                console.log('res >' , res);
+                // console.log('object >', JSON.parse(res));
+                res.forEach(a => {
+                    console.log('a > ',a);
+                    console.log('cover >',a.cover[0]);
+                    console.log('title >',a.title);
+                    let div = document.createElement('div');
+                    let img = document.createElement('img');
+                    div.textContent=a.title;
+                    img.src=a.cover[0];
+                    resultBox.appendChild(div);
+                    resultBox.appendChild(img);
+                });
+            });
+            removeAllChildren(resultBox);
+       }
+        
+    </script>
+    <!-- <script>
+        function search(){
+            const title = document.getElementById('title').value;
+            $.ajax({
+                    method: "GET",
+                    url: "https://dapi.kakao.com/v3/search/book?target=title",
+                    data: {
+                        query: title,
+                    },
+                    headers: {
+                        Authorization: "KakaoAK 4a5d3f4db009c4144ee12836ea3792b4"
+                    },
+                    // url:"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbwonluvv0940001&Query=title&QueryType=Title&MaxResults=10&start=1&SearchTarget=B",
+                    // data:{
+                    //     query:title,
+                    // },
+                    // header:{
+
+                    // }
+                })
+                .done((msg) =>{
+                    console.log(msg.documents[0])
+                    console.log(msg);
+                });
+            
+        }
+    </script> -->
+   <!-- <script>
+    $(document).ready(function() {
+        // 버튼 클릭 시 Ajax 요청 보내기
+        $("#fetchData").on("click", function() {
+            $.ajax({
+                url: "https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbwonluvv0940001&Query=다락방", // 대상 API의 주소
+                type: "GET",
+                dataType: "xml", // 응답 데이터 타입이 XML임을 명시
+                success: function(data) {
+                    // 서버로부터 받은 XML 데이터를 파싱하여 처리
+                    parseXML(data);
+                },
+                error: function(error) {
+                    console.error("Error fetching data:", error);
+                }
+            });
+        });
+    
+        // XML 파싱 함수
+        function parseXML(xmlData) {
+            // 실제로 XML 데이터를 파싱하는 방법은 데이터의 구조에 따라 다릅니다.
+            // 여기서는 간단하게 예시를 들었습니다.
+            var result = "<ul>";
+    
+            // 각 XML 엘리먼트를 반복하여 데이터 추출
+            $(xmlData).find("item").each(function() {
+                var title = $(this).find("title").text();
+                var link = $(this).find("link").text();
+    
+                result += "<li><a href='" + link + "'>" + title + "</a></li>";
+            });
+    
+            result += "</ul>";
+    
+            // 결과를 화면에 출력
+            $("#result").html(result);
+        }
+    });
+    </script> -->
+<!-- <script src="./../static/index.js"></script> -->
+</body>
+</html>
