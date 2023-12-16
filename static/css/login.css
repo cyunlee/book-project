@@ -36,3 +36,24 @@ body{
     height: 100vh;
     background-color: lightgrey;
 }
+form{
+    margin: auto;
+}
+
+form h1{
+    font-size: 64px;
+    font-weight: 400;
+}
+
+.title{
+    font-weight: 600;
+}
+
+p{
+    color: #B3B3B3;
+}
+
+a{
+    color: #3B89E5;
+
+}
