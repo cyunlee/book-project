@@ -10,9 +10,16 @@
       <!-- axios CDN -->
       <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
       <style>
-        #result{
-            width:500px;
-            height:500px;
+        .box-section{
+            width:100vw;
+            height:300px;
+            display: flex;
+        }
+        .each-section{
+            height:250px;
+            width:200px;
+            margin: 0 auto;
+            text-align: center;
         }
       </style>
 </head>
@@ -21,8 +28,111 @@
     <button type="button" onclick="search();">검색</button>
     <button id="best" onclick="best();">BestSeller</button>
     <button id="brendNew" onclick="brendNew();">신간추천</button>
-    <div id="result"></div>
+    <div id="result" class="box-section"></div>
+    <div id="best-result" class="box-section"></div>
+    <div id="new-result" class="box-section"></div>
     <script>
+        const eventTitle = document.getElementById('title');
+        
+        // 메인페이지 로드 시, 책 정보들 불러오기
+        document.addEventListener("DOMContentLoaded", ()=>{
+            const resultBox = document.getElementById('result');
+            const bestResultBox = document.getElementById('best-result');
+            const newResultBox = document.getElementById('new-result');
+
+            // 베스트셀러 api
+            $.ajax({
+                method:'get',
+                url:'/bestSeller',
+            }).done((res) => {
+                    console.log('알라딘 bestseller >' , res);
+                    // console.log('object >', JSON.parse(res));
+                    res.forEach(a => {
+                        // console.log('알라딘 bestseller cover >',a.cover[0]);
+                        console.log('알라딘 bestseller a.isbn13 > ',a.isbn13[0]);
+                        let button = document.createElement('button');
+                        let sectionEachDiv = document.createElement('div');
+                        let contentDiv = document.createElement('div');
+                        let img = document.createElement('img');
+
+                        contentDiv.textContent=a.title;
+                        button.type="button";
+                        img.src=a.cover[0];
+                        button.appendChild(img);
+                        button.appendChild(contentDiv);
+                        sectionEachDiv.appendChild(button);
+                        sectionEachDiv.classList.add('each-section');
+                        bestResultBox.appendChild(sectionEachDiv);
+                        // console.log('a>',a.title);
+                        button.addEventListener('click',()=>{
+                            detail(a.isbn13[0]);
+                        });
+                    });
+            });
+
+            // 신간 api
+            $.ajax({
+            method:'get',
+            url:'/brendNew',
+            }).done((res) => {
+                    console.log('알라딘 brendnew res >' , res);
+                    // console.log('object >', JSON.parse(res));
+                    res.forEach(a => {
+                        // console.log('알라딘 brendnew cover >',a.cover[0]);
+                        let sectionEachDiv = document.createElement('div');
+                        let contentDiv = document.createElement('div');
+                        let img = document.createElement('img');
+                        contentDiv.textContent=a.title;
+                        img.src=a.cover[0];
+                        sectionEachDiv.appendChild(img);
+                        sectionEachDiv.appendChild(contentDiv);
+                        sectionEachDiv.classList.add('each-section');
+                        newResultBox.appendChild(sectionEachDiv);
+                    });
+                });
+        });
+        
+        // keyup 이벤트 발생시 내용들이 화면에 보이게
+        eventTitle.addEventListener("keyup", () => {
+            search();
+        });
+
+        // 책 검색 함수(카카오 책 검색 api)
+        function search(){
+            const title = document.getElementById('title').value;
+            const resultBox = document.getElementById('result');
+            $.ajax({
+                    method: "GET",
+                    url: "https://dapi.kakao.com/v3/search/book?target=title",
+                    data: {
+                        query: title,
+                        size:5,
+                    },
+                    headers: {
+                        Authorization: "KakaoAK 4a5d3f4db009c4144ee12836ea3792b4"
+                    },
+                })
+                .done((res) =>{
+                    console.log('search res > ',res);
+                    console.log('search res.documents[0] > ',res.documents[0])
+                    res.documents.forEach(a => {
+                        // console.log('cover >',a.cover[0]);
+                        let sectionEachDiv = document.createElement('div');
+                        let contentDiv = document.createElement('div');
+                        let img = document.createElement('img');
+                        contentDiv.textContent=a.title;
+                        img.src=a.thumbnail;
+                        sectionEachDiv.appendChild(img);
+                        sectionEachDiv.appendChild(contentDiv);
+                        sectionEachDiv.classList.add('each-section');
+                        resultBox.appendChild(sectionEachDiv);
+                    });
+                    
+                });
+                removeAllChildren(resultBox);
+            
+        }
+
         function removeAllChildren(element) {
             while (element.firstChild) {
                 removeAllChildren(element.firstChild);
@@ -30,7 +140,36 @@
             }
         }
 
+        function detail(isbn){
+            location.href='/detail';
+        }
 
+        // function search() {
+        //     // const title={};
+        //     const resultBox = document.getElementById('result');
+
+        //     $.ajax({
+        //     method: 'get',
+        //     url: '/search', // 서버에 요청을 보내는 주소로 변경
+        //     data:{
+        //         title:document.getElementById('title').value,
+        //     }
+        //     }).done((res) => {
+        //         console.log('res >' , res);
+        //         // console.log('object >', JSON.parse(res));
+        //         res.forEach(a => {
+        //             let div = document.createElement('div');
+        //             div.textContent=a.title;
+        //             resultBox.appendChild(div);
+        //             console.log('a>',a.title);
+        //         });
+        //     });
+        //     removeAllChildren(resultBox);
+        //     // console.log('title> ',title)
+        //     // document.getElementById('result').value=title;
+        // }
+
+/*
         function search() {
             // const title={};
             const resultBox = document.getElementById('result');
@@ -56,7 +195,7 @@
             // document.getElementById('result').value=title;
         }
 
-       function best(){
+        function best(){
         const resultBox = document.getElementById('result');
         $.ajax({
             method:'get',
@@ -78,6 +217,7 @@
             removeAllChildren(resultBox);
        }
 
+     
        function brendNew(){
         const resultBox = document.getElementById('result');
         $.ajax({
@@ -100,35 +240,9 @@
             });
             removeAllChildren(resultBox);
        }
-        
+*/        
     </script>
-    <!-- <script>
-        function search(){
-            const title = document.getElementById('title').value;
-            $.ajax({
-                    method: "GET",
-                    url: "https://dapi.kakao.com/v3/search/book?target=title",
-                    data: {
-                        query: title,
-                    },
-                    headers: {
-                        Authorization: "KakaoAK 4a5d3f4db009c4144ee12836ea3792b4"
-                    },
-                    // url:"https://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbwonluvv0940001&Query=title&QueryType=Title&MaxResults=10&start=1&SearchTarget=B",
-                    // data:{
-                    //     query:title,
-                    // },
-                    // header:{
 
-                    // }
-                })
-                .done((msg) =>{
-                    console.log(msg.documents[0])
-                    console.log(msg);
-                });
-            
-        }
-    </script> -->
    <!-- <script>
     $(document).ready(function() {
         // 버튼 클릭 시 Ajax 요청 보내기

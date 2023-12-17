@@ -11,34 +11,35 @@ exports.main = (req,res)=>{
 }
 
 exports.getBooks=async (req, res) => {
-    try {
-        const title = req.query.title;
-        console.log(title);
-        const response = await axios.get('https://www.aladin.co.kr/ttb/api/ItemSearch.aspx', {
-        params: {
-          ttbkey: 'ttbwonluvv0940001',
-          Query: title,
-        },
-      });
+    res.send('hi');
+    // try {
+    //     const title = req.query.title;
+    //     console.log(title);
+    //     const response = await axios.get('https://www.aladin.co.kr/ttb/api/ItemSearch.aspx', {
+    //     params: {
+    //       ttbkey: 'ttbwonluvv0940001',
+    //       Query: title,
+    //     },
+    //   });
 
-      // XML을 JSON으로 파싱
-    const parser = new xml2js.Parser();
-    parser.parseString(response.data, (err, result) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error');
-      } else {
-        // 'item' 배열 추출
-        const items = result.object.item;
-        res.json(items);
-        console.log(items);
-      }
-    });
+    //   // XML을 JSON으로 파싱
+    // const parser = new xml2js.Parser();
+    // parser.parseString(response.data, (err, result) => {
+    //   if (err) {
+    //     console.error(err);
+    //     res.status(500).send('Internal Server Error');
+    //   } else {
+    //     // 'item' 배열 추출
+    //     const items = result.object.item;
+    //     res.json(items);
+    //     console.log(items);
+    //   }
+    // });
     
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Internal Server Error');
-    }
+    // } catch (error) {
+    //   console.error(error);
+    //   res.status(500).send('Internal Server Error');
+    // }
 };
 
 exports.getBestSeller = async (req,res)=>{
@@ -105,4 +106,8 @@ exports.getBrendNew = async (req,res)=>{
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
+}
+
+exports.getDetail= (req,res)=>{
+  res.render('detail');
 }
