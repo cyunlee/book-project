@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+          <!-- jQuery CDN -->
+          <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>상세페이지</h1>
+    <div id="result"></div>
+    <div>
+        <form name="comment-form">
+            <input type="text" name="c_id"><br>
+            <input type="text" name="c_content"><br>
+            <input type="text" name="c_date"><br>
+            <button type="button" onclick="createComment();"></button>
+        </form>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const isbn13 = urlParams.get('isbn13');
+
+        console.log(isbn13); // 출력: 9788954699075
+        document.addEventListener("DOMContentLoaded", ()=>{
+        $.ajax({
+        method:'get',
+        url:'/getDetail',
+        data:{
+            ItemId:`${isbn13}`,
+        }
+        }).done((res) => {
+                console.log('알라딘 brendnew res >' , res);
+                const detailItem = res[0];
+                const resultBox = document.getElementById('result');
+                let contentDiv = document.createElement('div');
+                let img = document.createElement('img');
+
+                contentDiv.textContent=detailItem.title;
+                img.src=detailItem.cover;
+
+                resultBox.appendChild(contentDiv);
+                resultBox.appendChild(img);
+
+            });
+        });
+
+        function createComment(){
+            axios({
+                method:'post',
+                url:'',
+            })
+        }
+    </script>
+</body>
+</html>
