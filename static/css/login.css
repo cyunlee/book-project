@@ -35,6 +35,7 @@ body{
     width: 50%;
     height: 100vh;
     background-color: lightgrey;
+    
 }
 form{
     margin: auto;
@@ -45,8 +46,9 @@ form h1{
     font-weight: 400;
 }
 
-.title{
+label{
     font-weight: 600;
+    margin: 14px 0 8px 0;
 }
 
 p{

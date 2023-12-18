@@ -9,3 +9,6 @@ exports.signin = (req, res) => {
 exports.signup = (req, res) => {
 	res.render('signup');
 }
+exports.mypage=(req, res)=>{
+	res.render('mypage');
+}
