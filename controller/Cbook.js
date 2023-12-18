@@ -1,6 +1,5 @@
 const book = require('../models/index');
 const axios = require('axios');
-const xml2js = require('xml2js');
 
 exports.link = (req,res)=>{
     res.render('index')
@@ -10,6 +9,7 @@ exports.main = (req,res)=>{
     res.render('main')
 }
 
+// 알라딘 검색 api
 exports.getBooks=async (req, res) => {
     try {
         const title = req.query.title;
@@ -25,7 +25,7 @@ exports.getBooks=async (req, res) => {
           Cover:'Big',
         },
       });
-      console.log('response > ',response.data.item);
+      console.log('Cbook getBooks response > ',response.data.item);
       const items = response.data.item;
       res.json(items);
     
@@ -35,6 +35,7 @@ exports.getBooks=async (req, res) => {
     }
 }
 
+// 알라딘 베스트셀러 api
 exports.getBestSeller = async (req,res)=>{
   try {
     const response = await axios.get('http://www.aladin.co.kr/ttb/api/ItemList.aspx', {
@@ -49,7 +50,7 @@ exports.getBestSeller = async (req,res)=>{
       },
     });
 
-    console.log('response > ',response.data.item);
+    console.log('Cbook getBestSeller response > ',response.data.item);
     const items = response.data.item;
     res.json(items);
 
@@ -59,6 +60,7 @@ exports.getBestSeller = async (req,res)=>{
   }
 }
 
+// 알라딘 추천 신간 api
 exports.getBrendNew = async (req,res)=>{
   try {
     const response = await axios.get('http://www.aladin.co.kr/ttb/api/ItemList.aspx', {
@@ -72,7 +74,7 @@ exports.getBrendNew = async (req,res)=>{
         Cover:'Big',
       },
     });
-    console.log('response > ',response.data.item);
+    console.log('Cbook getBrendNew response > ',response.data.item);
     const items = response.data.item;
     res.json(items);
 
@@ -82,13 +84,7 @@ exports.getBrendNew = async (req,res)=>{
   }
 }
 
-// exports.goDetail = (req,res)=>{
-//   const isbn13 = req.query.isbn13;
-//   console.log('goDetail > ',isbn13);
-//   res.render('detail');
-//   // res.render('detail',{isbn13:isbn13});
-// }
-
+// 클릭한 책의 isbn 받아오기
 exports.getIsbn= async (req,res)=>{
   try {
     const isbn = req.query.ItemId;
@@ -103,7 +99,7 @@ exports.getIsbn= async (req,res)=>{
       },
     });
 
-    console.log('responsesssssssssssssssssss > ',response.data.item);
+    console.log('Cbook getIsbn response > ',response.data.item);
     const items = response.data.item;
 
     // const jsonItems = JSON.stringify(items);
@@ -117,10 +113,12 @@ exports.getIsbn= async (req,res)=>{
   // res.render('detail');
 }
 
+// 상세페이지로 이동
 exports.goDetail = (req,res)=>{
   res.render('detail')
 }
 
+// 상세페이지 내용 불러오기
 exports.getDetail= async (req,res)=>{
   try {
     const isbn = req.query.ItemId;
@@ -136,7 +134,7 @@ exports.getDetail= async (req,res)=>{
       },
     });
 
-    console.log('responsesssssssssssssssssss > ',response.data.item);
+    console.log('Cbook getDetail response > ',response.data.item);
     const items = response.data.item;
 
     // const jsonItems = JSON.stringify(items);
