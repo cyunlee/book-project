@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="static/css/login.css" rel="stylesheet" />
+	<script src="static/js/login.js"></script>
+	<!-- axios cdn -->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<title>로그인</title>
+</head>
+<body>
+
+	<div class="left">
+		<form name="login">
+			<h1>Log In</h1>
+			<label class="title" for="id">ID</label><br>
+			<input class="user-input" placeholder="Enter your ID" type="text" id="id" name="id"><br><br>
+	
+			<label class="title" for="pw">Password</label><br>
+			<input class="user-input" placeholder="Enter your password" type="password" id="pw" name="pw"></input><br><br>
+	
+			<button type="button" onclick="logIn()">Sign In</button><br>
+		
+		<p>Don't have an account? <a href="/signup">Sign Up</a><br> </p>
+			
+		</form>
+	</div>
+	<div class="right"></div>
+</body>
+</html>

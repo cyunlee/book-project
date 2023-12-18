@@ -1,0 +1,67 @@
+
+.user-input {
+    width: 310px;
+    height: 46px;
+    border: 1px solid #c6c6c6;
+    border-radius: 8px;
+}
+
+button {
+    width: 310px;
+    height: 46px;
+    background-color: black;
+    color: white;
+    border-radius: 8px;
+}
+
+button:hover{
+    background-color: #585858;
+    color: #c9c9c9;
+}
+
+body{
+    display: flex;
+}
+
+.left{
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.right{
+    width: 50%;
+    height: 100vh;
+    background-color: lightgrey;
+    background-image: url('/static/img/bookstack.jpg');
+    background-size: cover;
+}
+
+form{
+    margin: auto;
+}
+
+form h1{
+    font-size: 64px;
+    font-weight: 400;
+}
+
+label{
+    font-weight: 600;
+    
+}
+
+p{
+    color: #B3B3B3;
+}
+
+a{
+    color: #3B89E5
+
+}
+
+
+
+

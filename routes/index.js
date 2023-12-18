@@ -1,9 +1,12 @@
 const express= require('express');
 const router = express.Router();
+const controller = require('../controller/Cmain')
 const controller = require('./../controller/Cbook');
 
-// 임시 링크
-router.get('/',controller.link);
+router.get('/', controller.main);
+router.get('/login', controller.signin);
+router.get('/signup', controller.signup);
+router.get('/mypage', controller.mypage);
 
 // 메인 페이지
 router.get('/main',controller.main);
@@ -25,6 +28,5 @@ router.get('/detailGo',controller.goDetail);
 
 // 상세페이지 내용 가져오기
 router.get('/getDetail',controller.getDetail);
-
 
 module.exports = router;
