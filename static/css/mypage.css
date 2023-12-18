@@ -1,0 +1,141 @@
+.profile{
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profile-image{
+    width: 200px;
+    height: 200px;
+    background-color: lightgrey;
+    border-radius: 50%;
+}
+.name{
+    font-weight: 600;
+}
+.id{
+    color: #c6c6c6;
+}
+
+.info{
+    display: flex;
+    width: fit-content;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+}
+.record{
+    width: 250px;
+    display: flex;
+    justify-content: space-between;
+}
+.wish{
+    width: 100px;
+    height: 100px;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+}
+.finish{
+    width: 100px;
+    height: 100px;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+}
+.book{
+    min-width: 180px;
+    min-height: 225px;
+    max-width: 180px;
+    max-height: 225px;
+    border: 1px solid black;
+}
+.review{
+    min-width: 250px;
+    min-height: 200px;
+    max-width: 250px;
+    max-height: 200px;
+    display: flex;
+    background-image: url('/static/img/review-image.png');
+    background-size: cover;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+}
+.text{
+    text-align: center;
+    padding: 20px;
+    margin: auto;
+}
+
+body{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile-container{
+    width: 85%;
+    height: fit-content;
+    padding: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.categories{
+    width: 85%;
+    height: fit-content;
+    padding: 20px;
+    border: 2px solid lightgrey;
+    border-radius: 16px;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+}
+.category{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+}
+.lifelist{
+    display: flex;
+    width: 660px;
+    justify-content: space-between;
+}
+.swiper{
+    width: 60vw;
+    height: fit-content;
+}
+.follower-container{
+    width: fit-content;
+    display: flex;
+}
+.following-container{
+    width: fit-content;
+    display: flex;
+}
+.follow-container{
+    display: flex;
+}
+.email-container{
+    width: fit-content;
+    display: flex;
+}
+.profile-title{
+    font-weight: bold;
+    margin-right: 4px;
+}
+.profile-info{
+    margin-right: 10px;
+}
+h3{
+    margin-bottom: 32px;
+}
+.bookstack{
+    width: 360px;
+    height: 60px;
+    border: 1px solid black;
+}
+
