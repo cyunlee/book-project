@@ -7,6 +7,10 @@ router.get('/main',controller.main);
 router.get('/search',controller.getBooks);
 router.get('/bestSeller',controller.getBestSeller);
 router.get('/brendNew',controller.getBrendNew);
-router.get('/detail',controller.getDetail);
+router.get('/getIsbn',controller.getIsbn);
+router.get('/detailGo',controller.goDetail);
+router.get('/getDetail',controller.getDetail);
+// router.get('/goDetail',controller.goDetail);
+// router.get('/getDetailTemp',controller.getDetailTemp);
 
 module.exports = router;

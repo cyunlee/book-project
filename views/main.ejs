@@ -31,6 +31,9 @@
     <div id="result" class="box-section"></div>
     <div id="best-result" class="box-section"></div>
     <div id="new-result" class="box-section"></div>
+
+    <div id="detail-result" class="box-section"></div>
+    
     <script>
         const eventTitle = document.getElementById('title');
         
@@ -49,7 +52,7 @@
                     // console.log('object >', JSON.parse(res));
                     res.forEach(a => {
                         // console.log('알라딘 bestseller cover >',a.cover[0]);
-                        console.log('알라딘 bestseller a.isbn13 > ',a.isbn13[0]);
+                        console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
                         let button = document.createElement('button');
                         let sectionEachDiv = document.createElement('div');
                         let contentDiv = document.createElement('div');
@@ -57,7 +60,7 @@
 
                         contentDiv.textContent=a.title;
                         button.type="button";
-                        img.src=a.cover[0];
+                        img.src=a.cover;
                         button.appendChild(img);
                         button.appendChild(contentDiv);
                         sectionEachDiv.appendChild(button);
@@ -65,7 +68,7 @@
                         bestResultBox.appendChild(sectionEachDiv);
                         // console.log('a>',a.title);
                         button.addEventListener('click',()=>{
-                            detail(a.isbn13[0]);
+                            detail(a.isbn13);
                         });
                     });
             });
@@ -76,18 +79,25 @@
             url:'/brendNew',
             }).done((res) => {
                     console.log('알라딘 brendnew res >' , res);
-                    // console.log('object >', JSON.parse(res));
                     res.forEach(a => {
-                        // console.log('알라딘 brendnew cover >',a.cover[0]);
+                        console.log('알라딘 brendnew a.isbn13 > ',a.isbn13);
+                        let button = document.createElement('button');
                         let sectionEachDiv = document.createElement('div');
                         let contentDiv = document.createElement('div');
                         let img = document.createElement('img');
+
                         contentDiv.textContent=a.title;
-                        img.src=a.cover[0];
-                        sectionEachDiv.appendChild(img);
-                        sectionEachDiv.appendChild(contentDiv);
+                        button.type="button";
+                        img.src=a.cover;
+                        button.appendChild(img);
+                        button.appendChild(contentDiv);
+                        sectionEachDiv.appendChild(button);
                         sectionEachDiv.classList.add('each-section');
                         newResultBox.appendChild(sectionEachDiv);
+                        // console.log('a>',a.title);
+                        button.addEventListener('click',()=>{
+                            detail(a.isbn13);
+                        });
                     });
                 });
         });
@@ -98,40 +108,46 @@
         });
 
         // 책 검색 함수(카카오 책 검색 api)
-        function search(){
-            const title = document.getElementById('title').value;
+        function search() {
+            // const title = document.getElementById('title').value;
             const resultBox = document.getElementById('result');
+
             $.ajax({
-                    method: "GET",
-                    url: "https://dapi.kakao.com/v3/search/book?target=title",
-                    data: {
-                        query: title,
-                        size:5,
-                    },
-                    headers: {
-                        Authorization: "KakaoAK 4a5d3f4db009c4144ee12836ea3792b4"
-                    },
-                })
-                .done((res) =>{
-                    console.log('search res > ',res);
-                    console.log('search res.documents[0] > ',res.documents[0])
-                    res.documents.forEach(a => {
-                        // console.log('cover >',a.cover[0]);
+            method: 'get',
+            url: '/search', // 서버에 요청을 보내는 주소로 변경
+            data:{
+                title:document.getElementById('title').value,
+            }
+            }).done((res) => {
+                console.log('res >' , res);
+                // console.log('object >', JSON.parse(res));
+                res.forEach(a => {
+                    console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
+                        let button = document.createElement('button');
                         let sectionEachDiv = document.createElement('div');
                         let contentDiv = document.createElement('div');
                         let img = document.createElement('img');
+
                         contentDiv.textContent=a.title;
-                        img.src=a.thumbnail;
-                        sectionEachDiv.appendChild(img);
-                        sectionEachDiv.appendChild(contentDiv);
+                        button.type="button";
+                        img.src=a.cover;
+                        button.appendChild(img);
+                        button.appendChild(contentDiv);
+                        sectionEachDiv.appendChild(button);
                         sectionEachDiv.classList.add('each-section');
                         resultBox.appendChild(sectionEachDiv);
-                    });
-                    
+                        // console.log('a>',a.title);
+                        button.addEventListener('click',()=>{
+                            detail(a.isbn13);
+                        });
                 });
-                removeAllChildren(resultBox);
-            
+            });
+            removeAllChildren(resultBox);
+            // console.log('title> ',title)
+            // document.getElementById('result').value=title;
         }
+
+        
 
         function removeAllChildren(element) {
             while (element.firstChild) {
@@ -141,8 +157,55 @@
         }
 
         function detail(isbn){
-            location.href='/detail';
+            const detailBox = document.getElementById('detail-result');
+            $.ajax({
+                method:'get',
+                url:'/getIsbn',
+                data:{
+                    ItemId:`${isbn}`,
+                }
+            }).done((res)=>{
+                console.log(res);
+                console.log('res detail aaaaaaaaaaa > ',res[0].isbn13);
+                location.href=`/detailGo?isbn13=${res[0].isbn13}`;
+            })
         }
+
+        // function search(){
+        //     const title = document.getElementById('title').value;
+        //     const resultBox = document.getElementById('result');
+        //     $.ajax({
+        //             method: "GET",
+        //             url: "https://dapi.kakao.com/v3/search/book?target=title",
+        //             data: {
+        //                 query: title,
+        //                 size:5,
+        //             },
+        //             headers: {
+        //                 Authorization: "KakaoAK 4a5d3f4db009c4144ee12836ea3792b4"
+        //             },
+        //         })
+        //         .done((res) =>{
+        //             console.log('search res > ',res);
+        //             console.log('search res.documents[0] > ',res.documents[0])
+        //             res.documents.forEach(a => {
+        //                 // console.log('cover >',a.cover[0]);
+        //                 let sectionEachDiv = document.createElement('div');
+        //                 let contentDiv = document.createElement('div');
+        //                 let img = document.createElement('img');
+        //                 contentDiv.textContent=a.title;
+        //                 img.src=a.thumbnail;
+        //                 sectionEachDiv.appendChild(img);
+        //                 sectionEachDiv.appendChild(contentDiv);
+        //                 sectionEachDiv.classList.add('each-section');
+        //                 resultBox.appendChild(sectionEachDiv);
+        //             });
+                    
+        //         });
+        //         removeAllChildren(resultBox);
+            
+        // }
+
 
         // function search() {
         //     // const title={};
