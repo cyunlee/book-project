@@ -36,7 +36,8 @@ body{
 .right{
     width: 50%;
     height: 100vh;
-    background-color: lightgrey;
+    background-image: url('/static/img/openbook.jpg');
+    background-size: cover;
     
 }
 form{
