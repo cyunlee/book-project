@@ -7,15 +7,15 @@ const CommentModel = (sequelize,DataTypes)=>{
             autoIncrement:true
         },
         c_isbn:{
-            type:DataTypes.TEXT,
+            type:DataTypes.STRING(50),
             allowNull:false
         },
         c_id:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.STRING(50),
             allowNull:false
         },
         c_content:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.TEXT,
             allowNull:false
         },
         c_date:{
