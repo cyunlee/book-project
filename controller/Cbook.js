@@ -1,16 +1,13 @@
-const book = require('../models/index');
+const model = require('../models/index');
+const {Sequelize, Comment} = model;
 const axios = require('axios');
-
-exports.link = (req,res)=>{
-    res.render('index')
-}
 
 exports.main = (req,res)=>{
     res.render('main')
 }
 
 // 알라딘 검색 api
-exports.getBooks=async (req, res) => {
+exports.get_books=async (req, res) => {
     try {
         const title = req.query.title;
         console.log(title);
@@ -36,7 +33,7 @@ exports.getBooks=async (req, res) => {
 }
 
 // 알라딘 베스트셀러 api
-exports.getBestSeller = async (req,res)=>{
+exports.get_bestSeller = async (req,res)=>{
   try {
     const response = await axios.get('http://www.aladin.co.kr/ttb/api/ItemList.aspx', {
     params: {
@@ -61,7 +58,7 @@ exports.getBestSeller = async (req,res)=>{
 }
 
 // 알라딘 추천 신간 api
-exports.getBrendNew = async (req,res)=>{
+exports.get_brendNew = async (req,res)=>{
   try {
     const response = await axios.get('http://www.aladin.co.kr/ttb/api/ItemList.aspx', {
     params: {
@@ -85,7 +82,7 @@ exports.getBrendNew = async (req,res)=>{
 }
 
 // 클릭한 책의 isbn 받아오기
-exports.getIsbn= async (req,res)=>{
+exports.get_isbn= async (req,res)=>{
   try {
     const isbn = req.query.ItemId;
     console.log('isbnnnnnnn',isbn);
@@ -114,12 +111,12 @@ exports.getIsbn= async (req,res)=>{
 }
 
 // 상세페이지로 이동
-exports.goDetail = (req,res)=>{
+exports.go_detail = (req,res)=>{
   res.render('detail')
 }
 
 // 상세페이지 내용 불러오기
-exports.getDetail= async (req,res)=>{
+exports.get_detail= async (req,res)=>{
   try {
     const isbn = req.query.ItemId;
     console.log('isbnnnnnnn',isbn);
@@ -146,4 +143,37 @@ exports.getDetail= async (req,res)=>{
     res.status(500).send('Internal Server Error');
   }
   // res.render('detail');
+}
+
+// 상세페이지 댓글 불러오기
+exports.get_comments = async (req,res)=>{
+  
+}
+
+// 상세페이지 댓글 입력하기
+exports.post_comment = async (req,res)=>{
+  try{
+    const{c_isbn, c_id, c_content}=req.body;
+    const newComment = await Comment.create({
+      c_isbn,
+      c_id,
+      c_content,
+      c_date: Sequelize.literal('CURRENT_TIMESTAMP'),
+    })
+    res.send(newComment);
+    // res.send('hi');
+  }catch(err){
+      console.log(err)
+      res.send("Internal Server Error!")
+  }
+}
+
+// 상세페이지 댓글 수정하기
+exports.patch_comment = (req,res)=>{
+
+}
+
+// 상세페이지 댓글 삭제하기
+exports.delete_comment = (req,res)=>{
+
 }

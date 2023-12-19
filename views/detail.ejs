@@ -13,10 +13,9 @@
     <div id="result"></div>
     <div>
         <form name="comment-form">
-            <input type="text" name="c_id"><br>
-            <input type="text" name="c_content"><br>
-            <input type="text" name="c_date"><br>
-            <button type="button" onclick="createComment();"></button>
+            <input type="text" name="c_id" placeholder="id"><br>
+            <input type="text" name="c_content" placeholder="content"><br>
+            <button type="button" onclick="addComment();">댓글 입력하기</button>
         </form>
     </div>
     <script>
@@ -25,13 +24,13 @@
 
         console.log(isbn13); // 출력: 9788954699075
         document.addEventListener("DOMContentLoaded", ()=>{
-        $.ajax({
-        method:'get',
-        url:'/getDetail',
-        data:{
-            ItemId:`${isbn13}`,
-        }
-        }).done((res) => {
+            $.ajax({
+            method:'get',
+            url:'/getDetail',
+            data:{
+                ItemId:`${isbn13}`,
+             }
+            }).done((res) => {
                 console.log('알라딘 brendnew res >' , res);
                 const detailItem = res[0];
                 const resultBox = document.getElementById('result');
@@ -47,11 +46,24 @@
             });
         });
 
-        function createComment(){
+        function addComment(){
+            console.log('isbn',`${isbn13}`);
+            const form = document.forms['comment-form'];
+
             axios({
                 method:'post',
-                url:'',
-            })
+                url:'/writeComment',
+                data:{
+                    c_isbn:isbn13,
+                    c_id : form.c_id.value,
+                    c_content:form.c_content.value,
+                }
+            }).then((res) => {
+                console.log('댓글 작성 성공:', res);
+                // 여기에서 원하는 동작을 수행할 수 있습니다.
+            }).catch((error) => {
+                console.error('댓글 작성 실패:', error);
+            });
         }
     </script>
 </body>
