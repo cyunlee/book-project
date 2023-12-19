@@ -8,6 +8,10 @@ router.get('/login', controller.signin);
 router.get('/signup', controller.signup);
 router.get('/mypage', controller.mypage);
 router.post('/signup_post', controller.signup_post);
+router.post('/login_post', controller.login_post)
+router.post('/nameCheck_post', controller.nameCheck)
+router.post('/idCheck_post', controller.idCheck)
+
 
 
 // 메인 페이지

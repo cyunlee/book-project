@@ -1,5 +1,46 @@
+const form = document.forms['register']
+
+async function nameCheck() {
+    try{
+        const response = await axios({
+            method: 'POST',
+            url: '/nameCheck_post',
+            data: {
+                u_name: form.name.value
+            }
+        })
+        //시윤님 여기입니다!!!!!!!!!!!
+        if (response.data.result) {
+            alert('중복된 닉네임이 있어요');
+        } else {
+            alert('사용 가능한 닉네임입니다');
+        }
+    } catch (error){
+        console.log(error);
+    }
+}
+
+async function idCheck() {
+    try{
+        const response = await axios({
+            method: 'POST',
+            url: '/idCheck_post',
+            data: {
+                u_id: form.id.value
+            }
+        })
+        //시윤님 여기입니다!!!!!!!!!!!
+        if (response.data.result) {
+            alert('중복된 아이디가 있어요');
+        } else {
+            alert('사용 가능한 아이디입니다');
+        }
+    } catch (error){
+        console.log(error);
+    }
+}
+
 async function signUp() {
-    const form = document.forms['register'];
     try{
         const response = await axios({
             method: 'POST',
