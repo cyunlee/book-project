@@ -12,7 +12,6 @@ async function signUp() {
             },
         });
 
-        console.log('what?', response);
         if(response.data.result){
             alert('회원가입을 축하드립니다');
             document.location.href='/';
