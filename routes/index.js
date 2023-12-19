@@ -7,6 +7,8 @@ router.get('/', controller.main);
 router.get('/login', controller.signin);
 router.get('/signup', controller.signup);
 router.get('/mypage', controller.mypage);
+router.post('/signup_post', controller.signup_post);
+
 
 // 메인 페이지
 router.get('/main',bookController.main);
