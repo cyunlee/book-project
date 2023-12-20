@@ -1,10 +1,49 @@
 const { User } = require('../models/index');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
+
+const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
+
+const cookieConfig = {
+	httpOnly: true,
+	maxAge: 10 * 60 * 1000, //10분
+}
 
 const saltRounds = 10;
 
-exports.main = (req, res) => {
-	res.render('index');
+// 쿠키로 로그인 여부 확인하고 token으로 verify하고
+// true면 이후 해당 user_id를 반환,
+// 아니면 false 반환 해주는 모듈
+// const jwtCheck= (token) => {
+
+// }
+
+const tokenCheck = async (req) => {
+	const token = req.cookies.jwtCookie;
+	if(!token) {
+		return false;
+	} else {
+		const result = jwt.verify(token, jwtSecret);
+		const checkID = await User.findOne({
+			where: {u_id : result.id}
+		})
+		if (checkID){
+			return (result.id);
+		} else {
+			return false;
+		}
+	}
+}
+
+//로그인 성공해서 jwt 갖고있을시 서버에서 토큰을 조회해서 확인되면 user이름 홈화면에 반영되어 렌더되도록.
+exports.main = async (req, res) => {
+	const tokenId = await tokenCheck(req);
+	if(!tokenId) {
+		res.render('index', {isLogin : false})
+	} else {
+		res.render('index', {isLogin : true, id : tokenId});
+	}
 }
 
 exports.signin = (req, res) => {
@@ -27,7 +66,6 @@ exports.idCheck = async (req, res) => {
 exports.nameCheck = async (req, res) => {
 	try {
 		const u_name = req.body;
-		console.log('check!!!!!!!!!!!', name);
 		const checkName = await User.findOne({
 			where: {u_name : u_name}
 		})
@@ -36,6 +74,10 @@ exports.nameCheck = async (req, res) => {
 	} catch (error) {
 		res.send(error);
 	}
+}
+
+exports.logout = (req, res) => {
+	res.clearCookie('jwtCookie').redirect('/');
 }
 
 exports.login_post = async (req, res) => {
@@ -53,7 +95,9 @@ exports.login_post = async (req, res) => {
 			// (!result) {
 				res.send({result: false})
 			}
-			else {
+			else { // 성공시
+				const token = jwt.sign({id: id}, jwtSecret)
+				res.cookie('jwtCookie', token, cookieConfig);
 				res.send({result: true});
 			}
 		}
@@ -71,7 +115,6 @@ exports.signup_post = async (req, res) => {
 		const newid = await User.findOne({
 			where: { u_id : u_id }
 		})
-		console.log('check!!!>' , newname);
 		if (newname) res.send({result: false, msg: 'name duplicated'})
 		else if (newid) res.send({result: false, msg: 'id duplicated'})
 		else {

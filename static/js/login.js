@@ -20,3 +20,7 @@ async function logIn() {
         console.log(error);
     }
 }
+
+function logout() {
+    location.href = '/logout';
+}
