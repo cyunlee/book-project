@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <!-- jQuery CDN -->
+      <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+      <!-- axios CDN -->
+      <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <style>
+        .box-section{
+            width:100vw;
+            height:300px;
+            display: flex;
+        }
+        .each-section{
+            height:250px;
+            width:200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+      </style>
+</head>
+<body>
+    <input type="text" id="title" name="title">
+    <button type="button" onclick="search();">검색</button>
+    <button id="best" onclick="best();">BestSeller</button>
+    <button id="brendNew" onclick="brendNew();">신간추천</button>
+    <div id="result" class="box-section"></div>
+    <div id="best-result" class="box-section"></div>
+    <div id="new-result" class="box-section"></div>
+
+    <div id="detail-result" class="box-section"></div>
+       
+    <script>
+        const eventTitle = document.getElementById('title');
+        
+        // 메인페이지 로드 시, 책 정보들 불러오기
+        document.addEventListener("DOMContentLoaded", ()=>{
+            const resultBox = document.getElementById('result');
+            const bestResultBox = document.getElementById('best-result');
+            const newResultBox = document.getElementById('new-result');
+        
+            // 베스트셀러 api
+            $.ajax({
+                method:'get',
+                url:'/bestSeller',
+            }).done((res) => {
+                    console.log('알라딘 bestseller >' , res);
+                    // console.log('object >', JSON.parse(res));
+                    res.forEach(a => {
+                        // console.log('알라딘 bestseller cover >',a.cover[0]);
+                        console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
+                        let button = document.createElement('button');
+                        let sectionEachDiv = document.createElement('div');
+                        let contentDiv = document.createElement('div');
+                        let img = document.createElement('img');
+        
+                        contentDiv.textContent=a.title;
+                        button.type="button";
+                        img.src=a.cover;
+                        button.appendChild(img);
+                        button.appendChild(contentDiv);
+                        sectionEachDiv.appendChild(button);
+                        sectionEachDiv.classList.add('each-section');
+                        bestResultBox.appendChild(sectionEachDiv);
+                        // console.log('a>',a.title);
+                        button.addEventListener('click',()=>{
+                            detail(a.isbn13);
+                        });
+                    });
+            });
+        
+            // 신간 api
+            $.ajax({
+            method:'get',
+            url:'/brendNew',
+            }).done((res) => {
+                    console.log('알라딘 brendnew res >' , res);
+                    res.forEach(a => {
+                        console.log('알라딘 brendnew a.isbn13 > ',a.isbn13);
+                        let button = document.createElement('button');
+                        let sectionEachDiv = document.createElement('div');
+                        let contentDiv = document.createElement('div');
+                        let img = document.createElement('img');
+        
+                        contentDiv.textContent=a.title;
+                        button.type="button";
+                        img.src=a.cover;
+                        button.appendChild(img);
+                        button.appendChild(contentDiv);
+                        sectionEachDiv.appendChild(button);
+                        sectionEachDiv.classList.add('each-section');
+                        newResultBox.appendChild(sectionEachDiv);
+                        // console.log('a>',a.title);
+                        button.addEventListener('click',()=>{
+                            detail(a.isbn13);
+                        });
+                    });
+                });
+        });
+        
+        // keyup 이벤트 발생시 내용들이 화면에 보이게
+        eventTitle.addEventListener("keyup", () => {
+            search();
+        });
+        
+        // 책 검색 함수(카카오 책 검색 api)
+        function search() {
+            // const title = document.getElementById('title').value;
+            const resultBox = document.getElementById('result');
+        
+            $.ajax({
+            method: 'get',
+            url: '/search', // 서버에 요청을 보내는 주소로 변경
+            data:{
+                title:document.getElementById('title').value,
+            }
+            }).done((res) => {
+                console.log('res >' , res);
+                // console.log('object >', JSON.parse(res));
+                res.forEach(a => {
+                    console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
+                        let button = document.createElement('button');
+                        let sectionEachDiv = document.createElement('div');
+                        let contentDiv = document.createElement('div');
+                        let img = document.createElement('img');
+        
+                        contentDiv.textContent=a.title;
+                        button.type="button";
+                        img.src=a.cover;
+                        button.appendChild(img);
+                        button.appendChild(contentDiv);
+                        sectionEachDiv.appendChild(button);
+                        sectionEachDiv.classList.add('each-section');
+                        resultBox.appendChild(sectionEachDiv);
+                        // console.log('a>',a.title);
+                        button.addEventListener('click',()=>{
+                            detail(a.isbn13);
+                        });
+                });
+            });
+            removeAllChildren(resultBox);
+            // console.log('title> ',title)
+            // document.getElementById('result').value=title;
+        }
+        
+        
+        
+        function removeAllChildren(element) {
+            while (element.firstChild) {
+                removeAllChildren(element.firstChild);
+                element.removeChild(element.firstChild);
+            }
+        }
+        
+        function detail(isbn){
+            const detailBox = document.getElementById('detail-result');
+            $.ajax({
+                method:'get',
+                url:'/getIsbn',
+                data:{
+                    ItemId:`${isbn}`,
+                }
+            }).done((res)=>{
+                console.log(res);
+                console.log('res detail aaaaaaaaaaa > ',res[0].isbn13);
+                location.href=`/detailGo?isbn13=${res[0].isbn13}`;
+            })
+        }
+    </script>
+</body>
+</html>

@@ -21,6 +21,8 @@ button:hover{
 
 body{
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 .left{
@@ -34,7 +36,9 @@ body{
 .right{
     width: 50%;
     height: 100vh;
-    background-color: lightgrey;
+    background-image: url('/static/img/openbook.jpg');
+    background-size: cover;
+    
 }
 form{
     margin: auto;
@@ -45,8 +49,9 @@ form h1{
     font-weight: 400;
 }
 
-.title{
+label{
     font-weight: 600;
+    margin: 14px 0 8px 0;
 }
 
 p{

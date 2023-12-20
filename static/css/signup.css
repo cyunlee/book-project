@@ -21,6 +21,8 @@ button:hover{
 
 body{
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 .left{
@@ -35,6 +37,8 @@ body{
     width: 50%;
     height: 100vh;
     background-color: lightgrey;
+    background-image: url('/static/img/bookstack.jpg');
+    background-size: cover;
 }
 
 form{
@@ -46,8 +50,9 @@ form h1{
     font-weight: 400;
 }
 
-.title{
+label{
     font-weight: 600;
+    
 }
 
 p{

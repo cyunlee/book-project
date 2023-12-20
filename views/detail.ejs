@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+          <!-- jQuery CDN -->
+          <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+          <style>
+            .divWrapper{
+                width:500px;
+                height: fit-content;
+            }
+            .comment{
+                width:500px;
+                height: fit-content;
+            }
+            .morevertToggle{
+                background-color: aqua;
+            }
+            .box-show{
+                width: 70px;
+                height: 50px;
+                display: none;
+                position: absolute;
+                top: 26px;
+                right: 30px;
+                border: 1px black solid;
+                z-index: 100;
+            }
+            .comment_inner_wrapper{
+                width:500px;
+                display: inline-block;
+            }
+            .comment-wrapper{
+                position: relative;
+                border: 1px solid black;
+                width: 80%;
+                height: 100px;
+            }
+            .comment{
+                display: inline-block;
+            }
+            .morevert{
+                position: absolute;
+                right: 0;
+            }
+            .editBox-content{
+                width: 98%;
+                height: 90%;
+            }
+            .inputBox{
+                height: 100px;
+            }
+            .editBox-id{
+                position:absolute;
+            }
+            .edit-btn{
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                margin-bottom:10px;
+                margin-right:20px;
+            }
+          </style>
+</head>
+<body>
+    <h1>상세페이지</h1>
+    <div id="result"></div>
+    <div>
+        <form name="comment-form">
+            <input type="text" name="c_id" placeholder="id"><br>
+            <input type="text" name="c_content" placeholder="content"><br>
+            <button type="button" onclick="addComment();">댓글 입력하기</button>
+        </form>
+        <div id="comment-box"></div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const isbn13 = urlParams.get('isbn13');
+
+        console.log(isbn13); // 출력: 9788954699075
+        document.addEventListener("DOMContentLoaded", ()=>{
+            loadView();
+        });
+
+
+        function loadView(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const isbn13 = urlParams.get('isbn13');
+            console.log(isbn13); // 출력: 9788954699075
+
+            $.ajax({
+            method:'get',
+            url:'/getDetail',
+            data:{
+                ItemId:`${isbn13}`,
+             }
+            }).done((res) => {
+                console.log('알라딘 brendnew res >' , res);
+                const detailItem = res[0];
+                const resultBox = document.getElementById('result');
+                let contentDiv = document.createElement('div');
+                let img = document.createElement('img');
+
+                contentDiv.textContent=detailItem.title;
+                img.src=detailItem.cover;
+
+                resultBox.appendChild(contentDiv);
+                resultBox.appendChild(img);
+            });
+
+            axios({
+                method:'post',
+                url:'/getComments',
+                data:{
+                    c_isbn:`${isbn13}`,
+                },
+            }).then((res)=>{
+                console.log('getComments res.data > ',res.data)
+                const commentItem = res.data;
+                const form = document.forms['comment-form'];
+                const commentBox = document.getElementById('comment-box');
+                
+                commentItem.forEach(i => {
+                    
+                    // isbn 넘버에 밎는 댓글 보여주기
+                    const html = `
+                    <div id="div_${i.c_no}" class="comment-wrapper">
+                        <div class="comment_inner_wrapper">
+                        <div class="comment_id comment">${i.c_id}</div>
+                        <div class="comment_content comment">${i.c_content}</div>
+                        <div class="comment_date comment">${i.c_date}</div>
+                        </div>
+                        <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
+                        </div>
+                        `
+                        commentBox.insertAdjacentHTML('beforeend',html);
+                        
+                        
+                        // morevert 버튼을 눌렀을 때 나올 버튼 박스
+                        const btnBox = document.createElement('div');
+                        const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${i.c_no},'${i.c_id}','${i.c_content}');" >수정</button><br>
+                        <button type="button" class="editBtn"  onclick="deleteComment(${i.c_no})">삭제</button>`
+                        btnBox.insertAdjacentHTML('beforeend',btnHtml);
+                        btnBox.classList.add('box-show');
+                        
+                        const toggleBtn = document.querySelector(`#morevert_${i.c_no}`);
+                        toggleBtn.after(btnBox);
+                        toggleBtn.addEventListener('click',()=>{
+                            editToggle(`${i.c_no}`);
+                        })
+                        form.reset();
+                            
+                    });
+            })
+        }
+
+        function editToggle(no){
+            const toggleBtn = document.querySelector(`#morevert_${no}`);
+            let btnShow = document.querySelector(`#morevert_${no} + .box-show`);
+            // const btnShow = document.querySelector('.box-show');
+            toggleBtn.classList.toggle('morevertToggle');
+            if(toggleBtn.classList.contains('morevertToggle')){
+                btnShow.style.display = 'inline-block';
+            }else{
+                btnShow.style.display='none';
+            }
+        }
+
+        function addComment(){
+            console.log('isbn',`${isbn13}`);
+            const form = document.forms['comment-form'];
+
+            axios({
+                method:'post',
+                url:'/writeComment',
+                data:{
+                    c_isbn:isbn13,
+                    c_id : form.c_id.value,
+                    c_content:form.c_content.value,
+                }
+            }).then((res) => {
+                console.log('댓글 작성 성공:', res);
+                const commentBox = document.querySelector('#comment-box');
+                const resultBox = document.querySelector('#result');
+                removeAllChildren(resultBox);
+                removeAllChildren(commentBox);
+                loadView();
+
+            }).catch((error) => {
+                console.error('댓글 작성 실패:', error);
+            });
+        }
+
+        function editBox(no,id,content){
+            const originalBox = document.querySelector(`#div_${no}`);
+            removeAllChildren(originalBox);
+            const html =`
+                <div class="editBox-id">${id}</div>
+                <form name="edit-form" class="inputBox">
+                    <input type ="text" name="c_content" value="${content}" class="editBox-content">
+                    <button type="button" onclick="editComment(${no})" class="edit-btn">확인</button>
+                </form>
+               
+                `
+            originalBox.insertAdjacentHTML('beforeend',html);
+            // originalBox.appendChild(inputBox);
+        }
+
+        function editComment(no){
+            console.log(no);
+            const form = document.forms['edit-form'];
+            axios({
+                method:'patch',
+                url:'/updateComment',
+                data:{
+                    c_no:`${no}`,
+                    c_content:form.c_content.value,
+                },                
+            }).then((res)=>{
+                const commentBox = document.querySelector('#comment-box');
+                const resultBox = document.querySelector('#result');
+                removeAllChildren(resultBox);
+                removeAllChildren(commentBox);
+                loadView();
+
+            })
+        }
+        
+        function deleteComment(no){
+            console.log(no);
+            axios({
+                method:'delete',
+                url:'/deleteComment',
+                data:{
+                    c_no:`${no}`,
+                },                
+            }).then((res)=>{
+                const commentBox = document.querySelector('#comment-box');
+                const resultBox = document.querySelector('#result');
+                removeAllChildren(resultBox);
+                removeAllChildren(commentBox);
+                loadView();
+
+            })
+            
+        }
+
+        function removeAllChildren(element) {
+            while (element.firstChild) {
+                removeAllChildren(element.firstChild);
+                element.removeChild(element.firstChild);
+            }
+        }
+    </script>
+</body>
+</html>
