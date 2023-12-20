@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/mypage.css" />
-
+    <script defer src="/static/js/mypage.js"></script>
     <!-- in HEAD -->
     <link
       rel="stylesheet"
@@ -12,36 +12,57 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
+    <!-- axios cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <title>MyPage</title>
   </head>
   <body>
     <div class="profile-container">
       <div class="profile">
-        <div class="profile-image"></div>
+        <div class="profile-image">
+          <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진">
+          <button class="edit">Edit</button>
+          <div class="upload hidden">
+            <span class="select-text">Select a photo</span>
+            <span class="upload-text">Upload a photo</span>
+          </div>
+          <div class="profile-form">
+            <input id="my-input" type="file" name="userfile" /><br />
+            <button id="my-button" onclick="submit()">업로드</button>
+          </div>
+        </div>
         <div class="name">Siyun Lee</div>
         <div class="id">@cyunlee</div>
       </div>
       <br />
       <div class="info">
         <div class="follow-container">
-            <div class="follower-container">
-                <div class="profile-title">팔로워</div>
-                <div class="profile-info">54</div>
-            </div>
-            <div class="following-container">
-                <div class="profile-title">팔로잉</div>
-                <div class="profile-info">110</div>
-            </div>
+          <div class="follower-container">
+            <div class="profile-title">팔로워</div>
+            <div class="profile-info">54</div>
+          </div>
+          <div class="following-container">
+            <div class="profile-title">팔로잉</div>
+            <div class="profile-info">110</div>
+          </div>
         </div>
         <div class="email-container">
-            <div class="profile-title">이메일</div>
-            <div class="profile-info">loremipsum1234@google.com</div>
+          <div class="profile-title">이메일</div>
+          <div class="profile-info">loremipsum1234@google.com</div>
         </div>
       </div>
       <br />
       <div class="record">
-        <div class="wish"></div>
-        <div class="finish"></div>
+        <div class="wishlist-container">
+          <div class="wishlist-info">77</div>
+          <div class="wishlist-title">찜했어요</div>
+        </div>
+        <div class="finish-container">
+          <div class="finish-info">24</div>
+          <div class="finish-title">봤어요</div>
+        </div>
       </div>
     </div>
     <br />
@@ -57,45 +78,67 @@
       <br />
       <div class="category">
         <h3>읽고싶은 책</h3>
-          <!-- Slider container -->
-          <div class="swiper">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-              <!-- Slides -->
-              <div class="swiper-slide book"></div>
-              <div class="swiper-slide book"></div>
-              <div class="swiper-slide book"></div>
-              <div class="swiper-slide book"></div>
-              <div class="swiper-slide book"></div>
-              <div class="swiper-slide book"></div>
-              <div class="swiper-slide book"></div>
-              <div class="swiper-slide book"></div>
-            </div>
-
-            <!-- 페이징 필요시 추가 -->
-            <div class="swiper-pagination"></div>
-            <!-- 이전, 다음 버튼 필요시 추가 -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+        <!-- Slider container -->
+        <div class="swiper">
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
           </div>
+
+          <!-- 페이징 필요시 추가 -->
+          <div class="swiper-pagination"></div>
+          <!-- 이전, 다음 버튼 필요시 추가 -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
+      </div>
 
       <br />
       <div class="category">
         <h3>읽은 책</h3>
         <div class="bookstack-list">
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
-            <div class="bookstack"></div>
+          <div class="bookstack ten">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack nine">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack eight">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack seven">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack six">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack five">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack four">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack three">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack two">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack one">
+            <div class="bookstack-title">소비의 심리학</div>
+          </div>
+        </div>
+        <br />
+        <div class="all-container">
+          <button class="all">전체보기</button>
         </div>
       </div>
       <br />
@@ -103,38 +146,40 @@
         <h3>내가 작성한 리뷰</h3>
         <!-- Slider container -->
         <div class="swiper">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-              <!-- Slides -->
-              <div class="swiper-slide review"><div class="text">너무 재미있게 읽었던 책이예요</div></div>
-              <div class="swiper-slide review"></div>
-              <div class="swiper-slide review"></div>
-              <div class="swiper-slide review"></div>
-              <div class="swiper-slide review"></div>
-              <div class="swiper-slide review"></div>
-              <div class="swiper-slide review"></div>
-              <div class="swiper-slide review"></div>
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide review">
+              <div class="text">너무 재미있게 읽었던 책이예요</div>
             </div>
-
-            <!-- 페이징 필요시 추가 -->
-            <div class="swiper-pagination"></div>
-            <!-- 이전, 다음 버튼 필요시 추가 -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
           </div>
+
+          <!-- 페이징 필요시 추가 -->
+          <div class="swiper-pagination"></div>
+          <!-- 이전, 다음 버튼 필요시 추가 -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
       </div>
     </div>
     <script>
-        new Swiper(".swiper", {
-          // 다양한 옵션 설정,
-          // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
-          slidesPerView: 3,
-          spaceBetween: 20,
-          navigation: {
-            prevEl: ".swiper-button-prev",
-            nextEl: ".swiper-button-next",
-          },
-        });
-      </script>
+      new Swiper(".swiper", {
+        // 다양한 옵션 설정,
+        // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
+        slidesPerView: 3,
+        spaceBetween: 20,
+        navigation: {
+          prevEl: ".swiper-button-prev",
+          nextEl: ".swiper-button-next",
+        },
+      });
+    </script>
   </body>
 </html>
