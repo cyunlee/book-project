@@ -16,6 +16,9 @@ router.get('/logout', controller.logout);
 
 // 회원가입 페이지
 router.get('/signup', controller.signup);
+router.get('/search', controller.search);
+router.get('/searchDetail', controller.searchDetail);
+
 
 // 마이페이지
 router.get('/mypage', controller.mypage);
