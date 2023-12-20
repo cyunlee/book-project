@@ -3,16 +3,24 @@ const router = express.Router();
 const controller = require('../controller/Cmain')
 const bookController = require('./../controller/Cbook');
 
+// 임시 링크
 router.get('/', controller.main);
+
+// 로그인 페이지
 router.get('/login', controller.signin);
+
+// 회원가입 페이지
 router.get('/signup', controller.signup);
+
+// 마이페이지
 router.get('/mypage', controller.mypage);
-router.post('/signup_post', controller.signup_post);
+
 router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 
-
+// 회원가입하기
+router.post('/signup_post', controller.signup_post);
 
 // 메인 페이지
 router.get('/main',bookController.main);
@@ -36,7 +44,7 @@ router.get('/detailGo',bookController.go_detail);
 router.get('/getDetail',bookController.get_detail);
 
 // 상세페이지 댓글 가져오기
-router.get('/getComments',bookController.get_comments);
+router.post('/getComments',bookController.get_comments);
 
 // 상세 페이지 댓글 작성
 router.post('/writeComment',bookController.post_comment)
