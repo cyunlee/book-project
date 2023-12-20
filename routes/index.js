@@ -15,6 +15,10 @@ router.get('/signup', controller.signup);
 // 마이페이지
 router.get('/mypage', controller.mypage);
 
+router.post('/login_post', controller.login_post)
+router.post('/nameCheck_post', controller.nameCheck)
+router.post('/idCheck_post', controller.idCheck)
+
 // 회원가입하기
 router.post('/signup_post', controller.signup_post);
 

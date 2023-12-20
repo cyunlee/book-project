@@ -7,8 +7,12 @@
 .profile-image{
     width: 200px;
     height: 200px;
-    background-color: lightgrey;
+    background-color: white;
+    background-image: url('/static/img/default-profile.png');
     border-radius: 50%;
+}
+.profile-image:hover{
+    cursor: pointer;
 }
 .name{
     font-weight: 600;
@@ -29,24 +33,52 @@
     display: flex;
     justify-content: space-between;
 }
-.wish{
+.wishlist-container{
     width: 100px;
     height: 100px;
     border: 1px solid lightgrey;
+    background-color: white;
     border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.finish{
+.wishlist-info{
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: 20px;
+}
+.wishlist-title{
+    color: grey;
+}
+.finish-container{
     width: 100px;
     height: 100px;
     border: 1px solid lightgrey;
+    background-color: white;
     border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.finish-info{
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: 20px;
+}
+.finish-title{
+    color: grey;
 }
 .book{
     min-width: 180px;
     min-height: 225px;
     max-width: 180px;
     max-height: 225px;
-    border: 1px solid black;
+    border: 1px solid lightgrey;
+    background-color: white;
+}
+.book:hover{
+    cursor: pointer;
 }
 .review{
     min-width: 250px;
@@ -58,6 +90,9 @@
     background-size: cover;
     border: 1px solid lightgrey;
     border-radius: 16px;
+}
+.review:hover{
+    cursor: pointer;
 }
 .text{
     text-align: center;
@@ -71,6 +106,7 @@ body{
     flex-direction: column;
     align-items: center;
     margin: 0;
+    background-color: #565C76;
 }
 
 .profile-container{
@@ -79,7 +115,7 @@ body{
     padding: 20px;
     border: 1px solid lightgrey;
     border-radius: 16px;
-    background-color: white;
+    background-color: #F7F4EF;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -90,7 +126,7 @@ body{
     padding: 20px;
     border: 2px solid lightgrey;
     border-radius: 16px;
-    background-color: white;
+    background-color: #F6F6F6;
     flex-direction: column;
     align-items: center;
 }
@@ -137,6 +173,41 @@ h3{
 .bookstack{
     width: 360px;
     height: 60px;
-    border: 1px solid black;
+    border: 1px solid lightgrey;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+}
+.bookstack:hover{
+    cursor: pointer;
+}
+.bookstack-title{
+    font-size: 18px;
+    color: rgb(106, 106, 106);
+    background-color: rgb(233, 233, 233);
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    padding: 8px;
+    border-radius: 16px;
+}
+.bookstack-list{
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+.all-container{
+    width: 600px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+.all{
+    border-radius: 16px;
+    background-color: black;
+    color: white;
+}
+.all:hover{
+    cursor: pointer;
 }
 
