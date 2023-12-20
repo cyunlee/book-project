@@ -85,7 +85,7 @@ exports.get_brendNew = async (req,res)=>{
 exports.get_isbn= async (req,res)=>{
   try {
     const isbn = req.query.ItemId;
-    console.log('isbnnnnnnn',isbn);
+    console.log('클릭한 책의 isbn',isbn);
     const response = await axios.get('https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx', {
     params: {
         ttbkey: 'ttbwonluvv0940001',
@@ -119,7 +119,7 @@ exports.go_detail = (req,res)=>{
 exports.get_detail= async (req,res)=>{
   try {
     const isbn = req.query.ItemId;
-    console.log('isbnnnnnnn',isbn);
+    console.log('상세페이지의 isbn > ',isbn);
     const response = await axios.get('https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx', {
     params: {
         ttbkey: 'ttbwonluvv0940001',
@@ -147,7 +147,20 @@ exports.get_detail= async (req,res)=>{
 
 // 상세페이지 댓글 불러오기
 exports.get_comments = async (req,res)=>{
-  
+  try {
+    
+    console.log('isbn > ',req.body.c_isbn);
+    const comments = await Comment.findAll({
+      where:{
+        c_isbn:req.body.c_isbn,
+      }
+    })
+
+    res.send(comments);
+  } catch (error) {
+    console.log(error)
+    res.send("Internal Server Error!")
+  }
 }
 
 // 상세페이지 댓글 입력하기

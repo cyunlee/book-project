@@ -7,6 +7,16 @@
           <!-- jQuery CDN -->
           <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
           <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+          <style>
+            .divWrapper{
+                width:500px;
+                height: fit-content;
+            }
+            .comment{
+                width:500px;
+                height: fit-content;
+            }
+          </style>
 </head>
 <body>
     <h1>상세페이지</h1>
@@ -17,6 +27,7 @@
             <input type="text" name="c_content" placeholder="content"><br>
             <button type="button" onclick="addComment();">댓글 입력하기</button>
         </form>
+        <div id="comment-box"></div>
     </div>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
@@ -42,8 +53,35 @@
 
                 resultBox.appendChild(contentDiv);
                 resultBox.appendChild(img);
-
             });
+
+            axios({
+                method:'post',
+                url:'/getComments',
+                data:{
+                    c_isbn:`${isbn13}`,
+                },
+            }).then((res)=>{
+                console.log('getComments res.data > ',res.data)
+                const commentItem = res.data;
+                const form = document.forms['comment-form'];
+                const commentBox = document.getElementById('comment-box');
+                
+                commentItem.forEach(i => {
+                    const html = `
+                        <div id="div_${i.c_no}">
+                            ${i.c_id}
+                            ${i.c_content}
+                            ${i.c_date}
+                            <button type="button" onclick="editComment(${i.c_no});" >수정</button>
+                            <button type="button" onclick="deleteComment(this, ${i.c_no})">삭제</button><br>
+                        </div>
+                     `
+                    commentBox.insertAdjacentHTML('beforeend',html);
+                    form.reset();
+
+                });
+            })
         });
 
         function addComment(){
@@ -64,6 +102,28 @@
             }).catch((error) => {
                 console.error('댓글 작성 실패:', error);
             });
+        }
+
+
+        function editComment(no){
+            axios({
+                method:'patch',
+                url:'/updateComment',
+                data:{
+                    c_no:`${no}`,
+                },                
+            })
+        }
+        
+        function deleteComment(no){
+            axios({
+                method:'delete',
+                url:'deleteComment',
+                data:{
+                    c_no:`${no}`,
+                },                
+            })
+            
         }
     </script>
 </body>
