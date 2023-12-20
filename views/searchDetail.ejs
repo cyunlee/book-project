@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>임시 상세페이지</h1>
+        <img class="img" src="<%= detailData.cover  %>" alt="">
+        <div>
+            <p class="title"><%= detailData.title %></p>
+        </div>
+        <p><%= detailData.author %></p>
+        <p>출간일 <%= detailData.pubDate %></p>
+        <p><%= detailData.description %></p>
+        <p><%= detailData.categoryName %></p>
+        <p>출판사 <%= detailData.publisher %></p>
+
+    <input type="checkbox" id="checkbox1" class="custom-checkbox" name="rating" value="like">
+    <label for="checkbox1">Checkbox 1</label>
+
+    <input type="checkbox" id="checkbox2" class="custom-checkbox" name="rating" value="soso">
+    <label for="checkbox2">Checkbox 2</label>
+
+    <input type="checkbox" id="checkbox3" class="custom-checkbox" name="rating" value="bad">
+    <label for="checkbox3">Checkbox 3</label>
+
+    <script>
+        // 모든 체크박스 요소 가져오기
+        const checkboxes = document.querySelectorAll('.custom-checkbox');
+
+        // 각 체크박스에 이벤트 리스너 추가
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', function() {
+                // 선택된 체크박스의 id 가져오기
+                const selectedId = this.id;
+
+                // 나머지 체크박스들의 선택 해제
+                checkboxes.forEach(otherCheckbox => {
+                    if (otherCheckbox.id !== selectedId) {
+                        otherCheckbox.checked = false;
+                    }
+                });
+            });
+        });
+    </script>
+
+
+</body>
+</html>

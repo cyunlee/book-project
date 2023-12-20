@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.1518.0",
+    "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
