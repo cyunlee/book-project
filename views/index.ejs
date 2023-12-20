@@ -3,14 +3,23 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="static/js/login.js"></script>
+
 	<title>index</title>
 </head>
 <body>
 	<h1>임시 index페이지</h1>
-	<a href="/login">로그인</a>
-	<a href="/signup">회원가입</a>
-	<a href="/mypage">마이페이지</a>
-  <a href="/main">메인</a>
+	<a href="/main">메인</a>
+	<% if (!isLogin) { %>
+		<a href="/login">로그인</a>
+		<a href="/signup">회원가입</a>
+	<% } %>
+	<% if (isLogin) { %>
+		<a href="/mypage">마이페이지</a>
+		<p><%=id%>님 환영합니다!</p>
+		<button type='button' onclick='logout()'>
+		로그아웃</button>
+	<% } %>
 	
 </body>
 </html>
