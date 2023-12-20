@@ -182,11 +182,44 @@ exports.post_comment = async (req,res)=>{
 }
 
 // 상세페이지 댓글 수정하기
-exports.patch_comment = (req,res)=>{
+exports.patch_comment = async (req,res)=>{
+  try {
+    const {c_no,c_content} = req.body;
+    console.log(c_no,c_content);
 
+    const updatedComment = await Comment.update({
+        c_content
+    },{
+        where:{c_no}
+    })
+    res.send(updatedComment);
+    
+  } catch (err) {
+    console.log(err);
+    res.send('Internal Server Error');
+  }
 }
 
 // 상세페이지 댓글 삭제하기
-exports.delete_comment = (req,res)=>{
+exports.delete_comment = async (req,res)=>{
+  try {
+    const c_no = req.body.c_no;
+    console.log(c_no);
+    const isDeleted = await Comment.destroy({
+      where:{
+        c_no: c_no,
+      }
+    })
+
+    if(isDeleted==true){
+      res.send({isDeleted:true})
+    }else{
+      res.send({isDeleted:true})
+    }
+    
+  } catch (err) {
+    console.log(err);
+    res.send('Internal Server Error');
+  }
 
 }
