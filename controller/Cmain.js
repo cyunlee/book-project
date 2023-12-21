@@ -2,7 +2,6 @@ const { User } = require('../models/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
 const cookieConfig = {
@@ -11,13 +10,6 @@ const cookieConfig = {
 }
 
 const saltRounds = 10;
-
-// 쿠키로 로그인 여부 확인하고 token으로 verify하고
-// true면 이후 해당 user_id를 반환,
-// 아니면 false 반환 해주는 모듈
-// const jwtCheck= (token) => {
-
-// }
 
 const tokenCheck = async (req) => {
 	const token = req.cookies.jwtCookie;
@@ -52,11 +44,12 @@ exports.signin = (req, res) => {
 
 exports.idCheck = async (req, res) => {
 	try {
-		const id = req.body;
+		const id = req.body.u_id;
 		const checkID = await User.findOne({
 			where: {u_id : id}
 		})
-		if (checkID) res.send({result: true})
+		if (id === '') res.send({result: 'empty'})
+		else if (checkID) res.send({result: true})
 		else res.send({result : false})
 	} catch (error) {
 		res.send(error);
@@ -65,11 +58,13 @@ exports.idCheck = async (req, res) => {
 
 exports.nameCheck = async (req, res) => {
 	try {
-		const u_name = req.body;
+		const u_name = req.body.u_name;
 		const checkName = await User.findOne({
 			where: {u_name : u_name}
 		})
-		if (checkName) res.send({result: true})
+		if (u_name === '') {
+			res.send({result: 'empty'})
+		} else if (checkName) res.send({result: true})
 		else res.send({result : false})
 	} catch (error) {
 		res.send(error);
