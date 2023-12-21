@@ -6,8 +6,8 @@ const sequelize = new Sequelize(
     config.database,
     config.username,
     config.password,
-    config
-)
+    config,
+    )
 
 // TODO: 모델 모듈 불러오기 
 const User = require('./User')(sequelize, Sequelize);

@@ -47,11 +47,8 @@ function submit() {
             'Content-Type': 'multipart/form-data',
         }
     }).then((res)=>{
-        const {
-            file
-        } = res.data;
-
-        console.log(res.data.path);
+        console.log('res.data.path >', res.data.path);
+        // console.log(res.data.path);
     })
 }
 
