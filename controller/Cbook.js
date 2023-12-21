@@ -166,10 +166,10 @@ exports.get_comments = async (req,res)=>{
 // 상세페이지 댓글 입력하기
 exports.post_comment = async (req,res)=>{
   try{
-    const{c_isbn, c_id, c_content}=req.body;
+    const{c_isbn, u_id, c_content}=req.body;
     const newComment = await Comment.create({
       c_isbn,
-      c_id,
+      u_id,
       c_content,
       c_date: Sequelize.literal('CURRENT_TIMESTAMP'),
     })

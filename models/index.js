@@ -13,6 +13,18 @@ const sequelize = new Sequelize(
 const User = require('./User')(sequelize, Sequelize);
 const Comment = require('./Comment')(sequelize,Sequelize);
 
+// 유저와 댓글 1:다 설정
+User.hasMany(Comment, {
+    foreignKey: 'u_id',  // Comment 테이블의 외래 키
+    sourceKey: 'u_id'    // User 테이블의 소스 키
+});
+
+Comment.belongsTo(User, {
+    foreignKey: 'u_id',  // Comment 테이블의 외래 키
+    targetKey: 'u_id'    // User 테이블의 타겟 키
+});
+
+
 // TODO: 관계를 정의한 모델들을 db 객체에 저장
 db.User = User;
 db.Comment = Comment;

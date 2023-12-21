@@ -70,7 +70,7 @@
     <div id="result"></div>
     <div>
         <form name="comment-form">
-            <input type="text" name="c_id" placeholder="id"><br>
+            <input type="text" name="u_id" placeholder="id"><br>
             <input type="text" name="c_content" placeholder="content"><br>
             <button type="button" onclick="addComment();">댓글 입력하기</button>
         </form>
@@ -129,7 +129,7 @@
                     const html = `
                     <div id="div_${i.c_no}" class="comment-wrapper">
                         <div class="comment_inner_wrapper">
-                        <div class="comment_id comment">${i.c_id}</div>
+                        <div class="comment_id comment">${i.u_id}</div>
                         <div class="comment_content comment">${i.c_content}</div>
                         <div class="comment_date comment">${i.c_date}</div>
                         </div>
@@ -141,7 +141,7 @@
                         
                         // morevert 버튼을 눌렀을 때 나올 버튼 박스
                         const btnBox = document.createElement('div');
-                        const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${i.c_no},'${i.c_id}','${i.c_content}');" >수정</button><br>
+                        const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${i.c_no},'${i.u_id}','${i.c_content}');" >수정</button><br>
                         <button type="button" class="editBtn"  onclick="deleteComment(${i.c_no})">삭제</button>`
                         btnBox.insertAdjacentHTML('beforeend',btnHtml);
                         btnBox.classList.add('box-show');
@@ -178,7 +178,7 @@
                 url:'/writeComment',
                 data:{
                     c_isbn:isbn13,
-                    c_id : form.c_id.value,
+                    u_id : form.u_id.value,
                     c_content:form.c_content.value,
                 }
             }).then((res) => {
