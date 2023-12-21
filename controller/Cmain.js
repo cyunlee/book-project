@@ -3,7 +3,6 @@ const axios = require('axios')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
 const cookieConfig = {
@@ -12,13 +11,6 @@ const cookieConfig = {
 }
 
 const saltRounds = 10;
-
-// 쿠키로 로그인 여부 확인하고 token으로 verify하고
-// true면 이후 해당 user_id를 반환,
-// 아니면 false 반환 해주는 모듈
-// const jwtCheck= (token) => {
-
-// }
 
 const tokenCheck = async (req) => {
 	const token = req.cookies.jwtCookie;
@@ -53,11 +45,12 @@ exports.signin = (req, res) => {
 
 exports.idCheck = async (req, res) => {
 	try {
-		const id = req.body;
+		const id = req.body.u_id;
 		const checkID = await User.findOne({
 			where: {u_id : id}
 		})
-		if (checkID) res.send({result: true})
+		if (id === '') res.send({result: 'empty'})
+		else if (checkID) res.send({result: true})
 		else res.send({result : false})
 	} catch (error) {
 		res.send(error);
@@ -66,11 +59,13 @@ exports.idCheck = async (req, res) => {
 
 exports.nameCheck = async (req, res) => {
 	try {
-		const u_name = req.body;
+		const u_name = req.body.u_name;
 		const checkName = await User.findOne({
 			where: {u_name : u_name}
 		})
-		if (checkName) res.send({result: true})
+		if (u_name === '') {
+			res.send({result: 'empty'})
+		} else if (checkName) res.send({result: true})
 		else res.send({result : false})
 	} catch (error) {
 		res.send(error);
@@ -172,13 +167,13 @@ exports.upload_patch=async (req,res)=>{
 	}
 }
 
-exports.search = async (req, res) => {
+exports.searchList = async (req, res) => {
 	console.log('Cmain search req.query >' ,req.query);
 	const query = req.query.title
 	const currentPage = req.query.page
 
 	try{
-		const search = await axios({
+		const searchList = await axios({
 			method: 'get',
             url: 'http://www.aladin.co.kr/ttb/api/ItemSearch.aspx',
 			params: {
@@ -194,8 +189,8 @@ exports.search = async (req, res) => {
 				Version: 20131101,
 			}
 		})
-		console.log('Cmain search 알라딘 요청 결과 >', search.data.totalResults)
-		let totalResults = search.data.totalResults // 알라딘 api에서 검색 결과 수
+		console.log('Cmain search 알라딘 요청 결과 >', searchList.data.totalResults)
+		let totalResults = searchList.data.totalResults // 알라딘 api에서 검색 결과 수
 		// 알라딘 api에서 검색 결과를 200개 까지만 제공!!!!
 		if(!totalResults) {
 			totalResults = 0
@@ -205,7 +200,7 @@ exports.search = async (req, res) => {
             totalResults = 200
         }
 		const totalPages = Math.ceil(totalResults / 20);
-		const searchData = search.data.item; // 검색 결과 책 데이터
+		const searchData = searchList.data.item; // 검색 결과 책 데이터
 		console.log('page 수 >', totalPages);
 		res.render('search', { query, searchData, totalPages });
 	} catch(err) {

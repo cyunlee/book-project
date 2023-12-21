@@ -10,6 +10,9 @@ async function nameCheck() {
             }
         })
         //시윤님 여기입니다!!!!!!!!!!!
+        if (response.data.result == 'empty') {
+            alert('닉네임은 필수로 입력해주세요');
+        } else 
         if (response.data.result) {
             alert('중복된 닉네임이 있어요');
         } else {
@@ -30,6 +33,9 @@ async function idCheck() {
             }
         })
         //시윤님 여기입니다!!!!!!!!!!!
+        if (response.data.result == 'empty') {
+            alert('아이디는 필수로 입력해주세요');
+        } else 
         if (response.data.result) {
             alert('중복된 아이디가 있어요');
         } else {
