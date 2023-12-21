@@ -63,7 +63,7 @@ router.patch('/updateComment',bookController.patch_comment);
 router.delete('/deleteComment',bookController.delete_comment);
 
 // 검색 결과 페이지
-router.get('/search', controller.search);
+router.get('/searchList', controller.searchList);
 
 // 검색 결과 -> 특정 책 상세 페이지
 router.get('/searchDetail', controller.searchDetail);
