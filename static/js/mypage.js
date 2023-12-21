@@ -47,8 +47,17 @@ function submit() {
             'Content-Type': 'multipart/form-data',
         }
     }).then((res)=>{
-        console.log('res.data.path >', res.data.path);
-        // console.log(res.data.path);
+        const item = res.data;
+        console.log('res.data.data.path >', item.data.path);
+        console.log('res.data.id > ',item.id);
+        return axios({
+			method:'patch',
+			url:'/patchImg',
+			data:{
+				id : item.id,
+				path: item.data.path,
+			}
+		})
     })
 }
 

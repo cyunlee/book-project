@@ -132,10 +132,39 @@ exports.mypage=(req, res)=>{
 }
 
 
-exports.upload_post=(req, res)=>{
-    console.log('req.file > ',req.file);
-    //console.log(req.body);
-    res.send(req.file);
+exports.upload_post= async (req, res)=>{
+
+	try {
+		const tokenId = await tokenCheck(req);
+
+		const path = req.file.path;
+		console.log('tokenId > ',tokenId);
+		console.log('req.file > ',req.file);
+		console.log('req.file.path > ',req.file.path);
+
+		res.send({data:req.file,id:tokenId});
+	} catch (error) {
+		console.log(error);
+		res.send('Internal Server Error!');
+	}
+	
+}
+
+exports.upload_patch=async (req,res)=>{
+	try {
+		// const path = req.file.path;
+		console.log('req.body > ',req.body);
+		const uploadProfile = await User.update({
+			u_profile:req.body.path,
+		},{
+			where:{u_id:req.body.id,}
+		})
+	
+		res.send(uploadProfile,{imgItem:req.body});
+	} catch (error) {
+		console.log(error);
+		res.send('Internal Server Error!');
+	}
 }
 
 exports.searchList = async (req, res) => {
