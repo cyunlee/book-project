@@ -138,13 +138,13 @@ exports.upload_post=(req, res)=>{
     res.send(req.file);
 }
 
-exports.search = async (req, res) => {
+exports.searchList = async (req, res) => {
 	console.log('Cmain search req.query >' ,req.query);
 	const query = req.query.title
 	const currentPage = req.query.page
 
 	try{
-		const search = await axios({
+		const searchList = await axios({
 			method: 'get',
             url: 'http://www.aladin.co.kr/ttb/api/ItemSearch.aspx',
 			params: {
@@ -160,8 +160,8 @@ exports.search = async (req, res) => {
 				Version: 20131101,
 			}
 		})
-		console.log('Cmain search 알라딘 요청 결과 >', search.data.totalResults)
-		let totalResults = search.data.totalResults // 알라딘 api에서 검색 결과 수
+		console.log('Cmain search 알라딘 요청 결과 >', searchList.data.totalResults)
+		let totalResults = searchList.data.totalResults // 알라딘 api에서 검색 결과 수
 		// 알라딘 api에서 검색 결과를 200개 까지만 제공!!!!
 		if(!totalResults) {
 			totalResults = 0
@@ -171,7 +171,7 @@ exports.search = async (req, res) => {
             totalResults = 200
         }
 		const totalPages = Math.ceil(totalResults / 20);
-		const searchData = search.data.item; // 검색 결과 책 데이터
+		const searchData = searchList.data.item; // 검색 결과 책 데이터
 		console.log('page 수 >', totalPages);
 		res.render('search', { query, searchData, totalPages });
 	} catch(err) {
