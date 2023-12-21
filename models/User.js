@@ -24,7 +24,7 @@ const UserModel = (sequelize, DataTypes) => {
             allowNull: false
         },
 		u_profile: {
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING(200),
             allowNull: true
         },
     }, {
