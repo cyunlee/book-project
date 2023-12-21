@@ -2,6 +2,9 @@ const express= require('express');
 const router = express.Router();
 const controller = require('../controller/Cmain')
 const bookController = require('./../controller/Cbook');
+const cookieParser = require('cookie-parser');
+
+router.use(cookieParser());
 
 // 임시 링크
 router.get('/', controller.main);
@@ -9,8 +12,13 @@ router.get('/', controller.main);
 // 로그인 페이지
 router.get('/login', controller.signin);
 
+router.get('/logout', controller.logout);
+
 // 회원가입 페이지
 router.get('/signup', controller.signup);
+router.get('/search', controller.search);
+router.get('/searchDetail', controller.searchDetail);
+
 
 // 마이페이지
 router.get('/mypage', controller.mypage);
@@ -18,6 +26,7 @@ router.get('/mypage', controller.mypage);
 router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
+
 
 // 회원가입하기
 router.post('/signup_post', controller.signup_post);

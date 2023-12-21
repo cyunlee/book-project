@@ -4,16 +4,80 @@
     flex-direction: column;
     align-items: center;
 }
+
 .profile-image{
+    position: relative;
     width: 200px;
     height: 200px;
-    background-color: white;
-    background-image: url('/static/img/default-profile.png');
     border-radius: 50%;
 }
+
+.image-setting{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
 .profile-image:hover{
     cursor: pointer;
 }
+
+.profile-form{
+    visibility: hidden;
+}
+
+.edit{
+    position: absolute;
+    top: 170px;
+    left: 30px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 8px;
+    border: 1px solid lightgrey;
+}
+.edit:hover{
+    cursor: pointer;
+}
+.upload{
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 195px;
+    left: -65px;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 8px;
+    border: 1px solid lightgrey;
+    background-color: white;
+    font-size: 14px;
+    box-shadow: 6px 6px 6px lightgrey;
+}
+
+.select-text{
+    padding-bottom: 2px;
+}
+
+.select-text:hover{
+    background-color: #0969DA;
+    color: white;
+}
+
+.upload-text{
+    border-top: 1px solid lightgrey;
+}
+
+.upload-text:hover{
+    background-color: #0969DA;
+    color: white;
+}
+.hidden{
+    display: none;
+}
+
 .name{
     font-weight: 600;
 }
