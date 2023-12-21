@@ -136,6 +136,13 @@ exports.mypage=(req, res)=>{
 	res.render('mypage');
 }
 
+
+exports.upload_post=(req, res)=>{
+    console.log('req.file > ',req.file);
+    //console.log(req.body);
+    res.send(req.file);
+}
+
 exports.search = async (req, res) => {
 	console.log('Cmain search req.query >' ,req.query);
 	const query = req.query.title

@@ -22,7 +22,7 @@ router.get('/searchDetail', controller.searchDetail);
 
 // 마이페이지
 router.get('/mypage', controller.mypage);
-
+router.post('/upload',controller.upload_post);
 router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)

@@ -8,7 +8,8 @@ const UserModel = (sequelize, DataTypes) => {
         },
         u_id: {
             type: DataTypes.STRING(30),
-            allowNull: false
+            allowNull: false,
+            unique: true,
         },
         u_pw: {
             type: DataTypes.STRING(30),
