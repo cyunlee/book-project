@@ -16,8 +16,6 @@ router.get('/logout', controller.logout);
 
 // 회원가입 페이지
 router.get('/signup', controller.signup);
-router.get('/search', controller.search);
-router.get('/searchDetail', controller.searchDetail);
 
 
 // 마이페이지
@@ -63,5 +61,11 @@ router.patch('/updateComment',bookController.patch_comment);
 
 // 상세페이지 댓글 삭제
 router.delete('/deleteComment',bookController.delete_comment);
+
+// 검색 결과 페이지
+router.get('/search', controller.search);
+
+// 검색 결과 -> 특정 책 상세 페이지
+router.get('/searchDetail', controller.searchDetail);
 
 module.exports = router;
