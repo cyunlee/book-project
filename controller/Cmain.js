@@ -29,6 +29,7 @@ const tokenCheck = async (req) => {
 	}
 }
 
+
 //로그인 성공해서 jwt 갖고있을시 서버에서 토큰을 조회해서 확인되면 user이름 홈화면에 반영되어 렌더되도록.
 exports.main = async (req, res) => {
 	const tokenId = await tokenCheck(req);
@@ -160,7 +161,7 @@ exports.upload_patch=async (req,res)=>{
 			where:{u_id:req.body.id,}
 		})
 	
-		res.send(uploadProfile,{imgItem:req.body});
+		res.send(uploadProfile);
 	} catch (error) {
 		console.log(error);
 		res.send('Internal Server Error!');
