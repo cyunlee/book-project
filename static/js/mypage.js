@@ -7,10 +7,18 @@ const profileForm = document.querySelector('.profile-form');
 const myInput = document.querySelector('#my-input');
 const myButton = document.querySelector('#my-button');
 
+const top1 = document.getElementById('#top1');
+const top2 = document.getElementById('#top2');
+const top3 = document.getElementById('#top3');
+
 function init() {
 editBtn.addEventListener('click', () => {
     upload.classList.remove('hidden');
 });
+setTimeout(()=> {
+    console.log('프로필 버튼 닫음');
+    upload.classList.add('hidden');
+}, 10000);
 }
 
 // setTimeout(() => {
@@ -36,6 +44,7 @@ uploadBtn.addEventListener('click', ()=>{
 function submit() {
     const formData = new FormData();
     const file = document.querySelector('#my-input');
+    const imageSetting = document.querySelector('.image-setting');
 
     formData.append('userfile', file.files[0]);
     
