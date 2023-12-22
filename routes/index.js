@@ -1,7 +1,8 @@
 const express= require('express');
 const router = express.Router();
-const controller = require('../controller/Cmain')
+const controller = require('../controller/Cmain');
 const bookController = require('./../controller/Cbook');
+const chatController = require('./../controller/Cchat');
 const cookieParser = require('cookie-parser');
 
 router.use(cookieParser());
@@ -14,17 +15,23 @@ router.get('/login', controller.signin);
 
 router.get('/logout', controller.logout);
 
+router.post('/login_post', controller.login_post)
+router.post('/nameCheck_post', controller.nameCheck)
+router.post('/idCheck_post', controller.idCheck)
+
 // 회원가입 페이지
 router.get('/signup', controller.signup);
 
 
 // 마이페이지
 router.get('/mypage', controller.mypage);
+
 router.post('/upload',controller.upload_post);
 router.patch('/patchImg',controller.upload_patch);
 router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
+
 
 
 // 회원가입하기
@@ -63,10 +70,16 @@ router.patch('/updateComment',bookController.patch_comment);
 // 상세페이지 댓글 삭제
 router.delete('/deleteComment',bookController.delete_comment);
 
+
+// 채팅방 신설
+router.get('/makeRoom', chatController.make_room);
+router.get('/chattingRoom', chatController.enter_chat_room);
+
 // 검색 결과 페이지
 router.get('/searchList', controller.searchList);
 
 // 검색 결과 -> 특정 책 상세 페이지
 router.get('/searchDetail', controller.searchDetail);
+
 
 module.exports = router;

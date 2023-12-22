@@ -7,7 +7,7 @@ const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
 const cookieConfig = {
 	httpOnly: true,
-	maxAge: 10 * 60 * 1000, //10분
+	maxAge: 300 * 60 * 1000, //300분
 }
 
 const saltRounds = 10;
@@ -128,8 +128,16 @@ exports.signup = (req, res) => {
 	res.render('signup');
 }
 
-exports.mypage=(req, res)=>{
-	res.render('mypage');
+exports.mypage= async (req, res) =>{
+	const id = await tokenCheck(req);
+	try{
+		const userInfo = await User.findOne({
+			where: { u_id : id }
+		})
+		res.render('mypage', {userInfo : userInfo});
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 

@@ -18,15 +18,16 @@
 
     <title>MyPage</title>
   </head>
+  
   <body>
     <div class="profile-container">
       <div class="profile">
         <div class="profile-image">
-          <img
-            class="image-setting"
-            src="/static/img/default-profile.png"
-            alt="프로필 사진"
-          />
+          <% if (!userInfo.u_profile) { %>
+            <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진">
+          <% } else { %>
+            <img class="image-setting" src=`<%= userInfo.u_profile %>` alt="프로필 사진">
+          <% } %>
           <button class="edit" onclick="init()">Edit</button>
           <div class="upload hidden">
             <span class="select-text">Select a photo</span>
@@ -39,24 +40,28 @@
             <button id="my-button" onclick="submit()">업로드</button>
           </div>
         </div>
-        <div class="name">Siyun Lee</div>
-        <div class="id">@cyunlee</div>
+        <div class="name"></div>
+        <div class="id"></div>
       </div>
       <br />
       <div class="info">
         <div class="follow-container">
           <div class="follower-container">
             <div class="profile-title">팔로워</div>
-            <div class="profile-info">54</div>
+            <div class="profile-info-follower">54</div>
           </div>
           <div class="following-container">
             <div class="profile-title">팔로잉</div>
-            <div class="profile-info">110</div>
+            <div class="profile-info-following">110</div>
           </div>
         </div>
         <div class="email-container">
           <div class="profile-title">이메일</div>
-          <div class="profile-info">loremipsum1234@google.com</div>
+          <% if (!userInfo.u_email) { %>
+            <div class="profile-info-email">-</div>
+          <% } else { %>
+              <div class="profile-info-email"><%= userInfo.u_email %></div>
+          <% } %>
         </div>
       </div>
       <br />
@@ -209,6 +214,9 @@
       </div>
     </div>
     <script>
+      document.querySelector('.name').innerHTML = `<%= userInfo.u_name %>`;
+      document.querySelector('.id').innerHTML = `<%= '@' + userInfo.u_id %>`;
+      
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
         // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
