@@ -8,7 +8,8 @@ const UserModel = (sequelize, DataTypes) => {
         },
         u_id: {
             type: DataTypes.STRING(30),
-            allowNull: false
+            allowNull: false,
+            unique: true,
         },
         u_pw: {
             type: DataTypes.STRING(30),
@@ -23,7 +24,7 @@ const UserModel = (sequelize, DataTypes) => {
             allowNull: false
         },
 		u_profile: {
-            type: DataTypes.STRING(30),
+            type: DataTypes.STRING(200),
             allowNull: true
         },
     }, {

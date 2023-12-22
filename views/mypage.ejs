@@ -28,11 +28,13 @@
           <% } else { %>
             <img class="image-setting" src=`<%= userInfo.u_profile %>` alt="프로필 사진">
           <% } %>
-          <button class="edit">Edit</button>
+          <button class="edit" onclick="init()">Edit</button>
           <div class="upload hidden">
             <span class="select-text">Select a photo</span>
             <span class="upload-text">Upload a photo</span>
           </div>
+
+          <!-- 파일 업로드 -->
           <div class="profile-form">
             <input id="my-input" type="file" name="userfile" /><br />
             <button id="my-button" onclick="submit()">업로드</button>
@@ -76,12 +78,45 @@
     </div>
     <br />
     <div class="categories">
-      <div class="category">
+      <div class="category" id="category1">
         <h3>인생작품</h3>
         <div class="lifelist">
-          <div class="book"></div>
-          <div class="book"></div>
-          <div class="book"></div>
+          <div class="book" id="top1" onclick="showSearch1()"></div>
+          <div class="book" id="top2" onclick="showSearch2()"></div>
+          <div class="book" id="top3" onclick="showSearch3()"></div>
+        </div>
+        <div class="hidden1 lifelist-search" id="search1">
+          <div class="lifelist-container">
+            <input
+              type="text"
+              class="lifelist-input"
+              placeholder="검색할 top1책을 입력해주세요."
+            />
+            <button class="lifelist-button">검색</button>
+          </div>
+          <div class="close1" onclick="close1()">&times;</div>
+        </div>
+        <div class="hidden2 lifelist-search" id="search2">
+          <div class="lifelist-container">
+            <input
+              type="text"
+              class="lifelist-input"
+              placeholder="검색할 top2책을 입력해주세요."
+            />
+            <button class="lifelist-button">검색</button>
+          </div>
+          <div class="close2" onclick="close2()">&times;</div>
+        </div>
+        <div class="hidden3 lifelist-search" id="search3">
+          <div class="lifelist-container">
+            <input
+              type="text"
+              class="lifelist-input"
+              placeholder="검색할 top3책을 입력해주세요."
+            />
+            <button class="lifelist-button">검색</button>
+          </div>
+          <div class="close3" onclick="close3()">&times;</div>
         </div>
       </div>
       <br />

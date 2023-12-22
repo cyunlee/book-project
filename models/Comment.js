@@ -10,9 +10,9 @@ const CommentModel = (sequelize,DataTypes)=>{
             type:DataTypes.STRING(50),
             allowNull:false
         },
-        c_id:{
-            type:DataTypes.STRING(50),
-            allowNull:false
+        u_id: {
+            type: DataTypes.STRING(30),
+            allowNull: false
         },
         c_content:{
             type:DataTypes.TEXT,

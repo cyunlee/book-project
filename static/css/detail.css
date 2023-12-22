@@ -1,0 +1,25 @@
+body {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    background-color: #565C76;
+}
+
+.bookImage {
+    min-width: 180px;
+    min-height: 225px;
+    max-width: 180px;
+    max-height: 225px;
+    border: 1px solid lightgrey;
+    background-color: white;
+    display: inline-block;
+}
+
+#bookCoverImg {
+    min-width: 180px;
+    min-height: 225px;
+    max-width: 180px;
+    max-height: 225px;
+}

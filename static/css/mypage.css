@@ -77,7 +77,15 @@
 .hidden{
     display: none;
 }
-
+.hidden1{
+    visibility: hidden;
+}
+.hidden2{
+    visibility: hidden;
+}
+.hidden3{
+    visibility: hidden;
+}
 .name{
     font-weight: 600;
 }
@@ -97,6 +105,50 @@
     display: flex;
     justify-content: space-between;
 }
+
+.lifelist-search{
+    position: absolute;
+    border: 1px solid lightgrey;
+    padding: 14px;
+    width: 350px;
+    height: 280px;
+    border-radius: 16px;
+    background-color: white;
+    box-shadow: 3px 3px 3px 3px rgb(223, 223, 223);
+    display: flex;
+    justify-content: space-around;
+    z-index:100;
+}
+.lifelist-input{
+    width: 250px;
+    height: 30px;
+    margin: auto;
+}
+.lifelist-button{
+    width: 50px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    margin: auto;
+    cursor: pointer;
+}
+
+.close1{
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+}
+.close2{
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+}
+.close3{
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+}
+
 .wishlist-container{
     width: 100px;
     height: 100px;
