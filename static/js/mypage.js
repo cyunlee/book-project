@@ -15,16 +15,20 @@ const search1 = document.getElementById('search1');
 const search2 = document.getElementById('search2');
 const search3 = document.getElementById('search3');
 
+const closeBtn1 = document.querySelector('.close1');
+const closeBtn2 = document.querySelector('.close2');
+const closeBtn3 = document.querySelector('.close3');
+
 function showSearch1() {
     top1.addEventListener('click', () => {
         search1.classList.remove('hidden1');
         search2.classList.add('hidden2');
         search3.classList.add('hidden3');
     });
-    setTimeout(()=> {
-        console.log('top1 검색창 닫음');
-        search1.classList.add('hidden1');
-    }, 10000);
+    // setTimeout(()=> {
+    //     console.log('top1 검색창 닫음');
+    //     search1.classList.add('hidden1');
+    // }, 10000);
 }
 
 function showSearch2() {
@@ -33,10 +37,10 @@ function showSearch2() {
         search2.classList.remove('hidden2');
         search3.classList.add('hidden3');
     });
-    setTimeout(()=> {
-        console.log('top2 검색창 닫음');
-        search2.classList.add('hidden2');
-    }, 10000);
+    // setTimeout(()=> {
+    //     console.log('top2 검색창 닫음');
+    //     search2.classList.add('hidden2');
+    // }, 10000);
 }
 
 function showSearch3() {
@@ -45,10 +49,29 @@ function showSearch3() {
         search2.classList.add('hidden2');
         search3.classList.remove('hidden3');
     });
-    setTimeout(()=> {
-        console.log('top3 검색창 닫음');
+    // setTimeout(()=> {
+    //     console.log('top3 검색창 닫음');
+    //     search3.classList.add('hidden3');
+    // }, 10000);
+}
+
+function close1() {
+    closeBtn1.addEventListener('click', () => {
+        search1.classList.add('hidden1');
+    });
+}
+
+function close2() {
+    closeBtn2.addEventListener('click', () => {
+        search2.classList.add('hidden2');
+    });
+
+}
+
+function close3() {
+    closeBtn3.addEventListener('click', () => {
         search3.classList.add('hidden3');
-    }, 10000);
+    });
 }
 
 function init() {
