@@ -18,12 +18,17 @@
 
     <title>MyPage</title>
   </head>
+  
   <body>
     <div class="profile-container">
       <div class="profile">
         <div class="profile-image">
-          <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진">
-          <button class="edit">Edit</button>
+          <% if (!userInfo.u_profile) { %>
+            <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진">
+          <% } else { %>
+            <img class="image-setting" src=`<%= userInfo.u_profile %>` alt="프로필 사진">
+          <% } %>
+          <button class="edit" onclick="init()">Edit</button>
           <div class="upload hidden">
             <span class="select-text">Select a photo</span>
             <span class="upload-text">Upload a photo</span>
@@ -34,26 +39,29 @@
             <input id="my-input" type="file" name="userfile" /><br />
             <button id="my-button" onclick="submit()">업로드</button>
           </div>
-          
         </div>
-        <div class="name">Siyun Lee</div>
-        <div class="id">@cyunlee</div>
+        <div class="name"></div>
+        <div class="id"></div>
       </div>
       <br />
       <div class="info">
         <div class="follow-container">
           <div class="follower-container">
             <div class="profile-title">팔로워</div>
-            <div class="profile-info">54</div>
+            <div class="profile-info-follower">54</div>
           </div>
           <div class="following-container">
             <div class="profile-title">팔로잉</div>
-            <div class="profile-info">110</div>
+            <div class="profile-info-following">110</div>
           </div>
         </div>
         <div class="email-container">
           <div class="profile-title">이메일</div>
-          <div class="profile-info">loremipsum1234@google.com</div>
+          <% if (!userInfo.u_email) { %>
+            <div class="profile-info-email">-</div>
+          <% } else { %>
+              <div class="profile-info-email"><%= userInfo.u_email %></div>
+          <% } %>
         </div>
       </div>
       <br />
@@ -70,15 +78,46 @@
     </div>
     <br />
     <div class="categories">
-      <div class="category">
+      <div class="category" id="category1">
         <h3>인생작품</h3>
         <div class="lifelist">
-          <div class="book" id="top1"></div>
-          <div class="book" id="top2"></div>
-          <div class="book" id="top3"></div>
+          <div class="book" id="top1" onclick="showSearch1()"></div>
+          <div class="book" id="top2" onclick="showSearch2()"></div>
+          <div class="book" id="top3" onclick="showSearch3()"></div>
         </div>
-        <div class="lifelist-search"></div>
-        
+        <div class="hidden1 lifelist-search" id="search1">
+          <div class="lifelist-container">
+            <input
+              type="text"
+              class="lifelist-input"
+              placeholder="검색할 top1책을 입력해주세요."
+            />
+            <button class="lifelist-button">검색</button>
+          </div>
+          <div class="close1" onclick="close1()">&times;</div>
+        </div>
+        <div class="hidden2 lifelist-search" id="search2">
+          <div class="lifelist-container">
+            <input
+              type="text"
+              class="lifelist-input"
+              placeholder="검색할 top2책을 입력해주세요."
+            />
+            <button class="lifelist-button">검색</button>
+          </div>
+          <div class="close2" onclick="close2()">&times;</div>
+        </div>
+        <div class="hidden3 lifelist-search" id="search3">
+          <div class="lifelist-container">
+            <input
+              type="text"
+              class="lifelist-input"
+              placeholder="검색할 top3책을 입력해주세요."
+            />
+            <button class="lifelist-button">검색</button>
+          </div>
+          <div class="close3" onclick="close3()">&times;</div>
+        </div>
       </div>
       <br />
       <div class="category">
@@ -175,6 +214,9 @@
       </div>
     </div>
     <script>
+      document.querySelector('.name').innerHTML = `<%= userInfo.u_name %>`;
+      document.querySelector('.id').innerHTML = `<%= '@' + userInfo.u_id %>`;
+      
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
         // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!

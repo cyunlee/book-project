@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static/css/top3.css" rel="stylesheet" />
+    <title>top3
+    </title>
+</head>
+<body>
+		<h1>당신이 가장 좋았던 책을 알려주세요!</h1><br>
+		<form name="top3">
+	
+			
+			<input class="question-container" placeholder="choice" type="text" id="question-container"><br>
+	
+			
+			<button type="button" onclick="getNextQuestion()">NEXT</button><br>
+		
+		</form>
+    <script>
+        let currentQuestionIndex = 0;
+        const qeustion = JSON.stringify(questions);
+
+        function getNextQuestion() {
+            if (currentQuestionIndex < questions.length -1) {
+                currentQuestionIndex++;
+                document.getElementById('question-text').innerHTML = questions[currentQuestionIndex];
+            } else {
+                alert( ' no thanks ');
+            }
+        }
+    </script>
+</body>
+</html>l
