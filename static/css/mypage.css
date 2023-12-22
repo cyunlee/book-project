@@ -108,16 +108,16 @@
 
 .lifelist-search{
     position: absolute;
-    top: 865px;
     border: 1px solid lightgrey;
     padding: 14px;
     width: 350px;
-    height: 36px;
+    height: 280px;
     border-radius: 16px;
     background-color: white;
     box-shadow: 3px 3px 3px 3px rgb(223, 223, 223);
     display: flex;
     justify-content: space-around;
+    z-index:100;
 }
 .lifelist-input{
     width: 250px;
@@ -132,11 +132,23 @@
     margin: auto;
     cursor: pointer;
 }
-.close{
+
+.close1{
     font-size: 24px;
-    cursor: pointer;
     color: grey;
+    cursor: pointer;
 }
+.close2{
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+}
+.close3{
+    font-size: 24px;
+    color: grey;
+    cursor: pointer;
+}
+
 .wishlist-container{
     width: 100px;
     height: 100px;
