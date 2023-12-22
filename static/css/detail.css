@@ -4,22 +4,111 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 0;
-    background-color: #565C76;
-}
-
-.bookImage {
-    min-width: 180px;
-    min-height: 225px;
-    max-width: 180px;
-    max-height: 225px;
-    border: 1px solid lightgrey;
     background-color: white;
-    display: inline-block;
 }
 
-#bookCoverImg {
-    min-width: 180px;
-    min-height: 225px;
-    max-width: 180px;
-    max-height: 225px;
+@media screen and (min-width: 100px) {
+    .bookshelf {
+        width: 800px;
+        height: 400px;
+        margin: 0 auto;
+        padding: 50px;
+
+        background-color: rgb(243, 243, 243);
+        border: 1px solid lightgray;
+        border-radius: 16px;
+        display: flex;
+    }
+    .bookCard {
+        width: 800px;
+    }
+    .bookImage {
+        /*min-width: 180px;
+        min-height: 225px;*/
+        max-width: 280px;
+        max-height: 280px;
+        border: 1px solid grey;
+        background-color: white;
+        display: inline-block;
+        border-radius: 8px;
+        overflow: hidden;
+        object-fit: cover;
+    }
+    .bookImage > img {
+        object-fit: cover;
+    }
+    
+    /*.bookTitle {
+        min-width: 180px;
+        min-height: 225px;
+        max-width: 180px;
+        max-height: 225px;
+        padding: 20px;
+    }*/
+    .bookTitle > p {
+        font-family: Malgun Gothic,"굴림";
+        font-size: 16pt;
+        margin-top: 10px;
+        margin-right: 0px;
+        margin-bottom: 10px;
+        font-weight: 600;
+
+    }
+    .bookBlock {
+        display: flex;
+        justify-content: space-between;
+    }
+    .bookSide {
+        display: block;
+        max-width: 450px;
+        /*max-height: 350px;*/
+        padding: 30px;
+    }
+    table, th, td { border: 0px solid black; border-collapse: collapse }
+    .bookTable {
+        padding: 50px;
+    }
+    hr {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        z-index: 2;
+    }
+    .thumbButton {
+        z-index: 10;
+        position: relative;
+    }
+    .thumbButton > img {
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+
+    .bookComment {
+        width: 800px;
+        margin: 20px;
+        padding: 50px;
+        position: relative;
+        background-color: rgb(243, 243, 243);
+        border: 1px solid lightgray;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+    }
+    .myComment > p {
+        margin-left: 20px;
+        font-size: 12pt;
+    }
+    .initComm {
+        margin: 20px;
+        width: 600px;
+        height: 100px;
+        display: block;
+    }
+    .btn {
+        display: block;
+        margin-left: 20px;
+    }
+    .thumbButton {
+        display: flex;
+    }
 }
