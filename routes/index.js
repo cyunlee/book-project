@@ -42,9 +42,6 @@ router.get('/bestSeller',bookController.get_bestSeller);
 // 추천 신간 가져오기
 router.get('/brendNew',bookController.get_brendNew);
 
-// 책 클릭 시 상세페이지로 이동할 때 필요한 isbn13 가져오기
-router.get('/getIsbn',bookController.get_isbn);
-
 // 상세 페이지
 router.get('/detailGo',bookController.go_detail);
 

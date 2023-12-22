@@ -1,4 +1,4 @@
-const { User } = require('../models/index');
+const { User,Comment } = require('../models/index');
 const axios = require('axios')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');

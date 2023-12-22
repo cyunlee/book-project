@@ -48,27 +48,19 @@
                 url:'/bestSeller',
             }).done((res) => {
                     console.log('알라딘 bestseller >' , res);
-                    // console.log('object >', JSON.parse(res));
                     res.forEach(a => {
                         // console.log('알라딘 bestseller cover >',a.cover[0]);
                         console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
-                        let button = document.createElement('button');
-                        let sectionEachDiv = document.createElement('div');
-                        let contentDiv = document.createElement('div');
-                        let img = document.createElement('img');
-        
-                        contentDiv.textContent=a.title;
-                        button.type="button";
-                        img.src=a.cover;
-                        button.appendChild(img);
-                        button.appendChild(contentDiv);
-                        sectionEachDiv.appendChild(button);
-                        sectionEachDiv.classList.add('each-section');
-                        bestResultBox.appendChild(sectionEachDiv);
-                        // console.log('a>',a.title);
-                        button.addEventListener('click',()=>{
-                            detail(a.isbn13);
-                        });
+
+                        let html = `
+                        <div class="each-selection">
+                            <button type="button" onclick="detail(${a.isbn13})">
+                                <img src="${a.cover}">
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        bestResultBox.insertAdjacentHTML('beforeend',html);
                     });
             });
         
@@ -80,23 +72,15 @@
                     console.log('알라딘 brendnew res >' , res);
                     res.forEach(a => {
                         console.log('알라딘 brendnew a.isbn13 > ',a.isbn13);
-                        let button = document.createElement('button');
-                        let sectionEachDiv = document.createElement('div');
-                        let contentDiv = document.createElement('div');
-                        let img = document.createElement('img');
-        
-                        contentDiv.textContent=a.title;
-                        button.type="button";
-                        img.src=a.cover;
-                        button.appendChild(img);
-                        button.appendChild(contentDiv);
-                        sectionEachDiv.appendChild(button);
-                        sectionEachDiv.classList.add('each-section');
-                        newResultBox.appendChild(sectionEachDiv);
-                        // console.log('a>',a.title);
-                        button.addEventListener('click',()=>{
-                            detail(a.isbn13);
-                        });
+                        let html = `
+                        <div class="each-selection">
+                            <button type="button" onclick="detail(${a.isbn13})">
+                                <img src="${a.cover}">
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        newResultBox.insertAdjacentHTML('beforeend',html);
                     });
                 });
         });
@@ -122,23 +106,15 @@
                 // console.log('object >', JSON.parse(res));
                 res.forEach(a => {
                     console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
-                        let button = document.createElement('button');
-                        let sectionEachDiv = document.createElement('div');
-                        let contentDiv = document.createElement('div');
-                        let img = document.createElement('img');
-        
-                        contentDiv.textContent=a.title;
-                        button.type="button";
-                        img.src=a.cover;
-                        button.appendChild(img);
-                        button.appendChild(contentDiv);
-                        sectionEachDiv.appendChild(button);
-                        sectionEachDiv.classList.add('each-section');
-                        resultBox.appendChild(sectionEachDiv);
-                        // console.log('a>',a.title);
-                        button.addEventListener('click',()=>{
-                            detail(a.isbn13);
-                        });
+                        let html = `
+                        <div class="each-selection">
+                            <button type="button" onclick="detail(${a.isbn13})">
+                                <img src="${a.cover}">
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        newResultBox.insertAdjacentHTML('beforeend',html);
                 });
             });
             removeAllChildren(resultBox);
@@ -159,14 +135,14 @@
             const detailBox = document.getElementById('detail-result');
             $.ajax({
                 method:'get',
-                url:'/getIsbn',
+                url:'/getDetail',
                 data:{
                     ItemId:`${isbn}`,
                 }
             }).done((res)=>{
                 console.log(res);
-                console.log('res detail aaaaaaaaaaa > ',res[0].isbn13);
-                location.href=`/detailGo?isbn13=${res[0].isbn13}`;
+                console.log('res detail aaaaaaaaaaa > ',res.items[0].isbn13);
+                location.href=`/detailGo?isbn13=${res.items[0].isbn13}`;
             })
         }
     </script>
