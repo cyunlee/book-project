@@ -386,3 +386,38 @@ h3{
     background-size: cover;
 }
 
+.follow{
+    top: 300px;
+    position: absolute;
+    width: 80px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    border: 2px solid lightgrey;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.follow:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+.unfollow{
+    position: absolute;
+    top: 300px;
+    width: 80px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    border: 2px solid lightgrey;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.unfollow:hover{
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
