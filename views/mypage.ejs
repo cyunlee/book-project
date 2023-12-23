@@ -26,7 +26,7 @@
           <% if (!userInfo.u_profile) { %>
             <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진">
           <% } else { %>
-            <img class="image-setting" src=`<%= userInfo.u_profile %>` alt="프로필 사진">
+            <img class="image-setting" src="<%= userInfo.u_profile %>" alt="프로필 사진">
           <% } %>
           <button class="edit" onclick="init()">Edit</button>
           <div class="upload hidden">
@@ -213,10 +213,12 @@
         </div>
       </div>
     </div>
+    <button onclick="check()">확인</button>
+
     <script>
       document.querySelector('.name').innerHTML = `<%= userInfo.u_name %>`;
       document.querySelector('.id').innerHTML = `<%= '@' + userInfo.u_id %>`;
-      
+      console.log(check);
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
         // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
@@ -227,6 +229,10 @@
           nextEl: ".swiper-button-next",
         },
       });
+      function check() {
+        const check = document.querySelector('.image-setting').getAttribute('src');
+        console.log(check);
+      }
     </script>
   </body>
 </html>

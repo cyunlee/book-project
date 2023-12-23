@@ -122,14 +122,16 @@ function submit() {
         const item = res.data;
         console.log('res.data.data.path >', item.data.path);
         console.log('res.data.id > ',item.id);
-        return axios({
-			method:'patch',
+        axios({
+            method:'patch',
 			url:'/patchImg',
 			data:{
-				id : item.id,
+                id : item.id,
 				path: item.data.path,
 			}
-		})
+		}).then(()=> {
+            location.reload();
+        })
     })
 }
 

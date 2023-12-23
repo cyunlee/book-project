@@ -13,7 +13,7 @@ const path = require('path');
 const uploadDetail = multer({
     storage: multer.diskStorage({
         destination(req, file, done){
-            done(null, 'uploads/');
+            done(null, 'static/img');
         },
         filename(req, file, done){
             const ext = path.extname(file.originalname);
