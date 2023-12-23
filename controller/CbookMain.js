@@ -44,5 +44,5 @@ exports.get_description = async (req, res) => {
 
 exports.load_detail = (req, res) => {
     console.log('load detail이 받은 요청 쿼리 ', req.query);
-    res.render('detail');
+    res.render('bookDetail');
 }

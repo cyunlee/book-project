@@ -4,44 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="/static/css/bookDetail.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <link rel="stylesheet" href="/static/css/bookshelf.css">
     <title>Document</title>
 </head>
+<style>
 
+</style>
 
 <body>
-    <a href="/">책장으로 이동</a>
-    <p>북 디테일</p>
+    <a href="/bookShelf">책장으로 이동</a>
+    <p>책 검색 결과</p>
     <div class="bookshelf">
         <div class="bookCard" id="bookResult">
         </div>
     </div>
+    <form class="bookComment">
+        <div class="myComment" id="insertComment">
+            <p>임시 댓글</p>
+            <input type="text" placeholder="댓글 내용을 입력해주세요." class="initComm" id="commentMine">
+            <input type="submit" class="btn" value="댓글쓰기">
+        </div>
+    </form>
 </body>
 <script>
     const urlParams = new URLSearchParams(window.location.search);
 
     const resultBox = document.getElementById('bookResult');
-    const html = `
-        <div class="bookImage" id="bookCover">
-                <img src="${urlParams.get('cover')}" id="bookCoverImg">
+    const html = `<div class="bookTitle" id="title">
+                <p>${urlParams.get('title')}</p>
             </div>
-            <div class="bookTilte" id="title">
-                <p>지은이 ${urlParams.get('title')}</p>
+            <hr>
+            <div class="bookBlock"
+             id="block">
+                <div class="bookImage" id="bookCover">
+                    <img src="${urlParams.get('cover')}" id="bookCoverImg">
+                </div>
+                <div class="bookSide" id=sideResult>
+                    <table style="width:100%" class="bookTable" id=resultTable>
+                        <tr>
+                            <td>지은이</td>
+                            <td>${urlParams.get('author')}</td>
+                        </tr>
+                        <tr>
+                            <td>출판사</td>
+                            <td>${urlParams.get('publisher')}</td>
+                        </tr>
+                        <tr>
+                            <td>ISBN</td>
+                            <td>${urlParams.get('isbn')}</td>
+                        </tr>
+                    </table>
+                    <div class="bookDes" id="description">
+                        <p>책 설명 ${urlParams.get('description')}</p>
+                    </div>
+                    <div class="thumbButton">
+                        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp">
+                        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown">
+                    </div>
+                </div>
             </div>
-            <div class="bookISBN13" id="isbn">
-                <p>ISBN ${urlParams.get('isbn')}</p>
-            </div>
-            <div class="bookAuthor" id="author">
-                <p>지은이 ${urlParams.get('author')}</p>
-            </div>
-            <div class="bookPub" id="publisher">
-                <p>출판사 ${urlParams.get('publisher')}</p>
-            </div>
-            <div class="bookDes" id="description">
-                <p>책 설명 ${urlParams.get('description')}</p>
-            </div>
+            
     `
     resultBox.insertAdjacentHTML('beforeend', html);
 
