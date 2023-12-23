@@ -34,7 +34,6 @@ router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 
 
-
 // 회원가입하기
 router.post('/signup_post', controller.signup_post);
 
