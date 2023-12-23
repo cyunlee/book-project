@@ -140,6 +140,10 @@ exports.mypage= async (req, res) =>{
 	}
 }
 
+exports.otherpage= (req, res) => {
+	res.render('otherpage');
+}
+
 
 exports.upload_post= async (req, res)=>{
 
