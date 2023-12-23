@@ -324,11 +324,13 @@
         }
 
         function removeAllChildren(element) {
+        if (element) {
             while (element.firstChild) {
                 removeAllChildren(element.firstChild);
                 element.removeChild(element.firstChild);
             }
         }
+    }
         
          function replyBox(no,id){
             const div = document.createElement('div');
