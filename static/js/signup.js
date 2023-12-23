@@ -48,7 +48,6 @@ async function idCheck() {
             iddiv.innerHTML='';
             iddiv.innerHTML='<span style="color: red; font-size: 12px;">중복된 아이디가 있습니다</span>';
         } else {
-            alert('사용 가능한 아이디입니다');
             iddiv.innerHTML='';
             iddiv.innerHTML='<span style="color: red; font-size: 12px;">사용 가능한 아이디입니다</span>';
         }
