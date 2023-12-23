@@ -22,7 +22,7 @@ const tokenCheck = async (req) => {
 }
 
 exports.main = (req,res)=>{
-    res.render('main')
+    res.render('mainpage');
 }
 
 // 알라딘 검색 api
