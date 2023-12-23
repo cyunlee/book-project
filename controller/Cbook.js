@@ -39,6 +39,8 @@ exports.get_books=async (req, res) => {
           MaxResults:'5',
           Output:'JS',
           Cover:'Big',
+          itemsPerPage:'5',
+          totalResults:'5'
         },
       });
       console.log('Cbook getBooks response > ',response.data.item);
@@ -214,4 +216,8 @@ exports.delete_comment = async (req,res)=>{
     res.send('Internal Server Error');
   }
 
+}
+
+exports.get_main=(req,res)=>{
+  res.render('mainpage');
 }

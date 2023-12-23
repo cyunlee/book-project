@@ -7,8 +7,10 @@ const cookieParser = require('cookie-parser');
 
 router.use(cookieParser());
 
+router.get('/')
+
 // 임시 링크
-router.get('/', controller.main);
+router.get('/getmain', bookController.get_main);
 
 // 로그인 페이지
 router.get('/login', controller.signin);

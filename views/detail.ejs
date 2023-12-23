@@ -135,6 +135,7 @@
                                 <div class="comment_date comment">${i.c_date}</div>
                                 </div>
                                 <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
+                                <button type="button" class ="reply" id="reply_${i.c_no}" onclick="replyBox(${i.c_no},${i.u_id})";>답글쓰기</button> 
                                 </div>
                                 `
                                 commentBox.insertAdjacentHTML('beforeend',html);
@@ -254,6 +255,14 @@
                         removeAllChildren(element.firstChild);
                         element.removeChild(element.firstChild);
                     }
+                }
+
+                function replyBox(no,id){
+                    const div = document.createElement('div');
+                    div.classList.add('comment-wrapper');
+                    div.textContent='hihitest';
+                    const replyBox = document.querySelector(`#div_${no}`);
+                    replyBox.after(div);
                 }
             </script>
 </head>
