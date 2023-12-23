@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 
 router.use(cookieParser());
 
+
 // 임시 링크
 router.get('/', controller.main);
 

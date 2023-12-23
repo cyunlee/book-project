@@ -90,7 +90,7 @@
             search();
         });
         
-        // 책 검색 함수(카카오 책 검색 api)
+        // 책 검색 함수(알라딘 책 검색 api)
         function search() {
             // const title = document.getElementById('title').value;
             const resultBox = document.getElementById('result');
@@ -114,7 +114,7 @@
                             </button>
                         </div>
                         `;
-                        newResultBox.insertAdjacentHTML('beforeend',html);
+                        resultBox.insertAdjacentHTML('beforeend',html);
                 });
             });
             removeAllChildren(resultBox);

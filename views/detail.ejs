@@ -10,9 +10,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <style>
-
-    </style>
 </head>
 
 <body>
@@ -45,6 +42,20 @@
         console.log(isbn13); // 출력: 9788954699075
         document.addEventListener("DOMContentLoaded", () => {
             loadView();
+            
+            const form = document.forms['comment-form'];
+                        const commentForm = document.querySelector('#commentForm');
+                        form.u_id.value = res.id;
+
+                        if(res.id==false){
+                            commentForm.style.display='none';
+                        }else{
+                            commentForm.style.display='block';
+                        }
+        
+                        resultBox.appendChild(contentDiv);
+                        resultBox.appendChild(img);
+                    });
         });
 
 
@@ -249,6 +260,14 @@
                 removeAllChildren(element.firstChild);
                 element.removeChild(element.firstChild);
             }
+        }
+        
+         function replyBox(no,id){
+            const div = document.createElement('div');
+            div.classList.add('comment-wrapper');
+            div.textContent='hihitest';
+            const replyBox = document.querySelector(`#div_${no}`);
+            replyBox.after(div);
         }
     </script>
 </body>

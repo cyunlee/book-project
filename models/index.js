@@ -16,12 +16,26 @@ const Comment = require('./Comment')(sequelize,Sequelize);
 // 유저와 댓글 1:다 설정
 User.hasMany(Comment, {
     foreignKey: 'u_id',  // Comment 테이블의 외래 키
-    sourceKey: 'u_id'    // User 테이블의 소스 키
+    sourceKey: 'u_id',    // User 테이블의 소스 키
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE',     
 });
 
 Comment.belongsTo(User, {
     foreignKey: 'u_id',  // Comment 테이블의 외래 키
     targetKey: 'u_id'    // User 테이블의 타겟 키
+});
+
+Comment.hasMany(Comment, {
+    foreignKey: 'parent_c_no', // 대댓글의 경우 부모 댓글의 c_no를 참조
+    as: 'replies', // 대댓글을 replies로 지칭
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE',     
+});
+
+Comment.belongsTo(Comment, {
+    foreignKey: 'parent_c_no', // 대댓글의 경우 부모 댓글의 c_no를 참조
+    as: 'parentComment' // 대댓글을 parentComment로 지칭
 });
 
 

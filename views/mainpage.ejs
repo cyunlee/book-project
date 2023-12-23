@@ -9,22 +9,40 @@
 		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<!-- axios CDN -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<style>
+		#result{
+			/* border: 1px solid black; */
+			background-color: white;
+			width: 50%;
+			/* margin: 0 auto; */
+			/* height: 300px; */
+			position: absolute;
+			z-index: 200;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+	</style>
 </head>
 <div>
 	<header>
 		<div id="top">
-			<div style="color: white; font-size: 40px;" class="box">로고자리
+			<!-- <div style="color: white; font-size: 40px;" class="box"> -->
+				<a href='/main'><img src="../static/img/Group16.png"></a>
 				<!--<div id="top_logo">
 				<img src="C:\Users\82105\Desktop\github\book-project\static\img\logo_top_en_US.gif">
 			</div>-->
-				<div id="top_ad">
-					<input type="text" placeholder="통합 검색">
-				</div>
+				
 				<div id="search">
-					<button class="buttonlog">Home</button>
-					<button class="buttonlog">LogIn</button>
-					<button class="buttonlog">LogOut</button>
+					<!-- <button class="buttonlog" onclick="location.href='/main'">Home</button> -->
+					<button class="buttonlog" onclick="location.href='/login'">SIGN IN</button>
+					<button class="buttonlog" onclick="location.href='/signup'">SIGN UP</button>
+					<button class="buttonlog" onclick="location.href='/logout'">LogOut</button>
 				</div>
+				<div id="top_ad">
+					<input type="text" id="title" name="title" placeholder="통합 검색">
+					<button type="button" id="searchBtn" onclick="search();">검색</button>
+				</div>
+				<div id="result"></div>
 			</div>
 
 		</div> <!-- top -->
@@ -77,29 +95,7 @@
 	<section class="content_box" id="best_sellers_section">
 		<div class="box">
 			<h3>베스트셀러</h3>
-			<script>
-				$(document).ready(function () {
-					
-					$.ajax({
-						url: 'script.php', // 데이터베이스에서 데이터를 가져오는 서버 측 스크립트의 실제 URL
-						method: 'GET',
-						dataType: 'json',
-						success: function (data) {
-							for (var i = 0; i < data.length; i++) {
-								var book = data[i];
-								var listItem = $('<ul class="items">');
-								listItem.append('<li><img src="' + book.image + '"></li>');
-								listItem.append('<li class="bookName">' + book.name + '</li>');
-								listItem.append('<li class="bookAuthor">' + book.author + '</li>');
-								$('#best_sellers_section .box').append(listItem);
-							}
-						},
-						error: function (error) {
-							console.error('Error fetching data:', error);
-						}
-					});
-				});
-			</script>
+			<div id="best-result" class="box-section"></div>
 		</div>
 
 	</section>
@@ -107,49 +103,7 @@
 		<section class="content_box" id="new_books_section">
 			<div class="box">
 				<h3>신간 추천</h3>
-				<!-- <ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="bookName">나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book2.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book3.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>	 -->
-				<script>
-					$(document).ready(function () {
-					
-					$.ajax({
-						url: 'script.php', // 데이터베이스에서 데이터를 가져오는 서버 측 스크립트의 실제 URL
-						method: 'GET',
-						dataType: 'json',
-						success: function (data) {
-							for (var i = 0; i < data.length; i++) {
-								var book = data[i];
-								var listItem = $('<ul class="items">');
-								listItem.append('<li><img src="' + book.image + '"></li>');
-								listItem.append('<li class="bookName">' + book.name + '</li>');
-								listItem.append('<li class="bookAuthor">' + book.author + '</li>');
-								$('#best_sellers_section .box').append(listItem);
-							}
-						},
-						error: function (error) {
-							console.error('Error fetching data:', error);
-						}
-					});
-				});
-				</script>
+				<div id="new-result" class="box-section"></div>
 			</div>
 
 		</section>
@@ -157,29 +111,7 @@
 		<section class="content_box" id="review_ranking_section">
 			<div class="box">
 				<h3>리뷰 순위</h3>
-				<script>
-					$(document).ready(function () {
-					
-					$.ajax({
-						url: 'script.php', // 데이터베이스에서 데이터를 가져오는 서버 측 스크립트의 실제 URL
-						method: 'GET',
-						dataType: 'json',
-						success: function (data) {
-							for (var i = 0; i < data.length; i++) {
-								var book = data[i];
-								var listItem = $('<ul class="items">');
-								listItem.append('<li><img src="' + book.image + '"></li>');
-								listItem.append('<li class="bookName">' + book.name + '</li>');
-								listItem.append('<li class="bookAuthor">' + book.author + '</li>');
-								$('#best_sellers_section .box').append(listItem);
-							}
-						},
-						error: function (error) {
-							console.error('Error fetching data:', error);
-						}
-					});
-				});
-				</script>
+				
 			</div>
 
 		</section>
@@ -187,128 +119,11 @@
 		<section class="content_box" id="liked_best_section">
 			<div class="box">
 				<h3>좋아요 베스트</h3>
-				<script>
-					$(document).ready(function () {
-					
-					$.ajax({
-						url: 'script.php', // 데이터베이스에서 데이터를 가져오는 서버 측 스크립트의 실제 URL
-						method: 'GET',
-						dataType: 'json',
-						success: function (data) {
-							for (var i = 0; i < data.length; i++) {
-								var book = data[i];
-								var listItem = $('<ul class="items">');
-								listItem.append('<li><img src="' + book.image + '"></li>');
-								listItem.append('<li class="bookName">' + book.name + '</li>');
-								listItem.append('<li class="bookAuthor">' + book.author + '</li>');
-								$('#best_sellers_section .box').append(listItem);
-							}
-						},
-						error: function (error) {
-							console.error('Error fetching data:', error);
-						}
-					});
-				});
-					/* var books = [
-						{ image: "C:\\Users\\82105\\Desktop\\github\\book-project\\static\\img\\book1.jpg", name: "나책제목1", author: "나작가1" },
-						{ image: "C:\\Users\\82105\\Desktop\\github\\book-project\\static\\img\\book2.jpg", name: "나책제목2", author: "나작가2" },
-						{ image: "C:\\Users\\82105\\Desktop\\github\\book-project\\static\\img\\book3.jpg", name: "나책제목3", author: "나작가3" },
-						{ image: "C:\\Users\\82105\\Desktop\\github\\book-project\\static\\img\\book3.jpg", name: "나책제목3", author: "나작가3" },
-						{ image: "C:\\Users\\82105\\Desktop\\github\\book-project\\static\\img\\book1.jpg", name: "나책제목4", author: "나작가4" }
-					];
-
-					for (var i = 0; i < books.length; i++) {
-						document.write('<ul class="items">');
-						document.write('<li><img src="' + books[i].image + '"></li>');
-						document.write('<li class="bookName">' + books[i].name + '</li>');
-						document.write('<li class="bookAuthor">' + books[i].author + '</li>');
-						document.write('</ul>');
-					} */
-				</script>
+				
 			</div>
 
 		</section>
 
-		<!-- 
-	<section id="content_box">
-		<div class="box">
-			<h3>베스트셀러</h3>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="a"> 나책제목</li>
-				<li class="b">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book2.jpg"></li>
-				<li class="a"> 나책제목</li>
-				<li class="b">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book3.jpg"></li>
-				<li class="a"> 나책제목</li>
-				<li class="b">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="a"> 나책제목</li>
-				<li class="b">나작가  </li>
-			</ul>		
-		</div>
-	</section>
-
-	<section id="content_box">
-		<div class="box">
-			<h3>신간 추천</h3>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="bookName">나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book2.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book3.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>		
-		</div>
-
-	</section>
-
-	<section id="content_box">
-		<div class="box">
-			<h3>신간 추천</h3>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="bookName">나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book2.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book3.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>
-			<ul class="items">
-				<li><img src="C:\Users\82105\Desktop\github\book-project\static\img\book1.jpg"></li>
-				<li class="bookName"> 나책제목</li>
-				<li class="bookAuthor">나작가  </li>
-			</ul>		
-		</div>
-
-	</section> -->
 	</div>
 	<footer>
 		<div class="box">
@@ -338,7 +153,129 @@
 
 		</div>
 	</footer>
+	<script>
+        const eventTitle = document.getElementById('title');
+        
+        // 메인페이지 로드 시, 책 정보들 불러오기
+        document.addEventListener("DOMContentLoaded", ()=>{
+            const resultBox = document.getElementById('result');
+            const bestResultBox = document.getElementById('best-result');
+            const newResultBox = document.getElementById('new-result');
+        
+            // 베스트셀러 api
+            $.ajax({
+                method:'get',
+                url:'/bestSeller',
+            }).done((res) => {
+                    console.log('알라딘 bestseller >' , res);
+                    res.forEach(a => {
+                        // console.log('알라딘 bestseller cover >',a.cover[0]);
+                        console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
 
+                        let html = `
+                        <div class="each-selection">
+                            <button type="button" onclick="detail(${a.isbn13})">
+                                <img src="${a.cover}">
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        bestResultBox.insertAdjacentHTML('beforeend',html);
+                    });
+            });
+        
+            // 신간 api
+            $.ajax({
+            method:'get',
+            url:'/brendNew',
+            }).done((res) => {
+                    console.log('알라딘 brendnew res >' , res);
+                    res.forEach(a => {
+                        console.log('알라딘 brendnew a.isbn13 > ',a.isbn13);
+                        let html = `
+                        <div class="each-selection">
+                            <button type="button" onclick="detail(${a.isbn13})">
+                                <img src="${a.cover}">
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        newResultBox.insertAdjacentHTML('beforeend',html);
+                    });
+                });
+        });
+
+		eventTitle.addEventListener("focus",()=>{
+			const resultBox = document.getElementById('result');
+			resultBox.innerHTML = '';
+			if (eventTitle =''){
+				resultBox.style.height='0px'
+			}else{
+				resultBox.style.height='500px'
+			}
+		})
+        
+        // keyup 이벤트 발생시 내용들이 화면에 보이게
+        eventTitle.addEventListener("keyup", () => {
+            search();
+        });
+        
+        // 책 검색 함수(알라딘 책 검색 api)
+        function search() {
+            // const title = document.getElementById('title').value;
+            const resultBox = document.getElementById('result');
+        
+            $.ajax({
+            method: 'get',
+            url: '/search', // 서버에 요청을 보내는 주소로 변경
+            data:{
+                title:document.getElementById('title').value,
+            }
+            }).done((res) => {
+                console.log('res >' , res);
+                // console.log('object >', JSON.parse(res));
+                res.forEach(a => {
+                    console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
+                        let html = `
+                        <div>
+                            <button type="button" onclick="detail(${a.isbn13})">
+                                
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        resultBox.insertAdjacentHTML('beforeend',html);
+                });
+            });
+            removeAllChildren(resultBox);
+            // console.log('title> ',title)
+            // document.getElementById('result').value=title;
+        }
+        
+        
+        
+        function removeAllChildren(element) {
+            while (element.firstChild) {
+                removeAllChildren(element.firstChild);
+                element.removeChild(element.firstChild);
+            }
+        }
+        
+        function detail(isbn){
+            const detailBox = document.getElementById('detail-result');
+            $.ajax({
+                method:'get',
+                url:'/getDetail',
+                data:{
+                    ItemId:`${isbn}`,
+                }
+            }).done((res)=>{
+                console.log(res);
+                console.log('res detail aaaaaaaaaaa > ',res.items[0].isbn13);
+                location.href=`/detailGo?isbn13=${res.items[0].isbn13}`;
+            })
+        }
+    </script>
 
 
 	</body>
