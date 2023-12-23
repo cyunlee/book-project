@@ -15,16 +15,20 @@
 		<form name="register">
 			<h1>Sign Up</h1>
 			<label class="title" for="name">Nickname</label><br>
-			<input class="user-input"placeholder="Enter your nickname" type="text" id="name" name="name" onblur="nameCheck()"></input><br><br>
+			<input class="user-input"placeholder="Enter your nickname" type="text" id="name" name="name" onblur="nameCheck()"></input>
+			<div class="namediv"></div>
 	
 			<label class="title" for="email">Email</label><br>
-			<input class="user-input" placeholder="Enter your email" type="email" id="email" name="email"><br><br>
+			<input class="user-input" placeholder="Enter your email" type="email" id="email" name="email">
+			<div class="emaildiv"></div>
 	
 			<label class="title" for="id">ID</label><br>
-			<input class="user-input" placeholder="Enter your ID" type="text" id="id" name="id" onblur="idCheck()"><br><br>
+			<input class="user-input" placeholder="Enter your ID" type="text" id="id" name="id" onblur="idCheck()">
+			<div class="iddiv"></div>
 	
 			<label class="title" for="pw">Password</label><br>
-			<input class="user-input" placeholder="Enter your password" type="password" id="pw" name="pw"></input><br><br>
+			<input class="user-input" placeholder="Enter your password" type="password" id="pw" name="pw"></input>
+			<div class="pwdiv"></div><br>
 	
 			<button type="button" onclick="signUp()">Create Account</button><br>
 		
