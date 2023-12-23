@@ -11,7 +11,78 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
+<style>
+        .btn {
+        display: block;
+        margin-left: 20px;
+    }
+    .divWrapper {
+        width: 500px;
+        height: fit-content;
+    }
 
+    .comment {
+        width: 500px;
+        height: fit-content;
+    }
+
+    .morevertToggle {
+        background-color: aqua;
+    }
+
+    .box-show {
+        width: 70px;
+        height: 50px;
+        display: none;
+        position: absolute;
+        top: 26px;
+        right: 30px;
+        border: 1px black solid;
+        z-index: 100;
+    }
+
+    .comment_inner_wrapper {
+        width: 500px;
+        display: inline-block;
+    }
+
+    .comment-wrapper {
+        position: relative;
+        border: 1px solid black;
+        width: 80%;
+        height: 100px;
+    }
+
+    .comment {
+        display: inline-block;
+    }
+
+    .morevert {
+        position: absolute;
+        right: 0;
+    }
+
+    .editBox-content {
+        width: 98%;
+        height: 90%;
+    }
+
+    .inputBox {
+        height: 100px;
+    }
+
+    .editBox-id {
+        position: absolute;
+    }
+
+    .edit-btn {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-bottom: 10px;
+        margin-right: 20px;
+    }
+</style>
 <body>
     <h1>상세페이지</h1>
     <div class="bookshelf">
@@ -28,7 +99,7 @@
     </form>
 
     <div>
-        <form name="comment-form">
+        <form name="comment-form" id="commentForm">
             <input type="text" name="u_id" placeholder="id"><br>
             <input type="text" name="c_content" placeholder="content"><br>
             <button type="button" onclick="addComment();">댓글 입력하기</button>
