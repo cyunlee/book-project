@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/otherpage.css" />
+    <!-- in HEAD -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+
+    <title>MyPage</title>
+  </head>
+  
+  <body>
+    <div class="out"></div>
+    <div class="profile-container">
+      <div class="profile">
+        <div class="profile-image">
+            <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진">
+        </div>
+        <div class="name">이름</div>
+        <div class="id">아이디</div>
+      </div>
+      <br />
+      <div class="info">
+        <div class="following-container">
+          <div class="info-text">팔로잉</div>
+          <div class="number">55</div>
+        </div>
+        <div class="line"></div>
+        <div class="follower-container">
+          <div class="info-text">팔로워</div>
+          <div class="number">100</div>
+        </div>
+        <div class="line"></div>
+        <div class="wish-container">
+          <div class="info-text">위시리스트</div>
+          <div class="number">100</div>
+        </div>
+        <div class="line"></div>
+        <div class="read-container">
+          <div class="info-text">읽은 책</div>
+          <div class="number">100</div>
+        </div>
+      </div>
+      <br />
+    </div>
+    <br />
+    <div class="categories">
+      <div class="category" id="category1">
+        <h3>나의 인생작</h3>
+        <div class="lifelist">
+          <div class="book" id="top1"></div>
+          <div class="book" id="top2"></div>
+          <div class="book" id="top3"></div>
+        </div>
+      </div>
+      <br />
+      <div class="category">
+        <h3>읽고 싶은 책</h3>
+        <!-- Slider container -->
+        <div class="swiper">
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+            <div class="swiper-slide book"></div>
+          </div>
+
+          <!-- 페이징 필요시 추가 -->
+          <div class="swiper-pagination"></div>
+          <!-- 이전, 다음 버튼 필요시 추가 -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+
+      <br />
+      <div class="category">
+        <h3>읽은 책</h3>
+        <div class="bookstack-list">
+          <div class="bookstack ten">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack nine">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack eight">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack seven">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack six">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack five">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack four">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack three">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack two">
+            <div class="bookstack-title"></div>
+          </div>
+          <div class="bookstack one">
+            <div class="bookstack-title">소비의 심리학</div>
+          </div>
+        </div>
+        <br />
+        <div class="all-container">
+          <button class="all">전체보기</button>
+        </div>
+      </div>
+      <br />
+      <div class="category">
+        <h3>내가 작성한 리뷰</h3>
+        <!-- Slider container -->
+        <div class="swiper">
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide review">
+              <div class="text">너무 재미있게 읽었던 책이예요</div>
+            </div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+            <div class="swiper-slide review"></div>
+          </div>
+
+          <!-- 페이징 필요시 추가 -->
+          <div class="swiper-pagination"></div>
+          <!-- 이전, 다음 버튼 필요시 추가 -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      new Swiper(".swiper", {
+        // 다양한 옵션 설정,
+        // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
+        slidesPerView: 3,
+        spaceBetween: 20,
+        navigation: {
+          prevEl: ".swiper-button-prev",
+          nextEl: ".swiper-button-next",
+        },
+      });
+    </script>
+  </body>
+</html>
