@@ -86,24 +86,74 @@
 .hidden3{
     visibility: hidden;
 }
+
 .name{
-    font-weight: 600;
+    font-weight: 500;
 }
+
 .id{
-    color: #c6c6c6;
+    color: #ADADAD;
 }
 
 .info{
+    margin-top: 40px;
+    width: 700px;
+    height: 150px;
+    background-color: white;
     display: flex;
-    width: fit-content;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.line{
+    width: 2px;
+    height: 110px;
+    background-color: #D9D9D9;
+    margin: auto;
+}
+
+.following-container{
+    min-width: 150px;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    margin: auto;
 }
-.record{
-    width: 250px;
+
+.follower-container{
+    min-width: 150px;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.wish-container{
+    min-width: 150px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.read-container{
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.number{
+    font-weight: 600;
+    font-size: 17px;
+    margin: auto;
+}
+
+.info-text{
+    margin: auto;
+    font-size: 17px;
 }
 
 .lifelist-search{
@@ -222,29 +272,27 @@ body{
     flex-direction: column;
     align-items: center;
     margin: 0;
-    background-color: #565C76;
+    background-color: #D9D9D9
 }
 
 .profile-container{
-    width: 85%;
+    width: 70%;
     height: fit-content;
     padding: 20px;
-    border: 1px solid lightgrey;
     border-radius: 16px;
-    background-color: #F7F4EF;
+    background-color: #D9D9D9;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .categories{
-    width: 85%;
+    width: 70%;
     height: fit-content;
     padding: 20px;
-    border: 2px solid lightgrey;
-    border-radius: 16px;
-    background-color: #F6F6F6;
+    background-color: #ffffff;
     flex-direction: column;
     align-items: center;
+    margin-top: -40px;
 }
 .category{
     display: flex;
@@ -254,11 +302,11 @@ body{
 }
 .lifelist{
     display: flex;
-    width: 660px;
+    width: 590px;
     justify-content: space-between;
 }
 .swiper{
-    width: 60vw;
+    width: 50vw;
     height: fit-content;
 }
 .follower-container{
@@ -325,5 +373,16 @@ h3{
 }
 .all:hover{
     cursor: pointer;
+}
+.out{
+    cursor: pointer;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-image: url('/static/img/out.png');
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-size: cover;
 }
 

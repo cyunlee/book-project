@@ -20,6 +20,7 @@
   </head>
   
   <body>
+    <div class="out"></div>
     <div class="profile-container">
       <div class="profile">
         <div class="profile-image">
@@ -45,41 +46,32 @@
       </div>
       <br />
       <div class="info">
-        <div class="follow-container">
-          <div class="follower-container">
-            <div class="profile-title">팔로워</div>
-            <div class="profile-info-follower">54</div>
-          </div>
-          <div class="following-container">
-            <div class="profile-title">팔로잉</div>
-            <div class="profile-info-following">110</div>
-          </div>
+        <div class="following-container">
+          <div class="info-text">팔로잉</div>
+          <div class="number">55</div>
         </div>
-        <div class="email-container">
-          <div class="profile-title">이메일</div>
-          <% if (!userInfo.u_email) { %>
-            <div class="profile-info-email">-</div>
-          <% } else { %>
-              <div class="profile-info-email"><%= userInfo.u_email %></div>
-          <% } %>
+        <div class="line"></div>
+        <div class="follower-container">
+          <div class="info-text">팔로워</div>
+          <div class="number">100</div>
+        </div>
+        <div class="line"></div>
+        <div class="wish-container">
+          <div class="info-text">위시리스트</div>
+          <div class="number">100</div>
+        </div>
+        <div class="line"></div>
+        <div class="read-container">
+          <div class="info-text">읽은 책</div>
+          <div class="number">100</div>
         </div>
       </div>
       <br />
-      <div class="record">
-        <div class="wishlist-container">
-          <div class="wishlist-info">77</div>
-          <div class="wishlist-title">찜했어요</div>
-        </div>
-        <div class="finish-container">
-          <div class="finish-info">24</div>
-          <div class="finish-title">봤어요</div>
-        </div>
-      </div>
     </div>
     <br />
     <div class="categories">
       <div class="category" id="category1">
-        <h3>인생작품</h3>
+        <h3>나의 인생작</h3>
         <div class="lifelist">
           <div class="book" id="top1" onclick="showSearch1()"></div>
           <div class="book" id="top2" onclick="showSearch2()"></div>
@@ -121,7 +113,7 @@
       </div>
       <br />
       <div class="category">
-        <h3>읽고싶은 책</h3>
+        <h3>읽고 싶은 책</h3>
         <!-- Slider container -->
         <div class="swiper">
           <!-- Additional required wrapper -->
