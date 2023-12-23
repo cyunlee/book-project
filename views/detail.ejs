@@ -42,20 +42,7 @@
         console.log(isbn13); // 출력: 9788954699075
         document.addEventListener("DOMContentLoaded", () => {
             loadView();
-            
-            const form = document.forms['comment-form'];
-                        const commentForm = document.querySelector('#commentForm');
-                        form.u_id.value = res.id;
-
-                        if(res.id==false){
-                            commentForm.style.display='none';
-                        }else{
-                            commentForm.style.display='block';
-                        }
-        
-                        resultBox.appendChild(contentDiv);
-                        resultBox.appendChild(img);
-                    });
+                
         });
 
 
@@ -116,6 +103,16 @@
                     </div>
                 </div>
                 `
+
+                const form = document.forms['comment-form'];
+                const commentForm = document.querySelector('#commentForm');
+                form.u_id.value = res.id;
+
+                if(res.id==false){
+                    commentForm.style.display='none';
+                }else{
+                    commentForm.style.display='block';
+                }
                 resultBox.insertAdjacentHTML('beforeend', html);
             });
 
