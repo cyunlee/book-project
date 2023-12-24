@@ -33,7 +33,8 @@ router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 
-
+// 다른 사람 계정 페이지
+router.get('/otherpage', controller.otherpage);
 
 // 회원가입하기
 router.post('/signup_post', controller.signup_post);
@@ -76,8 +77,21 @@ router.get('/chattingRoom', chatController.enter_chat_room);
 // 검색 결과 페이지
 router.get('/searchList', controller.searchList);
 
-// 검색 결과 -> 특정 책 상세 페이지
+// 검색 결과 -> 특정 책 클릭
 router.get('/searchDetail', controller.searchDetail);
+
+
+// 평가 데이터 렌더(좋아요, 싫어요)
+router.get('/ratingData', controller.ratingData);
+
+// 좋아요, 좋아요 취소, 싫어요, 싫어요 취소
+router.post('/createLike', controller.createLike);
+router.delete('/deleteLike', controller.deleteLike);
+router.post('/createBad', controller.createBad); 
+router.delete('/deleteBad', controller.deleteBad);
+
+// 유저들이 이 책과 함께 좋아한 다른 책 렌더
+router.get('/otherLikes', controller.otherLikes);
 
 
 module.exports = router;

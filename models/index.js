@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
 // TODO: 모델 모듈 불러오기 
 const User = require('./User')(sequelize, Sequelize);
 const Comment = require('./Comment')(sequelize,Sequelize);
+const Book = require('./Book')(sequelize,Sequelize);
 
 // 유저와 댓글 1:다 설정
 User.hasMany(Comment, {
@@ -26,6 +27,7 @@ Comment.belongsTo(User, {
     targetKey: 'u_id'    // User 테이블의 타겟 키
 });
 
+
 Comment.hasMany(Comment, {
     foreignKey: 'parent_c_no', // 대댓글의 경우 부모 댓글의 c_no를 참조
     as: 'replies', // 대댓글을 replies로 지칭
@@ -39,9 +41,23 @@ Comment.belongsTo(Comment, {
 });
 
 
+
+// User : Book = 1 : N
+User.hasMany(Book, {
+    foreignKey: 'u_id',
+    sourceKey: 'u_id'
+})
+Book.belongsTo(User,{
+    foreignKey: 'u_id',
+    sourceKey: 'u_id'
+})
+
+
+
 // TODO: 관계를 정의한 모델들을 db 객체에 저장
 db.User = User;
 db.Comment = Comment;
+db.Book = Book;
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
