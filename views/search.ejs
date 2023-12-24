@@ -27,6 +27,12 @@
         padding: 10px;
     }
 
+    .coverBox {
+        width: 200px;
+    }
+    .coverBox img {
+        width: 100%;
+    }
 </style>
 
 <body>
@@ -47,7 +53,9 @@
         <% if(searchData && searchData.length > 0) { %>
             <% searchData.forEach(ele => { %>
                 <div class="result" onclick="formSubmit('<%= ele.isbn%>')">
-                    <img class="img" src="<%= ele.cover  %>" alt="">
+                    <div class="coverBox">
+                        <img class="img" src="<%= ele.cover  %>" alt="">
+                    </div>
                     <div>
                         <p class="title"><%= ele.title %></p>
                     </div>
@@ -60,7 +68,7 @@
 
     <div class="pagination">
         <% for (let i = 1; i <= totalPages; i++) { %>
-            <a href="/search?title=<%= query %>&page=<%= i %>"><%= i %></a>
+            <a href="/searchList?title=<%= query %>&page=<%= i %>"><%= i %></a>
         <% } %>
     </div>
 
