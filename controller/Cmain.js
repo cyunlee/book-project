@@ -101,22 +101,9 @@ exports.login_post = async (req, res) => {
 				res.send({ result: true });
 			}
 		}
-	}
-} catch (error) {
+	} catch (error) {
 	res.send(error);
-}
-
-
-
-const dir = '../static/img/test';
-try {
-	if (!fs.existsSync(dir)) { // 해당 유저의 디렉토리가 있는지 확인
-	  fs.mkdirSync(dir, { recursive: true }); // 없다면 디렉토리를 생성
-	}
-	} catch (err) {
-	console.error(err);
-}
-}
+}}
 
 
 exports.signup_post = async (req, res) => {
