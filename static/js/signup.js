@@ -68,7 +68,6 @@ async function signUp() {
                 u_pw: form.pw.value,
             },
         });
-
         if(response.data.result){
             alert('회원가입을 축하드립니다');
             document.location.href='/';
@@ -77,8 +76,10 @@ async function signUp() {
             if (response.data.msg == 'name duplicated') {
                 alert('name이 중복됩니다');
             }
-            else {
+            else if(response.data.msg == 'id duplicated') {
                 alert('id가 중복됩니다');
+            } else {
+                alert('db error');
             }
         }
     } catch(error){

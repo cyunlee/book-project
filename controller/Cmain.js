@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { User,Comment } = require('../models/index');
 const axios = require('axios')
 const bcrypt = require('bcrypt');
@@ -52,10 +53,10 @@ exports.idCheck = async (req, res) => {
 		})
 		if (id === '') res.send({result: 'empty'})
 		else if (checkID) res.send({result: true})
-		else res.send({result : false})
-	} catch (error) {
-		res.send(error);
-	}
+	else res.send({result : false})
+} catch (error) {
+	res.send(error);
+}
 }
 
 exports.nameCheck = async (req, res) => {
@@ -85,23 +86,36 @@ exports.login_post = async (req, res) => {
 		});
 		if (!checkID) res.send({result: false})
 		else {
-			const checkPW = checkID.dataValues.u_pw;
-			// const result = await bcrypt.compare(pw, checkPW);
-			
-			if (checkPW !== pw) {
-			// (!result) {
-				res.send({result: false})
-			}
-			else { // 성공시
-				const token = jwt.sign({id: id}, jwtSecret)
-				res.cookie('jwtCookie', token, cookieConfig);
-				res.send({result: true});
-			}
+	const checkPW = checkID.dataValues.u_pw;
+	// const result = await bcrypt.compare(pw, checkPW);
+	
+	if (checkPW !== pw) {
+		// (!result) {
+			res.send({result: false})
 		}
-	} catch (error) {
-		res.send(error);
+		else { // 성공시
+			const token = jwt.sign({id: id}, jwtSecret)
+			// fs.mkdirSync(dir, { recursive: true }); // 없다면 디렉토리를 생성
+			res.cookie('jwtCookie', token, cookieConfig);
+			res.send({result: true});
+		}
 	}
+} catch (error) {
+	res.send(error);
 }
+
+
+
+const dir = '../static/img/test';
+try {
+	if (!fs.existsSync(dir)) { // 해당 유저의 디렉토리가 있는지 확인
+	  fs.mkdirSync(dir, { recursive: true }); // 없다면 디렉토리를 생성
+	}
+	} catch (err) {
+	console.error(err);
+}
+}
+
 
 exports.signup_post = async (req, res) => {
 	try {
@@ -117,6 +131,7 @@ exports.signup_post = async (req, res) => {
 		else {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
 			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
+			fs.mkdirSync(`./static/img/${u_id}`);
 			res.send({result : true});
 		}
 	} catch (error) {
@@ -175,6 +190,7 @@ exports.upload_patch=async (req,res)=>{
 		res.send('Internal Server Error!');
 	}
 }
+
 
 exports.searchList = async (req, res) => {
 	console.log('Cmain search req.query >' ,req.query);
