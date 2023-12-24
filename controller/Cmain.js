@@ -1,7 +1,7 @@
+const fs = require('fs');
 const { Op } = require('sequelize');
 const { User, Book, Comment } = require('../models/index');
 const model = require('../models/index');
-
 const axios = require('axios')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -101,10 +101,23 @@ exports.login_post = async (req, res) => {
 				res.send({ result: true });
 			}
 		}
-	} catch (error) {
-		res.send(error);
 	}
+} catch (error) {
+	res.send(error);
 }
+
+
+
+const dir = '../static/img/test';
+try {
+	if (!fs.existsSync(dir)) { // 해당 유저의 디렉토리가 있는지 확인
+	  fs.mkdirSync(dir, { recursive: true }); // 없다면 디렉토리를 생성
+	}
+	} catch (err) {
+	console.error(err);
+}
+}
+
 
 exports.signup_post = async (req, res) => {
 	try {
@@ -119,8 +132,10 @@ exports.signup_post = async (req, res) => {
 		else if (newid) res.send({ result: false, msg: 'id duplicated' })
 		else {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
-			await User.create({ u_name: u_name, u_id: u_id, u_pw: u_pw, u_email: u_email });
-			res.send({ result: true });
+			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
+			fs.mkdirSync(`./static/img/${u_id}`);
+			res.send({result : true});
+
 		}
 	} catch (error) {
 		res.send(error);
@@ -185,6 +200,7 @@ exports.upload_patch=async (req,res)=>{
 
 
 // 검색 결과
+
 exports.searchList = async (req, res) => {
 	console.log('Cmain search req.query >', req.query);
 	const query = req.query.title

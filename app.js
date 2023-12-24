@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const PORT = 8000;
 const db = require('./models/index');
-
 const multer = require('multer');
 const path = require('path');
 // const upload = multer({
