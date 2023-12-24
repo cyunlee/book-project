@@ -65,7 +65,19 @@ router.delete('/deleteComment',bookController.delete_comment);
 // 검색 결과 페이지
 router.get('/searchList', controller.searchList);
 
-// 검색 결과 -> 특정 책 상세 페이지
+// 검색 결과 -> 특정 책 클릭
 router.get('/searchDetail', controller.searchDetail);
+
+// 평가 데이터 렌더(좋아요, 싫어요)
+router.get('/ratingData', controller.ratingData);
+
+// 좋아요, 좋아요 취소, 싫어요, 싫어요 취소
+router.post('/createLike', controller.createLike);
+router.delete('/deleteLike', controller.deleteLike);
+router.post('/createBad', controller.createBad); 
+router.delete('/deleteBad', controller.deleteBad);
+
+// 유저들이 이 책과 함께 좋아한 다른 책 렌더
+router.get('/otherLikes', controller.otherLikes);
 
 module.exports = router;

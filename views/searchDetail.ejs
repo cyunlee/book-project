@@ -4,7 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- axios cdn -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
+
+<style>
+    .likeA {
+        display: none;
+        background-color: skyblue;
+    }
+
+    .badA {
+        display: none;
+        background-color: skyblue;
+    }
+
+    .itemList {
+        display: flex;
+        /* border: 1px solid; */
+        /* padding: 10px; */
+    }
+    .item {
+        padding: 10px;
+        /* margin: 10px; */
+        width: 200px;
+        border: 1px solid;
+        background-color: lightgray;
+    }
+    .coverBox {
+        width: 200px;
+    }
+    .coverBox img {
+        width: 100%;
+    }
+    a {
+        text-decoration: none;
+    }
+    a:visited { color: black; }
+
+</style>
+
 <body>
     <h1>임시 상세페이지</h1>
         <img class="img" src="<%= detailData.cover  %>" alt="">
@@ -17,35 +56,202 @@
         <p><%= detailData.categoryName %></p>
         <p>출판사 <%= detailData.publisher %></p>
 
-    <input type="checkbox" id="checkbox1" class="custom-checkbox" name="rating" value="like">
-    <label for="checkbox1">Checkbox 1</label>
+    <hr>
+    <button class="like" id="like">좋아요할래
+        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+    </button>
+    <button class="likeA">좋아요취소
+        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+    </button>
 
-    <input type="checkbox" id="checkbox2" class="custom-checkbox" name="rating" value="soso">
-    <label for="checkbox2">Checkbox 2</label>
+    <button class="bad">싫어요할래
+        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+    </button>
+    <button class="badA">싫어요취소
+        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+    </button>
 
-    <input type="checkbox" id="checkbox3" class="custom-checkbox" name="rating" value="bad">
-    <label for="checkbox3">Checkbox 3</label>
-
-    <script>
-        // 모든 체크박스 요소 가져오기
-        const checkboxes = document.querySelectorAll('.custom-checkbox');
-
-        // 각 체크박스에 이벤트 리스너 추가
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('click', function() {
-                // 선택된 체크박스의 id 가져오기
-                const selectedId = this.id;
-
-                // 나머지 체크박스들의 선택 해제
-                checkboxes.forEach(otherCheckbox => {
-                    if (otherCheckbox.id !== selectedId) {
-                        otherCheckbox.checked = false;
-                    }
-                });
-            });
-        });
-    </script>
-
+    <div class="listBox">
+        <h3 class="ptag"></h3>
+        <div class="itemList"></div>
+    </div>
+    
 
 </body>
+
+<script>
+    const isLogin = '<%= isLogin %>'
+    const id = '<%= id %>'
+    const isbn = '<%= detailData.isbn %>'
+    // console.log(id);
+
+    const like = document.querySelector('.like');
+    const likeA = document.querySelector('.likeA');
+
+    const bad = document.querySelector('.bad');
+    const badA = document.querySelector('.badA');
+
+
+    // 렌더될 때 좋아요 싫어요 평가 데이터 조회
+    (async () => {
+        if(isLogin == 'true') {
+        try {
+            const ratingData = await axios({
+                url: '/ratingData',
+                method: 'get',
+                params: {
+                    b_isbn: isbn,
+                    u_id: id
+                }
+            })
+            console.log('이 책에 남긴 평가 데이터>',ratingData.data);
+            if(ratingData.data == 'like') {
+                // alert('like!');
+                like.style.display = 'none';
+                likeA.style.display = 'inline-block';
+                bad.disabled = true; 
+            } else if(ratingData.data == 'bad') {
+                bad.style.display = 'none';
+                badA.style.display = 'inline-block';
+                like.disabled = true;
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    })();
+
+    // 렌더될 때 좋아요 기반 데이터
+    (async () => {
+        try{
+            const otherLikes = await axios({
+                url: '/otherLikes',
+                method: 'get',
+                params: {
+                    b_rating : 'like',
+                    u_id: id,
+                    b_isbn: isbn
+                }
+            })
+            console.log(otherLikes);
+            console.log('!!!>', otherLikes.data);
+            const newData = otherLikes.data;
+            // console.log(newData);
+                if(otherLikes)
+                    { const ptag = document.querySelector('.ptag');
+                    ptag.innerText = '유저들이 이 책과 함께 좋아한 다른 책'
+
+                        // 받아온 데이터를 forEach문을 사용하여 화면에 표시
+                    newData.forEach(item => {
+                        const itemList = document.querySelector('.itemList');
+                        itemList.innerHTML += `
+                            <div class="item">
+                                <a href="/searchDetail?isbn=${item.isbn}">
+                                    <div class="coverBox">
+                                        <img src="${item.cover}">
+                                    </div>
+                                    <p>${item.title}</p>
+                                </a>
+                            </div>
+                            `;
+                    });
+                }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    )();
+
+    // 좋아요 버튼 누를 때 데이터 전송
+    // console.log(like)
+    like.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            like.style.display = 'none';
+            likeA.style.display = 'inline-block';
+            bad.disabled = true; 
+            // db로 전송
+            // 내용 : 좋아요 누름!
+            // alert('db에 좋아요 평가 전송!')  // 테스트
+            console.log('id, rating >',id, "like");
+            axios({
+                url: '/createLike',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: id,
+                    b_rating : 'like',
+                    // b_isbnX: isbn
+                }
+            })
+        }
+        
+        })
+
+    // 좋아요 취소
+    likeA.addEventListener('click', (e) => {
+        likeA.style.display = 'none';
+        like.style.display = 'inline-block';
+        bad.disabled = false; 
+        // db로 전송
+        // 내용 : 좋아요 취소!
+        axios({
+                url: '/deleteLike',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: id,
+                    b_rating : 'like'
+                }
+            })
+        })
+
+    // 싫어요
+    bad.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            bad.style.display = 'none';
+            badA.style.display = 'inline-block';
+            like.disabled = true; 
+            // db로 전송
+            // 내용 : 싫어요 누름!
+            // alert('db에 싫어요 평가 전송!')
+            axios({
+                url: '/createBad',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: id,
+                    b_rating : 'bad',
+                }
+            })
+        }
+
+        })
+
+    // 싫어요 취소
+    badA.addEventListener('click', (e) => {
+        badA.style.display = 'none';
+        bad.style.display = 'inline-block';
+        like.disabled = false; 
+        // db로 전송
+        // 내용 : 싫어요 취소!
+        axios({
+                url: '/deleteBad',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: id,
+                    b_rating : 'bad'
+                }
+            })
+        })
+
+</script>
+
+
 </html>
