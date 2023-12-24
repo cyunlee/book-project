@@ -1,9 +1,28 @@
-const model = require('../models/index');
-const {Sequelize, Comment} = model;
+const {Sequelize,User, Comment} = require('../models/index');
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
+
+const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
+
+const tokenCheck = async (req) => {
+	const token = req.cookies.jwtCookie;
+	if(!token) {
+		return false;
+	} else {
+		const result = jwt.verify(token, jwtSecret);
+		const checkID = await User.findOne({
+			where: {u_id : result.id}
+		})
+		if (checkID){
+			return (result.id);
+		} else {
+			return false;
+		}
+	}
+}
 
 exports.main = (req,res)=>{
-    res.render('main')
+    res.render('mainpage');
 }
 
 // 알라딘 검색 api
@@ -20,6 +39,8 @@ exports.get_books=async (req, res) => {
           MaxResults:'5',
           Output:'JS',
           Cover:'Big',
+          itemsPerPage:'5',
+          totalResults:'5'
         },
       });
       console.log('Cbook getBooks response > ',response.data.item);
@@ -81,44 +102,18 @@ exports.get_brendNew = async (req,res)=>{
   }
 }
 
-// 클릭한 책의 isbn 받아오기
-exports.get_isbn= async (req,res)=>{
-  try {
-    const isbn = req.query.ItemId;
-    console.log('클릭한 책의 isbn',isbn);
-    const response = await axios.get('https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx', {
-    params: {
-        ttbkey: 'ttbwonluvv0940001',
-        ItemId: isbn,
-        version: '20131101',
-        ItemIdType:'ISBN13',
-        Output:'JS',
-      },
-    });
-
-    console.log('Cbook getIsbn response > ',response.data.item);
-    const items = response.data.item;
-
-    // const jsonItems = JSON.stringify(items);
-    res.json(items);
-    // res.render('detail',{items});
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
-  }
-  // res.render('detail');
-}
-
 // 상세페이지로 이동
 exports.go_detail = (req,res)=>{
-  res.render('detail')
+  const tokenId = tokenCheck(req);
+  console.log('tokenid > ',tokenId);
+  res.render('detail',{id:tokenId})
 }
 
 // 상세페이지 내용 불러오기
 exports.get_detail= async (req,res)=>{
   try {
     const isbn = req.query.ItemId;
+    const tokenId = await tokenCheck(req);
     console.log('상세페이지의 isbn > ',isbn);
     const response = await axios.get('https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx', {
     params: {
@@ -132,11 +127,10 @@ exports.get_detail= async (req,res)=>{
     });
 
     console.log('Cbook getDetail response > ',response.data.item);
+    console.log('Cbook getDetail tokenId > ',tokenId);
     const items = response.data.item;
 
-    // const jsonItems = JSON.stringify(items);
-    res.json(items);
-    // res.render('detail',{items});
+    res.send({items,id:tokenId});
 
   } catch (error) {
     console.error(error);
@@ -148,7 +142,6 @@ exports.get_detail= async (req,res)=>{
 // 상세페이지 댓글 불러오기
 exports.get_comments = async (req,res)=>{
   try {
-    
     console.log('isbn > ',req.body.c_isbn);
     const comments = await Comment.findAll({
       where:{
@@ -166,6 +159,7 @@ exports.get_comments = async (req,res)=>{
 // 상세페이지 댓글 입력하기
 exports.post_comment = async (req,res)=>{
   try{
+    const tokenId = await tokenCheck(req);
     const{c_isbn, u_id, c_content}=req.body;
     const newComment = await Comment.create({
       c_isbn,
@@ -222,4 +216,8 @@ exports.delete_comment = async (req,res)=>{
     res.send('Internal Server Error');
   }
 
+}
+
+exports.get_main=(req,res)=>{
+  res.render('mainpage');
 }

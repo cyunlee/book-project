@@ -1,0 +1,189 @@
+/*
+헤더 색상 : #280b79;
+카테고리별 배경색 : #F5F6F8
+*/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+li {
+	list-style: none;
+}
+header {
+	height: 224px;
+	/* border: solid 1px red; */
+}
+#top {
+	height: 200px;
+	background-color: #280b79;
+}
+
+.bookAuthor {
+	margin: 0 auto;
+	/* border: solid 1px blue; */
+}
+#top_logo {
+	float: left;
+}
+#top_logo img {
+	width: 250px;
+	height: 63px;
+	margin: 0;
+}
+#top_ad {
+	display: inline-block;
+	text-align: center;
+	/* margin: 50px 30px 500px 500px; */
+	font-size: 35px;
+	display: flex;
+    /* width: 100vw; */
+    justify-content: center;
+	position:relative;
+}
+#search {
+	/* border: solid 2px #280b79; */
+	border: none;
+	float: right;
+	background-image: url("img/search_bg.png");
+	/* width: 233px; */
+	/* height: 54px; */
+	margin: 5px 20px 0 0;
+}
+#searchBtn{
+	position:absolute;
+	right: 26%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#search input {
+	margin: 19px 0 0 25px;	
+	height: 20px;
+	border: 0;
+}
+#title{
+	width:50%;
+	height: 6vh;
+}
+#top_box {
+	width: 1320px;
+	margin: 0 auto;
+	border: solid 1px blue; 
+}
+#jjim {
+	float: left;
+	margin: 55px 0 0 20px;
+}
+#logo_image {
+	float: left;
+	margin: 30px 0 0 420px;
+}
+#main_menu {
+	border: solid 2px #280b79;
+	width: 95%;
+	padding: 25px 20px;
+	font-size: 12px;
+	margin: 30px 30px ;
+	border-radius: 20px;
+}
+#main_menu a {
+	display: inline;
+	margin-left: 30px;
+}
+#main_menu li {
+	display: inline;
+	margin-left: 30px;
+	font-size: 35px;
+}
+
+.box-section{
+	width:100vw;
+	height:300px;
+	display: flex;
+}
+.each-section{
+	height:250px;
+	width:200px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#content {
+	margin: 30px 30px 30px 30px;
+	display: inline-block;
+	border-radius: 20px;
+}
+
+.content_box {
+	background-color: #F5F6F8;
+	height: 600px;
+	border-radius: 20px;
+	border: solid 3px #F5F6F8;
+	margin-bottom: 30px;
+}
+.content_box h3 {
+	background-color: #F5F6F8;
+	margin: 20px;
+}
+.content_box p {
+	background-color: #F5F6F8;
+	float: right;
+	margin-right: 20px;
+}
+.items {
+	background-color: #F5F6F8;
+	margin: 20px;	
+	float: left;
+}
+.items li {
+	background-color: #F5F6F8;
+	font-family: "돋움";
+	color: #666666;
+}
+.items .bookAuthorookName {
+	background-color: #F5F6F8;
+	font-weight: bold;
+	color: black;
+	margin-top: 20px;
+}
+.items .bookAuthor {
+	background-color: #F5F6F8;
+	font-weight: bold;
+	color: black;
+	margin-top: 5px;
+}
+.items .bookAuthor span {
+	background-color: #F5F6F8;
+	color: #a26f59;
+}
+
+
+footer {
+	height: 300px;
+	border-top: solid 1px #cccccc;
+	margin-top: 70px;
+}
+#footer_menu {
+	padding: 20px;
+}
+#footer_menu li {
+	display: inline;
+}
+.footers {
+	margin-top: 30px;
+	margin-left: 20px;
+	margin-right: 80px;
+	float: left;
+}
+.footers li {
+	margin-top: 8px;
+	font-size: 12px;
+}
+.footers span {
+	font-weight: bold;
+}
+li > img {
+	width: 300px;
+	height: 461px;
+	margin: 5px;
+}

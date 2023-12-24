@@ -13,7 +13,7 @@ const path = require('path');
 const uploadDetail = multer({
     storage: multer.diskStorage({
         destination(req, file, done){
-            done(null, 'uploads/');
+            done(null, 'static/img');
         },
         filename(req, file, done){
             const ext = path.extname(file.originalname);
@@ -21,7 +21,6 @@ const uploadDetail = multer({
         }
     })
 })
-
 
 
 
@@ -35,6 +34,9 @@ app.use(express.json());
 
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
+
+const bookShelfRouter = require('./routes/bookMain');
+app.use('/bookShelf', bookShelfRouter);
 
 // 프로필 사진 업로드
 // app.post('/upload', uploadDetail.single('userfile'), (req, res)=>{

@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { User, Book } = require('../models/index');
+const { User, Book, Comment } = require('../models/index');
 const model = require('../models/index');
 
 const axios = require('axios')
@@ -10,7 +10,7 @@ const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
 const cookieConfig = {
 	httpOnly: true,
-	maxAge: 10 * 60 * 1000, //10분
+	maxAge: 300 * 60 * 1000, //300분
 }
 
 const saltRounds = 10;
@@ -31,6 +31,7 @@ const tokenCheck = async (req) => {
 		}
 	}
 }
+
 
 //로그인 성공해서 jwt 갖고있을시 서버에서 토큰을 조회해서 확인되면 user이름 홈화면에 반영되어 렌더되도록.
 exports.main = async (req, res) => {
@@ -130,15 +131,56 @@ exports.signup = (req, res) => {
 	res.render('signup');
 }
 
-exports.mypage = (req, res) => {
-	res.render('mypage');
+exports.mypage= async (req, res) =>{
+	const id = await tokenCheck(req);
+	try{
+		const userInfo = await User.findOne({
+			where: { u_id : id }
+		})
+		res.render('mypage', {userInfo : userInfo});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+exports.otherpage= (req, res) => {
+	res.render('otherpage');
 }
 
 
-exports.upload_post = (req, res) => {
-	console.log('req.file > ', req.file);
-	//console.log(req.body);
-	res.send(req.file);
+exports.upload_post= async (req, res)=>{
+
+	try {
+		const tokenId = await tokenCheck(req);
+
+		const path = req.file.path;
+		console.log('tokenId > ',tokenId);
+		console.log('req.file > ',req.file);
+		console.log('req.file.path > ',req.file.path);
+
+		res.send({data:req.file,id:tokenId});
+	} catch (error) {
+		console.log(error);
+		res.send('Internal Server Error!');
+	}
+	
+}
+
+exports.upload_patch=async (req,res)=>{
+	try {
+		// const path = req.file.path;
+		console.log('req.body > ',req.body);
+		const uploadProfile = await User.update({
+			u_profile:req.body.path,
+		},{
+			where:{u_id:req.body.id,}
+		})
+	
+		res.send(uploadProfile);
+	} catch (error) {
+		console.log(error);
+		res.send('Internal Server Error!');
+	}
 }
 
 

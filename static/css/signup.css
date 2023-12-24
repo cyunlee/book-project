@@ -63,6 +63,22 @@ a{
     color: #3B89E5
 
 }
+.namediv{
+    width: 310px;
+    height: 20px;
+}
+.emaildiv{
+    width: 310px;
+    height: 20px;
+}
+.iddiv{
+    width: 310px;
+    height: 20px;
+}
+.pwdiv{
+    width: 310px;
+    height: 20px;
+}
 
 
 

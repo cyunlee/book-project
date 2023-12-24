@@ -17,13 +17,30 @@ const Book = require('./Book')(sequelize,Sequelize);
 // 유저와 댓글 1:다 설정
 User.hasMany(Comment, {
     foreignKey: 'u_id',  // Comment 테이블의 외래 키
-    sourceKey: 'u_id'    // User 테이블의 소스 키
+    sourceKey: 'u_id',    // User 테이블의 소스 키
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE',     
 });
 
 Comment.belongsTo(User, {
     foreignKey: 'u_id',  // Comment 테이블의 외래 키
     targetKey: 'u_id'    // User 테이블의 타겟 키
 });
+
+
+Comment.hasMany(Comment, {
+    foreignKey: 'parent_c_no', // 대댓글의 경우 부모 댓글의 c_no를 참조
+    as: 'replies', // 대댓글을 replies로 지칭
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE',     
+});
+
+Comment.belongsTo(Comment, {
+    foreignKey: 'parent_c_no', // 대댓글의 경우 부모 댓글의 c_no를 참조
+    as: 'parentComment' // 대댓글을 parentComment로 지칭
+});
+
+
 
 // User : Book = 1 : N
 User.hasMany(Book, {
@@ -34,6 +51,7 @@ Book.belongsTo(User,{
     foreignKey: 'u_id',
     sourceKey: 'u_id'
 })
+
 
 
 // TODO: 관계를 정의한 모델들을 db 객체에 저장

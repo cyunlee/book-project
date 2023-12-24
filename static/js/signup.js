@@ -1,4 +1,8 @@
 const form = document.forms['register']
+const namediv = document.querySelector('.namediv');
+const emaildiv = document.querySelector('.emaildiv');
+const iddiv = document.querySelector('.iddiv');
+const pwdiv = document.querySelector('.pwdiv');
 
 async function nameCheck() {
     try{
@@ -11,12 +15,15 @@ async function nameCheck() {
         })
         //시윤님 여기입니다!!!!!!!!!!!
         if (response.data.result == 'empty') {
-            alert('닉네임은 필수로 입력해주세요');
+            namediv.innerHTML='';
+            namediv.innerHTML='<span style="color: red; font-size: 12px;">닉네임은 필수로 입력해주세요</span>';
         } else 
         if (response.data.result) {
-            alert('중복된 닉네임이 있어요');
+            namediv.innerHTML='';
+            namediv.innerHTML='<span style="color: red; font-size: 12px;">중복된 닉네임이 있습니다</span>';
         } else {
-            alert('사용 가능한 닉네임입니다');
+            namediv.innerHTML='';
+            namediv.innerHTML='<span style="color: red; font-size: 12px;">사용 가능한 닉네임입니다</span>';
         }
     } catch (error){
         console.log(error);
@@ -34,12 +41,15 @@ async function idCheck() {
         })
         //시윤님 여기입니다!!!!!!!!!!!
         if (response.data.result == 'empty') {
-            alert('아이디는 필수로 입력해주세요');
+            iddiv.innerHTML='';
+            iddiv.innerHTML='<span style="color: red; font-size: 12px;">아이디는 필수로 입력해주세요</span>';
         } else 
         if (response.data.result) {
-            alert('중복된 아이디가 있어요');
+            iddiv.innerHTML='';
+            iddiv.innerHTML='<span style="color: red; font-size: 12px;">중복된 아이디가 있습니다</span>';
         } else {
-            alert('사용 가능한 아이디입니다');
+            iddiv.innerHTML='';
+            iddiv.innerHTML='<span style="color: red; font-size: 12px;">사용 가능한 아이디입니다</span>';
         }
     } catch (error){
         console.log(error);

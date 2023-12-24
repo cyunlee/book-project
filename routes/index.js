@@ -1,10 +1,12 @@
 const express= require('express');
 const router = express.Router();
-const controller = require('../controller/Cmain')
+const controller = require('../controller/Cmain');
 const bookController = require('./../controller/Cbook');
+const chatController = require('./../controller/Cchat');
 const cookieParser = require('cookie-parser');
 
 router.use(cookieParser());
+
 
 // 임시 링크
 router.get('/', controller.main);
@@ -14,17 +16,25 @@ router.get('/login', controller.signin);
 
 router.get('/logout', controller.logout);
 
+router.post('/login_post', controller.login_post)
+router.post('/nameCheck_post', controller.nameCheck)
+router.post('/idCheck_post', controller.idCheck)
+
 // 회원가입 페이지
 router.get('/signup', controller.signup);
 
 
 // 마이페이지
 router.get('/mypage', controller.mypage);
+
 router.post('/upload',controller.upload_post);
+router.patch('/patchImg',controller.upload_patch);
 router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 
+// 다른 사람 계정 페이지
+router.get('/otherpage', controller.otherpage);
 
 // 회원가입하기
 router.post('/signup_post', controller.signup_post);
@@ -40,9 +50,6 @@ router.get('/bestSeller',bookController.get_bestSeller);
 
 // 추천 신간 가져오기
 router.get('/brendNew',bookController.get_brendNew);
-
-// 책 클릭 시 상세페이지로 이동할 때 필요한 isbn13 가져오기
-router.get('/getIsbn',bookController.get_isbn);
 
 // 상세 페이지
 router.get('/detailGo',bookController.go_detail);
@@ -62,11 +69,17 @@ router.patch('/updateComment',bookController.patch_comment);
 // 상세페이지 댓글 삭제
 router.delete('/deleteComment',bookController.delete_comment);
 
+
+// 채팅방 신설
+router.get('/makeRoom', chatController.make_room);
+router.get('/chattingRoom', chatController.enter_chat_room);
+
 // 검색 결과 페이지
 router.get('/searchList', controller.searchList);
 
 // 검색 결과 -> 특정 책 클릭
 router.get('/searchDetail', controller.searchDetail);
+
 
 // 평가 데이터 렌더(좋아요, 싫어요)
 router.get('/ratingData', controller.ratingData);
@@ -79,5 +92,6 @@ router.delete('/deleteBad', controller.deleteBad);
 
 // 유저들이 이 책과 함께 좋아한 다른 책 렌더
 router.get('/otherLikes', controller.otherLikes);
+
 
 module.exports = router;
