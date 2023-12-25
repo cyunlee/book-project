@@ -33,6 +33,9 @@ router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 
+// 마이페이지 읽은 책 전체보기
+router.get('/viewAll', controller.viewAll);
+
 // 다른 사람 계정 페이지
 router.get('/otherpage', controller.otherpage);
 

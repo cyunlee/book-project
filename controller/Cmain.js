@@ -149,6 +149,9 @@ exports.otherpage= (req, res) => {
 	res.render('otherpage');
 }
 
+exports.viewAll = (req, res) => {
+	res.render('viewAll');
+}
 
 exports.upload_post= async (req, res)=>{
 
