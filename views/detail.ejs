@@ -11,80 +11,12 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
-<style>
-        .btn {
-        display: block;
-        margin-left: 20px;
-    }
-    .divWrapper {
-        width: 500px;
-        height: fit-content;
-    }
-
-    .comment {
-        width: 500px;
-        height: fit-content;
-    }
-
-    .morevertToggle {
-        background-color: aqua;
-    }
-
-    .box-show {
-        width: 70px;
-        height: 50px;
-        display: none;
-        position: absolute;
-        top: 26px;
-        right: 30px;
-        border: 1px black solid;
-        z-index: 100;
-    }
-
-    .comment_inner_wrapper {
-        width: 500px;
-        display: inline-block;
-    }
-
-    .comment-wrapper {
-        position: relative;
-        border: 1px solid black;
-        width: 80%;
-        height: 100px;
-    }
-
-    .comment {
-        display: inline-block;
-    }
-
-    .morevert {
-        position: absolute;
-        right: 0;
-    }
-
-    .editBox-content {
-        width: 98%;
-        height: 90%;
-    }
-
-    .inputBox {
-        height: 100px;
-    }
-
-    .editBox-id {
-        position: absolute;
-    }
-
-    .edit-btn {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        margin-bottom: 10px;
-        margin-right: 20px;
-    }
-</style>
 <body>
-    <h1>상세페이지</h1>
+		<div id="top">
+            <a href='/main'><img src="../static/img/logo.png"></a>
+
+        </div>
+    <!-- <h1>상세페이지</h1> -->
     <div class="bookshelf">
         <div class="bookCard" id="bookResult">
         </div>
@@ -121,6 +53,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const isbn13 = urlParams.get('isbn13');
             console.log(isbn13); // 출력: 9788954699075
+
 
             $.ajax({
                 method: 'get',
@@ -209,6 +142,7 @@
                         <div class="comment_id comment">${i.u_id}</div>
                         <div class="comment_content comment">${i.c_content}</div>
                         <div class="comment_date comment">${i.c_date}</div>
+                        <button type="button" class="applyBtn" onclick="addReply(${i.c_no},${i.u_id});">답글쓰기</button>
                         </div>
                         <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
                         </div>
@@ -250,7 +184,10 @@
             console.log('isbn', `${isbn13}`);
             const form = document.forms['comment-form'];
 
-            axios({
+            if(form.c_content.value ==''){
+                alert('댓글을 입력해주세요!');
+            }else{
+                axios({
                 method: 'post',
                 url: '/writeComment',
                 data: {
@@ -258,17 +195,20 @@
                     u_id: form.u_id.value,
                     c_content: form.c_content.value,
                 }
-            }).then((res) => {
-                console.log('댓글 작성 성공:', res);
-                const commentBox = document.querySelector('#comment-box');
-                const resultBox = document.querySelector('#result');
-                removeAllChildren(resultBox);
-                removeAllChildren(commentBox);
-                loadView();
+                }).then((res) => {
+                    console.log('댓글 작성 성공:', res);
+                    const commentBox = document.querySelector('#comment-box');
+                    const resultBox = document.querySelector('#bookResult');
+                    removeAllChildren(resultBox);
+                    removeAllChildren(commentBox);
+                    loadView();
 
-            }).catch((error) => {
-                console.error('댓글 작성 실패:', error);
-            });
+                }).catch((error) => {
+                    console.error('댓글 작성 실패:', error);
+                });
+            }
+
+           
         }
 
         function editBox(no, id, content) {
@@ -297,7 +237,7 @@
                 },
             }).then((res) => {
                 const commentBox = document.querySelector('#comment-box');
-                const resultBox = document.querySelector('#result');
+                const resultBox = document.querySelector('#bookResult');
                 removeAllChildren(resultBox);
                 removeAllChildren(commentBox);
                 loadView();
@@ -315,7 +255,7 @@
                 },
             }).then((res) => {
                 const commentBox = document.querySelector('#comment-box');
-                const resultBox = document.querySelector('#result');
+                const resultBox = document.querySelector('#bookResult');
                 removeAllChildren(resultBox);
                 removeAllChildren(commentBox);
                 loadView();
@@ -333,12 +273,28 @@
         }
     }
         
-         function replyBox(no,id){
-            const div = document.createElement('div');
-            div.classList.add('comment-wrapper');
-            div.textContent='hihitest';
-            const replyBox = document.querySelector(`#div_${no}`);
-            replyBox.after(div);
+         function addReply(no,id){
+            if(`<%= id%>` =='false'){
+                alert('로그인 후 사용가능한 기능입니다.');
+            }else{
+                const html = `
+                <div class="comment-wrapper" class="reply_${no}">
+                    <div class="editBox-id">${id}</div>
+                    <form name="reply-form" class="inputBox">
+                        <input type ="text" name="c_content" class="editBox-content">
+                        <button type="button" onclick="editComment(${no})" class="edit-btn">확인</button>
+                    </form>
+                </div>
+                `
+                const nextSibling = document.querySelector(`#div_${no}`).nextElementSibling;
+                
+                // const replyToggle= document.querySelector('.replyToggle');
+                // replyToggle.classList.toggle('replyToggle');
+
+                const replyBox = document.querySelector(`#div_${no}`);
+                // replyBox.after(div);
+                replyBox.insertAdjacentHTML('afterend', html);
+            }
         }
     </script>
 </body>

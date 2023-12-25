@@ -1,12 +1,11 @@
 {
-"development": {
-    "username" : "user",
-    "password" : "1234",
-    "database" : "book_project",
-    "host" : "54.180.82.22",
-    "dialect" : "mysql",
-    "timezone":"+09:00"
-}, 
-"produnction":{},
-"test":{}
+    "development": {
+        "username" : "user",
+        "password" : "1234",
+        "database" : "kdt",
+        "host" : "127.0.0.1",
+        "dialect" : "mysql"
+    }, 
+    "produnction":{},
+    "test":{}
 }

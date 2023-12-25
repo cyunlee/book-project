@@ -21,8 +21,9 @@ const tokenCheck = async (req) => {
 	}
 }
 
-exports.main = (req,res)=>{
-    res.render('mainpage');
+exports.main = async (req,res)=>{
+  const tokenId = await tokenCheck(req);
+    res.render('mainpage',{id:tokenId});
 }
 
 // 알라딘 검색 api
@@ -103,8 +104,8 @@ exports.get_brendNew = async (req,res)=>{
 }
 
 // 상세페이지로 이동
-exports.go_detail = (req,res)=>{
-  const tokenId = tokenCheck(req);
+exports.go_detail = async (req,res)=>{
+  const tokenId = await tokenCheck(req);
   console.log('tokenid > ',tokenId);
   res.render('detail',{id:tokenId})
 }

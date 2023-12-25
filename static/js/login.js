@@ -14,7 +14,7 @@ async function logIn() {
         });
         if(response.data.result){
             alert('로그인 성공!');
-            document.location.href = '/'
+            document.location.href = '/main'
         } else {
             alert('아이디나 비밀번호를 확인하세요')
         }
