@@ -1,0 +1,110 @@
+/*
+헤더 색상 : #280b79;
+카테고리별 배경색 : #F5F6F8
+*/
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Noto Sans KR';
+}
+body{
+	margin:0;
+	padding:0;
+	background-color: #F1F3F8;
+}
+
+
+main{
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    margin: 0 100px;
+}
+.defaultText {
+    margin: 10px;
+}
+.resultList{
+    justify-content: center;
+}
+.searchTitle {
+    color: #280b79;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.result {
+    /* border: 1px solid; */
+    /* width: 200px; */
+    /* padding: 10px; */
+    display: flex;
+    margin: 50px 0;
+}
+
+.coverBox {
+    width:  13vw;
+    margin: 0 10px;
+}
+.coverBox img {
+    width: 100%;
+}
+
+.detailText {
+    margin: 0 20px;
+}
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+.author {
+    margin-bottom: 5px;
+}
+.pub {
+    display: flex;
+    margin-bottom: 5px;
+}
+.slash {
+    margin: 0 10px;
+}
+.isbn {
+    margin-bottom: 5px;
+}
+.description {
+    margin-bottom: 5px;
+}
+hr {
+    background-color: lightgray;
+    height: 1px;
+    border: 0;
+}
+
+.noResult {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25vh 0;
+    color: #280b79;
+
+}
+
+.pagination {
+    padding: 10px;
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+}
+.pagination a {
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+}
+a:visited { color: black; }
+
