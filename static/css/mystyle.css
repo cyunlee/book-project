@@ -3,34 +3,52 @@
 카테고리별 배경색 : #F5F6F8
 */
 
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
 * {
 	margin: 0;
 	padding: 0;
+	font-family: 'Noto Sans KR';
 }
+body{
+	margin:0;
+	padding:0;
+	background-color: #F1F3F8;
+}
+html{
+	scroll-behavior: smooth;
+}
+
 li {
 	list-style: none;
 }
-header {
-	height: 224px;
-	/* border: solid 1px red; */
-}
+
 #top {
-	height: 200px;
-	background-color: #280b79;
+	height: 100px;
+    /* background-color: #1E041D; */
+    /* background-color: #040c37; */
+    position: relative;
+    border-bottom: 1px solid #c1c1c1;
+}
+
+#top img {
+	height:60px;
+	position: absolute;
+	top:50%;
+	transform:translateY(-50%);
+	margin-left: calc((100vw - ((17vw * 5) + (10px * 10))) / 2);
+	filter: invert(1);
 }
 
 .bookAuthor {
 	margin: 0 auto;
 	/* border: solid 1px blue; */
 }
-#top_logo {
-	float: left;
-}
-#top_logo img {
-	width: 250px;
-	height: 63px;
-	margin: 0;
-}
+
 #top_ad {
 	display: inline-block;
 	text-align: center;
@@ -41,20 +59,80 @@ header {
     justify-content: center;
 	position:relative;
 }
+.top_h2{
+	margin: 12vh auto 5vh auto;
+    font-size: 30px;
+	text-align: center;
+}
+.top_explain{
+	margin :1vh auto 10vh auto;
+	font-size: 14px;
+    color: gray;
+	text-align: center;
+}
 #search {
 	/* border: solid 2px #280b79; */
+	position: absolute;
 	border: none;
 	float: right;
 	background-image: url("img/search_bg.png");
-	/* width: 233px; */
-	/* height: 54px; */
-	margin: 5px 20px 0 0;
+	top: 15px;
+    right: calc((100vw - ((17vw * 5) + (10px * 12))) / 2);
 }
+.buttonlog{
+	color:#040c37;
+    border: none;
+    /* color: white; */
+    cursor: pointer;
+    width: 90px;
+    height: 34px;
+    font-size: 16px;
+	border-radius: 5px;
+	background-color: #F1F3F8;
+
+}
+.buttonlog:hover{
+	background-color: gray;
+	color:white;
+}
+
 #searchBtn{
-	position:absolute;
+	/* position:absolute;
 	right: 26%;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-50%); */
+	width: 10vh;
+    border: none;
+    background-color: #d7d7d7;
+	cursor: pointer;
+}
+
+#searchBtn:hover{
+	background-color: #040c37;
+	color:white;
+	font-weight: 600;
+}
+
+.ul-category{
+	color: white;
+    list-style: none;
+    position: absolute;
+    bottom: 15px;
+    right: calc((100vw - ((17vw * 5) + (10px * 10))) / 2);
+}
+.ul-category li{
+	padding-bottom: 5px;
+	float: left;
+	margin-left: 20px;
+}
+.ul-category li a{
+	color:#040c37;
+	text-decoration: none;
+	
+}
+.ul-category li a:hover{
+	font-weight: 600;
+	/* border-bottom:2px solid #040c37; */
 }
 #search input {
 	margin: 19px 0 0 25px;	
@@ -62,14 +140,15 @@ header {
 	border: 0;
 }
 #title{
-	width:50%;
-	height: 6vh;
+	width: 40%;
+    height: 6vh;
+    border: none;
+    padding: 0 5vh;
 }
-#top_box {
-	width: 1320px;
-	margin: 0 auto;
-	border: solid 1px blue; 
+#title:focus{
+	
 }
+
 #jjim {
 	float: left;
 	margin: 55px 0 0 20px;
@@ -97,38 +176,51 @@ header {
 }
 
 .box-section{
-	width:100vw;
-	height:300px;
+	/* width:100vw;
+	height:300px; */
 	display: flex;
+    justify-content: center;
 }
-.each-section{
+/* .each-section{
 	height:250px;
 	width:200px;
 	margin: 0 auto;
 	text-align: center;
+} */
+
+.each-selection button{
+	/* width: 200px;
+    height: 290px; */
+	width: 17vw;
+    height: 25vw;
+	margin: 0 10px;
+    border: none;
+	background-color: white;
+	cursor: pointer;
+}
+.each-selection button img{
+    /* width: 200px;
+    height: 240px; */
+	width: 17vw;
+    height: 22vw;
+}
+.each-selection button div{
+	width: 17vw;
+	height:3vw;
 }
 
-#content {
-	margin: 30px 30px 30px 30px;
-	display: inline-block;
-	border-radius: 20px;
-}
 
 .content_box {
-	background-color: #F5F6F8;
-	height: 600px;
-	border-radius: 20px;
-	border: solid 3px #F5F6F8;
-	margin-bottom: 30px;
+	/* background-color: #F5F6F8; */
+	height: 33vw;
+	/* border: solid 1px black; */
 }
-.content_box h3 {
-	background-color: #F5F6F8;
-	margin: 20px;
-}
-.content_box p {
-	background-color: #F5F6F8;
-	float: right;
-	margin-right: 20px;
+
+.content_box .index {
+	margin: 30px calc((100vw - ((17vw * 5) + (10px * 10))) / 2);
+	font-size: 18px;
+    font-weight: 600;
+	
 }
 .items {
 	background-color: #F5F6F8;
@@ -186,4 +278,12 @@ li > img {
 	width: 300px;
 	height: 461px;
 	margin: 5px;
+}
+#result{
+	background-color: white;
+	width: calc( 40% + 10vh + 80px);
+	position: absolute;
+	z-index: 200;
+	left: 50%;
+	transform: translateX(-50%);
 }

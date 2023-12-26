@@ -9,92 +9,40 @@
 		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 	<!-- axios CDN -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<style>
-		#result{
-			/* border: 1px solid black; */
-			background-color: white;
-			width: 50%;
-			/* margin: 0 auto; */
-			/* height: 300px; */
-			position: absolute;
-			z-index: 200;
-			left: 50%;
-			transform: translateX(-50%);
-		}
-	</style>
+
 </head>
 <div>
-	<header>
+	<div>
 		<div id="top">
-			<!-- <div style="color: white; font-size: 40px;" class="box"> -->
-				<a href='/main'><img src="../static/img/Group16.png"></a>
-				<!--<div id="top_logo">
-				<img src="C:\Users\82105\Desktop\github\book-project\static\img\logo_top_en_US.gif">
-			</div>-->
-				
-				<div id="search">
-					<!-- <button class="buttonlog" onclick="location.href='/main'">Home</button> -->
-					<button class="buttonlog" onclick="location.href='/login'">SIGN IN</button>
-					<button class="buttonlog" onclick="location.href='/signup'">SIGN UP</button>
-					<button class="buttonlog" onclick="location.href='/logout'">LogOut</button>
-				</div>
-				<div id="top_ad">
-					<input type="text" id="title" name="title" placeholder="통합 검색">
-					<button type="button" id="searchBtn" onclick="search();">검색</button>
-				</div>
-				<div id="result"></div>
+				<a href='/main'><img src="../static/img/logo.png"></a>
+				<div id="search"></div>
+				<ul class="ul-category">
+					<li><a href="#best_sellers_section">베스트셀러</a></li>
+					<!-- <li>|</li> -->
+					<li><a href="#new_books_section">신간 추천</a></li>
+					<!-- <li>|</li> -->
+					<li><a href="#review_ranking_section">리뷰 순위</a></li>
+					<!-- <li>|</li> -->
+					<li><a href="#liked_best_section">좋아요 순위</a></li>
+				</ul>
+
 			</div>
-
-		</div> <!-- top -->
-		<div style="margin-top: 30px; text-align: center;">
-			<!-- <input type="text" style="width: 50%;"/> -->
-		</div> <!-- logo -->
-	</header>
-
-	<!-- 헤더영역 -->
-	<nav id="main_menu">
-		<div class="box">
-			<ul class="box-ul">
-				<li>카테고리</li>
-				<a href="#new_books">신간 추천</a>
-				<a href="#best_sellers">베스트셀러</a>
-				<a href="#review_ranking">리뷰 순위</a>
-				<a href="#liked_best">좋아요 베스트</a>
-			</ul>
+			
 		</div>
-		<script>
-			document.addEventListener('DOMContentLoaded', function () {
-				function scrollToCategory(categoryId) {
-					var categoryElement = document.getElementById(categoryId);
-					if (categoryElement) {
-						categoryElement.scrollIntoView({ behavior: 'smooth' });
-					}
-				}
+		<div class="top_h2">어쩌라고 저쩌라고 어쩌라고 저쩌라고<br>검색해 검색해 검색</div>
+		<div id="top_ad">
+			<input type="text" id="title" name="title" placeholder="통합 검색">
+			<button type="button" id="searchBtn" onclick="search();">검색</button>
+		</div>
+		<div id="result"></div>
+		<div class="top_explain">찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요</div>
 
-				// Add click event listeners to each category link
-				document.querySelector('a[href="#new_books"]').addEventListener('click', function () {
-					scrollToCategory('new_books_section');
-				});
-
-				document.querySelector('a[href="#best_sellers"]').addEventListener('click', function () {
-					scrollToCategory('best_sellers_section');
-				});
-
-				document.querySelector('a[href="#review_ranking"]').addEventListener('click', function () {
-					scrollToCategory('review_ranking_section');
-				});
-
-				document.querySelector('a[href="#liked_best"]').addEventListener('click', function () {
-					scrollToCategory('liked_best_section');
-				});
-			});
-		</script>
-	</nav>
+	</div>
 
 	<!-- 메인 페이지 -->
 	<section class="content_box" id="best_sellers_section">
 		<div class="box">
-			<h3>베스트셀러</h3>
+			<div class ="index">베스트셀러</div>
 			<div id="best-result" class="box-section"></div>
 		</div>
 
@@ -102,24 +50,22 @@
 	<div id="content">
 		<section class="content_box" id="new_books_section">
 			<div class="box">
-				<h3>신간 추천</h3>
+				<div class ="index">신간 추천</div>
 				<div id="new-result" class="box-section"></div>
 			</div>
-
+			
 		</section>
-
+		
 		<section class="content_box" id="review_ranking_section">
 			<div class="box">
-				<h3>리뷰 순위</h3>
-				
+				<div class ="index">리뷰 순위</div>
 			</div>
 
 		</section>
 
 		<section class="content_box" id="liked_best_section">
 			<div class="box">
-				<h3>좋아요 베스트</h3>
-				
+				<div class ="index">좋아요 베스트</div>	
 			</div>
 
 		</section>
@@ -161,6 +107,20 @@
             const resultBox = document.getElementById('result');
             const bestResultBox = document.getElementById('best-result');
             const newResultBox = document.getElementById('new-result');
+			const searchBox = document.getElementById('search');
+
+			console.log(`버튼 토큰 아이디 > <%= id%>`);
+			
+			if(`<%= id%>`=='false'){
+				const html1 =`<button class="buttonlog" onclick="location.href='/login'">SIGN IN</button>
+				<button class="buttonlog" onclick="location.href='/signup'">SIGN UP</button>`;
+				searchBox.insertAdjacentHTML("beforeend",html1);
+				
+			}else{
+				const html2= `<button class="buttonlog" onclick="location.href='/mypage'">MY PAGE</button>
+				<button class="buttonlog" onclick="location.href='/logout'">LOGOUT</button>`;
+				searchBox.insertAdjacentHTML("beforeend",html2);
+			}
         
             // 베스트셀러 api
             $.ajax({

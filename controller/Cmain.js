@@ -77,7 +77,10 @@ exports.nameCheck = async (req, res) => {
 }
 
 exports.logout = (req, res) => {
-	res.clearCookie('jwtCookie').redirect('/');
+	// res.clearCookie('jwtCookie').redirect(req.originalUrl);
+	res.clearCookie('jwtCookie');
+	// 여기에 현재 페이지로 리다이렉트하는 로직 추가
+	res.redirect(req.get('referer'));
 }
 
 exports.login_post = async (req, res) => {

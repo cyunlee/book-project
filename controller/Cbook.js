@@ -21,8 +21,9 @@ const tokenCheck = async (req) => {
 	}
 }
 
-exports.main = (req,res)=>{
-    res.render('mainpage');
+exports.main = async (req,res)=>{
+  const tokenId = await tokenCheck(req);
+    res.render('mainpage',{id:tokenId});
 }
 
 // 알라딘 검색 api
@@ -103,8 +104,8 @@ exports.get_brendNew = async (req,res)=>{
 }
 
 // 상세페이지로 이동
-exports.go_detail = (req,res)=>{
-  const tokenId = tokenCheck(req);
+exports.go_detail = async (req,res)=>{
+  const tokenId = await tokenCheck(req);
   console.log('tokenid > ',tokenId);
   res.render('detail',{id:tokenId})
 }
@@ -218,6 +219,22 @@ exports.delete_comment = async (req,res)=>{
 
 }
 
-exports.get_main=(req,res)=>{
-  res.render('mainpage');
+// 상세페이지 대댓글 입력하기
+exports.post_reply = async (req,res)=>{
+  try{
+    const tokenId = await tokenCheck(req);
+    const{c_isbn, u_id, c_content,parent_c_no}=req.body;
+    const newComment = await Comment.create({
+      c_isbn,
+      u_id,
+      c_content,
+      c_date: Sequelize.literal('CURRENT_TIMESTAMP'),
+      parent_c_no,
+    })
+    res.send(newComment);
+    // res.send('hi');
+  }catch(err){
+      console.log(err)
+      res.send("Internal Server Error!")
+  }
 }

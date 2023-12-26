@@ -72,6 +72,8 @@ router.patch('/updateComment',bookController.patch_comment);
 // 상세페이지 댓글 삭제
 router.delete('/deleteComment',bookController.delete_comment);
 
+// 상세페이지 대댓글 작성
+router.post('/writeReply',bookController.post_reply);
 
 // 채팅방 신설
 router.get('/makeRoom', chatController.make_room);
