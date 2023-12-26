@@ -23,10 +23,6 @@ button{
     cursor: pointer;
 }
 
-#all{
-    border-bottom: 2px solid black;
-}
-
 .button-set{
     margin-left: 8px;
 }
@@ -68,9 +64,9 @@ button{
 .book-container{
     display: flex;
     justify-content: space-between;
-    margin-left: 80px;
     flex-wrap: wrap;
     width: 80%;
+    margin-left: 80px;
 }
 
 .book-set{
@@ -87,3 +83,6 @@ button{
     margin-top: 8px;
 }
 
+#likes{
+    border-bottom: 2px solid black;
+}

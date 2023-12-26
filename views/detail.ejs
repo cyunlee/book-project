@@ -74,31 +74,35 @@
                 //resultBox.appendChild(contentDiv);
                 //resultBox.appendChild(img);
                 const html = 
-                `<div class="bookTitle" id="title">
-                    <p>${detailItem.title}</p>
-                </div>
-                <hr>
-                <div class="bookBlock" id="block">
-                    <div class="bookImage" id="bookCover">
+                `<div class="bookImage" id="bookCover">
                         <img src="${detailItem.cover}" id="bookCoverImg">
+                    </div>
+                <div class="bookBlock" id="block">
+                    <div class="bookTitle" id="title">
+                        <p>${detailItem.title}</p>
                     </div>
                     <div class="bookSide" id=sideResult>
                         <table style="width:100%" class="bookTable" id=resultTable>
                             <tr>
                                 <td>지은이</td>
+                                <td>|</td>
                                 <td>${detailItem.author}</td>
                             </tr>
                             <tr>
                                 <td>출판사</td>
+                                <td>|</td>
                                 <td>${detailItem.publisher}</td>
                             </tr>
                             <tr>
                                 <td>ISBN</td>
+
+                                <td>|</td>
                                 <td>${detailItem.isbn}</td>
                             </tr>
                         </table>
+                        <hr>
                         <div class="bookDes" id="description">
-                            <p>책 설명 ${detailItem.description}</p>
+                            <p>${detailItem.description}</p>
                         </div>
                         <div class="thumbButton">
                             <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp">

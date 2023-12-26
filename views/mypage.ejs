@@ -18,19 +18,27 @@
 
     <title>MyPage</title>
   </head>
-  
+
   <body>
-    <div class="header">
-      <div class="logo"></div>
+    <div id="top">
+      <a href="/main"><img src="../static/img/logo.png" /></a>
     </div>
     <div class="out"></div>
     <div class="profile-container">
       <div class="profile">
         <div class="profile-image">
           <% if (!userInfo.u_profile) { %>
-            <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진">
+          <img
+            class="image-setting"
+            src="/static/img/default-profile.png"
+            alt="프로필 사진"
+          />
           <% } else { %>
-            <img class="image-setting" src="<%= userInfo.u_profile %>" alt="프로필 사진">
+          <img
+            class="image-setting"
+            src="<%= userInfo.u_profile %>"
+            alt="프로필 사진"
+          />
           <% } %>
           <button class="edit" onclick="init()">Edit</button>
           <div class="upload hidden">
@@ -49,12 +57,12 @@
       </div>
       <br />
       <div class="info">
-        <div class="following-container">
+        <div class="following-container" onclick="location.href='/following'">
           <div class="info-text">팔로잉</div>
           <div class="number">55</div>
         </div>
         <div class="line"></div>
-        <div class="follower-container">
+        <div class="follower-container" onclick="location.href='/follower'">
           <div class="info-text">팔로워</div>
           <div class="number">100</div>
         </div>
@@ -177,7 +185,9 @@
         </div>
         <br />
         <div class="all-container">
-          <button class="all" onclick="location.href='/viewAll'">전체보기</button>
+          <button class="all" onclick="location.href='/viewAll'">
+            전체보기
+          </button>
         </div>
       </div>
       <br />
@@ -210,8 +220,8 @@
     </div>
 
     <script>
-      document.querySelector('.name').innerHTML = `<%= userInfo.u_name %>`;
-      document.querySelector('.id').innerHTML = `<%= '@' + userInfo.u_id %>`;
+      document.querySelector(".name").innerHTML = `<%= userInfo.u_name %>`;
+      document.querySelector(".id").innerHTML = `<%= '@' + userInfo.u_id %>`;
       console.log(check);
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
@@ -224,10 +234,12 @@
         },
       });
       function check() {
-        const check = document.querySelector('.image-setting').getAttribute('src');
+        const check = document
+          .querySelector(".image-setting")
+          .getAttribute("src");
         console.log(check);
       }
     </script>
-    <a href="">회원탈퇴</a>
+    <button onclick="delete_user()">회원탈퇴</button>
   </body>
 </html>

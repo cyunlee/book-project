@@ -148,12 +148,28 @@ exports.mypage= async (req, res) =>{
 	}
 }
 
-exports.otherpage= (req, res) => {
+exports.following = (req, res) => {
+	res.render('following');
+}
+
+exports.follower = (req, res) => {
+	res.render('follower');
+}
+
+exports.otherpage = (req, res) => {
 	res.render('otherpage');
 }
 
 exports.viewAll = (req, res) => {
 	res.render('viewAll');
+}
+
+exports.viewLikes = (req, res) => {
+	res.render('viewLikes');
+}
+
+exports.viewDislikes = (req, res) => {
+	res.render('viewDislikes');
 }
 
 exports.upload_post= async (req, res)=>{
@@ -191,6 +207,16 @@ exports.upload_patch=async (req,res)=>{
 	}
 }
 
+exports.delete_user = async (req, res) => {
+	try {
+		const tokenId = await tokenCheck(req);
+		await User.destroy({where: {u_id : tokenId}})
+		fs.rmdirSync(`./static/img/${tokenId}`);
+		res.send({result : true});
+	} catch (error) {
+		res.send('Internal Server Error! : ', error);
+	}
+}
 
 // 검색 결과
 
