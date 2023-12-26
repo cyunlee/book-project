@@ -19,6 +19,7 @@ const closeBtn1 = document.querySelector('.close1');
 const closeBtn2 = document.querySelector('.close2');
 const closeBtn3 = document.querySelector('.close3');
 
+
 function showSearch1() {
     top1.addEventListener('click', () => {
         search1.classList.remove('hidden1');
@@ -133,6 +134,20 @@ function submit() {
             location.reload();
         })
     })
+}
+
+
+async function delete_user() {
+    const response = await axios({
+        method: 'delete',
+        url: '/deleteUser',
+    })
+    if (response.data.result) {
+        location.href = '/';
+        alert('회원이 탈퇴 되셨습니다');
+    } else {
+        console.log('Interval error');
+    }
 }
 
 selectPhoto();

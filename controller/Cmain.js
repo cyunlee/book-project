@@ -185,6 +185,17 @@ exports.upload_patch=async (req,res)=>{
 	}
 }
 
+exports.delete_user = async (req, res) => {
+	try {
+		const tokenId = await tokenCheck(req);
+		await User.destroy({where: {u_id : tokenId}})
+		fs.rmdirSync(`./static/img/${tokenId}`);
+		res.send({result : true});
+	} catch (error) {
+		res.send('Internal Server Error! : ', error);
+	}
+}
+
 
 // 검색 결과
 

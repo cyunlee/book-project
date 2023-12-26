@@ -33,6 +33,8 @@ router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 
+router.delete('/deleteUser', controller.delete_user);
+
 // 다른 사람 계정 페이지
 router.get('/otherpage', controller.otherpage);
 
