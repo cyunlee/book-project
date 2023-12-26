@@ -142,7 +142,7 @@
                         <div class="comment_id comment">${i.u_id}</div>
                         <div class="comment_content comment">${i.c_content}</div>
                         <div class="comment_date comment">${i.c_date}</div>
-                        <button type="button" class="applyBtn" onclick="addReply(${i.c_no},${i.u_id});">답글쓰기</button>
+                        <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${i.u_id});">답글쓰기</button>
                         </div>
                         <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
                         </div>
@@ -273,29 +273,62 @@
         }
     }
         
-         function addReply(no,id){
-            if(`<%= id%>` =='false'){
-                alert('로그인 후 사용가능한 기능입니다.');
-            }else{
-                const html = `
-                <div class="comment-wrapper" class="reply_${no}">
-                    <div class="editBox-id">${id}</div>
-                    <form name="reply-form" class="inputBox">
-                        <input type ="text" name="c_content" class="editBox-content">
-                        <button type="button" onclick="editComment(${no})" class="edit-btn">확인</button>
-                    </form>
-                </div>
-                `
-                const nextSibling = document.querySelector(`#div_${no}`).nextElementSibling;
-                
-                // const replyToggle= document.querySelector('.replyToggle');
-                // replyToggle.classList.toggle('replyToggle');
+    function replyToggle(no, id) {
+        if (`<%= id%>` == 'false') {
+            alert('로그인 후 사용가능한 기능입니다.');
+        } else {
+            const replyBox = document.querySelector(`#div_${no}`);
+            const existingReplyInput = replyBox.nextElementSibling;
 
-                const replyBox = document.querySelector(`#div_${no}`);
-                // replyBox.after(div);
+            if (existingReplyInput && existingReplyInput.classList.contains('reply-input')) {
+                // 이미 추가된 경우, 삭제
+                existingReplyInput.remove();
+            } else {
+                // 추가되지 않은 경우, 추가
+                const html = `
+                    <div class="comment-wrapper reply-input">
+                        <div class="editBox-id" id="reply_${no}">${id}</div>
+                        <form name="reply-form" class="inputBox">
+                            <input type="hidden" name="u_id" value="${id}">
+                            <input type ="text" name="c_content" class="editBox-content">
+                            <button type="button" onclick="addReply(${no}, ${id})" class="edit-btn">확인</button>
+                        </form>
+                    </div>
+                `;
                 replyBox.insertAdjacentHTML('afterend', html);
             }
         }
+    }
+
+    function addReply(no, id){
+        const form = document.forms['reply-form'];
+        const content = form.c_content.value;
+        console.log(content);
+        if(content==''){
+            alert('댓글을 입력해주세요');
+        }else{
+            axios({
+                method: 'post',
+                url: '/writeReply',
+                data: {
+                    c_isbn: isbn13,
+                    u_id: form.u_id.value,
+                    c_content: form.c_content.value,
+                    parent_c_no:no,
+                }
+            }).then((res) => {
+                    console.log('댓글 작성 성공:', res);
+                    const commentBox = document.querySelector('#comment-box');
+                    const resultBox = document.querySelector('#bookResult');
+                    removeAllChildren(resultBox);
+                    removeAllChildren(commentBox);
+                    loadView();
+
+                }).catch((error) => {
+                    console.error('댓글 작성 실패:', error);
+                });
+        }
+    }
     </script>
 </body>
 

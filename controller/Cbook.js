@@ -219,6 +219,22 @@ exports.delete_comment = async (req,res)=>{
 
 }
 
-exports.get_main=(req,res)=>{
-  res.render('mainpage');
+// 상세페이지 대댓글 입력하기
+exports.post_reply = async (req,res)=>{
+  try{
+    const tokenId = await tokenCheck(req);
+    const{c_isbn, u_id, c_content,parent_c_no}=req.body;
+    const newComment = await Comment.create({
+      c_isbn,
+      u_id,
+      c_content,
+      c_date: Sequelize.literal('CURRENT_TIMESTAMP'),
+      parent_c_no,
+    })
+    res.send(newComment);
+    // res.send('hi');
+  }catch(err){
+      console.log(err)
+      res.send("Internal Server Error!")
+  }
 }
