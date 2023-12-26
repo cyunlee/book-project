@@ -3,83 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="static\css\searchList.css" rel="stylesheet" />
+
     <title>Document</title>
       <!-- axios cdn -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
 
-<style>
-    .result {
-        border: 1px solid;
-        width: 200px;
-        padding: 10px;
-    }
-
-    .resultList {
-        display: flex;
-    }
-
-    .pagination {
-        padding: 10px;
-    }
-    .pagination a {
-        padding: 10px;
-    }
-
-    .coverBox {
-        width: 200px;
-    }
-    .coverBox img {
-        width: 100%;
-    }
-</style>
 
 <body>
-    <h1>임시 검색 페이지</h1>
+    <h1>검색 결과 페이지</h1>
 
-    <h2>임시 검색창</h2>
+    <h2>검색창</h2>
 	<form action="/searchList" method="get">
 		<input type="text" name="title" id="" value="<%= query || '' %>">
 		<button>검색</button>
 	</form>
 
 
-    <h4>'<%= query %>' 검색 결과</h4>
-        <p>검색 결과는 200 개까지 제공됩니다.</p>
-        <p>원하는 검색 결과를 찾지 못 했다면 보다 정확한 책 제목을 입력해보세요!</p>
-
-    <div class="resultList">
-        <% if(searchData && searchData.length > 0) { %>
-            <% searchData.forEach(ele => { %>
-                <div class="result" onclick="formSubmit('<%= ele.isbn%>')">
-                    <div class="coverBox">
-                        <img class="img" src="<%= ele.cover  %>" alt="">
-                    </div>
-                    <div>
-                        <p class="title"><%= ele.title %></p>
-                    </div>
-                </div>
-            <% }); %>
-        <% } else { %>
-            <p>검색 결과가 없습니다.</p>
-            <% } %>
-    </div>
-
-    <div class="pagination">
-        <% for (let i = 1; i <= totalPages; i++) { %>
-            <a href="/searchList?title=<%= query %>&page=<%= i %>"><%= i %></a>
-        <% } %>
-    </div>
-
+<main>
+        <div class="defaultText">
+            <p><span class="searchTitle">'<%= query %>' </span>검색 결과</p>
+                <p>검색 결과는 200 개까지 제공됩니다.</p>
+                <p>원하는 검색 결과를 찾지 못 했다면 보다 정확한 책 제목을 입력해보세요!</p>
+        </div>
     
-
-    <!-- 알라딘 api에 상세 정보 조회 params 전달하는 hidden form(페이지 전환이 필요해서 사용) -->
-        <form name="searchDetail" action="/searchDetail" method="get">
-            <input type="hidden" name="isbn" id="">
-        </form>
-
-
+        <div class="resultList">
+            <% if(searchData && searchData.length > 0) { %>
+                <% searchData.forEach(ele => { %>
+                    <div class="result" onclick="formSubmit('<%= ele.isbn%>')">
+                        <div class="coverBox">
+                            <img class="img" src="<%= ele.cover  %>" alt="">
+                        </div>
+                        <div class="detailText">
+                            <p class="title"><%= ele.title %></p>
+                            <p class="author"><%= ele.author %></p>
+                            <div class="pub">
+                                <p class="publisher"><%= ele.publisher %></p>
+                                <span class="slash">|</span>
+                                <p class="pubDate"><%= ele.pubDate %></p>
+                            </div>
+                            <p class="isbn">ISBN <%= ele.isbn  %></p>
+                            <p class="description"></p>
+                            <p class="categoryName"></p>
+                        </div>
+                    </div>
+                    <hr>
+                <% }); %>
+            <% } else { %>
+                <div class="noResult">
+                    <p>검색 결과가 없습니다.</p>
+                </div>
+                <% } %>
+        </div>
+    
+        <div class="pagination">
+            <% for (let i = 1; i <= totalPages; i++) { %>
+                <a href="/searchList?title=<%= query %>&page=<%= i %>"><%= i %></a>
+            <% } %>
+        </div>
+    
+        
+    
+        <!-- 알라딘 api에 상세 정보 조회 params 전달하는 hidden form(페이지 전환이 필요해서 사용) -->
+            <form name="searchDetail" action="/searchDetail" method="get">
+                <input type="hidden" name="isbn" id="">
+            </form>
+    
+    
+</main>
     <script>
         function formSubmit(isbn) {
             const form = document.forms['searchDetail'];
