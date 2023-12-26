@@ -145,9 +145,7 @@ li {
     border: none;
     padding: 0 5vh;
 }
-#title:focus{
-	
-}
+
 
 #jjim {
 	float: left;
@@ -179,14 +177,10 @@ li {
 	/* width:100vw;
 	height:300px; */
 	display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+	margin-right: calc((100vw - ((17vw * 5) + (10px * 12))) / 2);
+    margin-left: calc((100vw - ((17vw * 5) + (10px * 12))) / 2);
 }
-/* .each-section{
-	height:250px;
-	width:200px;
-	margin: 0 auto;
-	text-align: center;
-} */
 
 .each-selection button{
 	/* width: 200px;

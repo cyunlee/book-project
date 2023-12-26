@@ -54,6 +54,9 @@ router.get('/bestSeller',bookController.get_bestSeller);
 // 추천 신간 가져오기
 router.get('/brendNew',bookController.get_brendNew);
 
+// 좋아요 랭킹 가져오기
+router.get('/mostLike', controller.mostLike);
+
 // 상세 페이지
 router.get('/detailGo',bookController.go_detail);
 

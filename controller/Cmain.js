@@ -435,3 +435,57 @@ exports.otherLikes = async (req, res) => {
 		console.log(err)
 	}
 }
+
+// 메인 페이지에 좋아요 많은 책 렌더
+exports.mostLike = async (req, res) => {
+    try {
+      const mostLike = await Book.findAll({
+        attributes: ['b_isbn', [model.sequelize.fn('COUNT', model.sequelize.literal('b_rating')), 'like_count']],
+        where: {
+          b_rating: 'like',
+        },
+        group: ['b_isbn'],
+        order: [[model.sequelize.literal('like_count'), 'DESC']],
+        limit: 5,
+      });
+    //   console.log('---------메인좋아요!!!', mostLike);
+
+    if(!mostLike) {
+        res.send('좋아요한 책이 없음')
+    }
+    else{
+        const mostLikeIsbn = mostLike.map(liked => liked.b_isbn);
+    // console.log('---------메인좋아요!!!', mostLikeIsbn);
+    
+    const mostLikeData = mostLikeIsbn.map(isbn => {
+        return axios({
+            method: 'get',
+            url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+            params: {
+                ttbkey: 'ttbclue91204001',
+                ItemId: isbn,
+                ItemIdType: 'ISBN',
+                Output: 'JS',
+                Cover: 'Big',
+                Version: 20131101
+            }
+        });
+    });
+    // 모든 요청이 완료될 때까지 기다리기
+    const mostLikeDataResponse = await Promise.all(mostLikeData);
+
+    // 각각의 응답에서 데이터 추출 및 처리
+    const likeListData = mostLikeDataResponse.map(res => res.data.item);
+
+    const mainLikes = likeListData.map(innerArray => innerArray[0]);
+
+    // console.log('————메인페이지 좋아요 책 리스트————', mainLikes);
+
+    res.send(mainLikes);
+
+    }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };

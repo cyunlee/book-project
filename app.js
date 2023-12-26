@@ -21,8 +21,6 @@ const uploadDetail = multer({
     })
 })
 
-
-
 app.set('view engine', 'ejs');
 
 app.use('/upload', uploadDetail.single('userfile'))
