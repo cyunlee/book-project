@@ -32,6 +32,7 @@ router.patch('/patchImg',controller.upload_patch);
 router.post('/login_post', controller.login_post)
 router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
+router.delete('/deleteUser', controller.delete_user);
 
 // 읽은 책 전체보기
 router.get('/viewAll', controller.viewAll);
