@@ -148,7 +148,15 @@ exports.mypage= async (req, res) =>{
 	}
 }
 
-exports.otherpage= (req, res) => {
+exports.following = (req, res) => {
+	res.render('following');
+}
+
+exports.follower = (req, res) => {
+	res.render('follower');
+}
+
+exports.otherpage = (req, res) => {
 	res.render('otherpage');
 }
 

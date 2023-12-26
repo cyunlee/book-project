@@ -134,6 +134,7 @@
     flex-direction: column;
     align-items: center;
     margin: auto;
+    cursor: pointer;
 }
 
 .follower-container{
@@ -142,6 +143,7 @@
     flex-direction: column;
     align-items: center;
     margin: auto;
+    cursor: pointer;
 }
 
 .wish-container{

@@ -34,6 +34,14 @@ router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 router.delete('/deleteUser', controller.delete_user);
 
+//팔로잉 전체보기
+router.get('/following', controller.following);
+
+//팔로워 전체보기
+router.get('/follower', controller.follower);
+
+//팔로워 전체보기
+
 // 읽은 책 전체보기
 router.get('/viewAll', controller.viewAll);
 
