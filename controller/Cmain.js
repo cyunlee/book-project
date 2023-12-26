@@ -156,6 +156,14 @@ exports.viewAll = (req, res) => {
 	res.render('viewAll');
 }
 
+exports.viewLikes = (req, res) => {
+	res.render('viewLikes');
+}
+
+exports.viewDislikes = (req, res) => {
+	res.render('viewDislikes');
+}
+
 exports.upload_post= async (req, res)=>{
 
 	try {
