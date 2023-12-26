@@ -30,45 +30,59 @@
         height: 60px;
     }
     .bookshelf {
-        width: 800px;
-        height: 400px;
+        min-width: 480px;
+        height: 600px;
         margin: 0 auto;
-        padding: 50px;
-
-        background-color: rgb(243, 243, 243);
-        border: 1px solid lightgray;
-        border-radius: 16px;
+        padding: 100px 200px;
+        font-family: 'Noto Sans KR';
+        background-color: white;
+        align-items: center;
+        justify-content: center;
+        /*border: 1px solid lightgray;*/
         display: flex;
     }
     .bookCard {
-        width: 800px;
+        max-width: 1280px;
+        display: flex;
+        justify-content: space-between;
     }
     .bookImage {
-        /*min-width: 180px;
-        min-height: 225px;*/
-        max-width: 280px;
-        max-height: 280px;
+        min-width: 150px;
+        min-height: 210px;
+        max-width: 400px;
+        max-height: 600px;
+        width: 28vw;
+        height: 33vw;
+        margin: 20px;
+        /*top: 200px+30vw;
+        left: 100px+30vw;*/
         border: 1px solid grey;
         background-color: white;
         display: inline-block;
-        border-radius: 8px;
-        overflow: hidden;
         object-fit: cover;
+        /*position: absolute;*/
     }
     .bookImage > img {
-        object-fit: cover;
+        /*object-fit: cover;*/
+        min-width: 150px;
+        min-height: 210px;
+        max-width: 400px;
+        max-height: 600px;
+        width: 28vw;
+        height: 33vw;
+        object-fit: fill;
+        overflow: clip;
     }
     
-    /*.bookTitle {
-        min-width: 180px;
-        min-height: 225px;
-        max-width: 180px;
-        max-height: 225px;
-        padding: 20px;
-    }*/
+    .bookTitle {
+        max-width: 630px;
+        max-height: 80px;
+        overflow: hidden;
+    }
+
     .bookTitle > p {
-        font-family: Malgun Gothic,"굴림";
-        font-size: 16pt;
+        font-family: 'Noto Sans KR';
+        font-size: 36pt;
         margin-top: 10px;
         margin-right: 0px;
         margin-bottom: 10px;
@@ -77,15 +91,20 @@
     }
     .bookBlock {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        margin: 30px;
     }
     .bookSide {
-        display: block;
-        max-width: 450px;
-        /*max-height: 350px;*/
-        padding: 30px;
+        /*display: block;*/
+        max-width: 600px;
+        max-height: 540px;
+        overflow: hidden;
+        padding: 30px 60px;
     }
-    table, th, td { border: 0px solid black; border-collapse: collapse }
+    table, th, td { border: 0px solid black; border-collapse: collapse; font-family: 'Noto Sans KR'; font-size: 15pt; text-align: left;}
+    th, td {
+        padding: 10px 15px;
+    }
     .bookTable {
         padding: 50px;
     }
@@ -93,6 +112,11 @@
         margin-top: 15px;
         margin-bottom: 15px;
         z-index: 2;
+    }
+    .bookDes {
+        margin: 10px;
+        font-family: 'Noto Sans KR'; 
+        font-size: 15pt;
     }
     .thumbButton {
         z-index: 10;
