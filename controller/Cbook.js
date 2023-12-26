@@ -1,4 +1,4 @@
-const {Sequelize,User, Comment} = require('../models/index');
+const {Sequelize,User, Comment, Book} = require('../models/index');
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 
@@ -44,7 +44,7 @@ exports.get_books=async (req, res) => {
           totalResults:'5'
         },
       });
-      console.log('Cbook getBooks response > ',response.data.item);
+      // console.log('Cbook getBooks response > ',response.data.item);
       const items = response.data.item;
       res.json(items);
     
@@ -69,7 +69,7 @@ exports.get_bestSeller = async (req,res)=>{
       },
     });
 
-    console.log('Cbook getBestSeller response > ',response.data.item);
+    // console.log('Cbook getBestSeller response > ',response.data.item);
     const items = response.data.item;
     res.json(items);
 
@@ -93,7 +93,7 @@ exports.get_brendNew = async (req,res)=>{
         Cover:'Big',
       },
     });
-    console.log('Cbook getBrendNew response > ',response.data.item);
+    // console.log('Cbook getBrendNew response > ',response.data.item);
     const items = response.data.item;
     res.json(items);
 
@@ -102,6 +102,7 @@ exports.get_brendNew = async (req,res)=>{
     res.status(500).send('Internal Server Error');
   }
 }
+
 
 // 상세페이지로 이동
 exports.go_detail = async (req,res)=>{
@@ -121,13 +122,13 @@ exports.get_detail= async (req,res)=>{
         ttbkey: 'ttbwonluvv0940001',
         ItemId: isbn,
         version: '20131101',
-        ItemIdType:'ISBN13',
+        ItemIdType:'ISBN',
         Output:'JS',
         Cover:'Big',
       },
     });
 
-    console.log('Cbook getDetail response > ',response.data.item);
+    console.log('Cbook getDetail response > ',response);
     console.log('Cbook getDetail tokenId > ',tokenId);
     const items = response.data.item;
 
