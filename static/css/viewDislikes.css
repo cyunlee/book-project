@@ -23,10 +23,6 @@ button{
     cursor: pointer;
 }
 
-#all{
-    border-bottom: 2px solid black;
-}
-
 .button-set{
     margin-left: 8px;
 }
@@ -41,6 +37,7 @@ button{
 
 .double-line{
     position: absolute;
+    left: 10vw;
     width: 5vw;
     height: 3px;
     background-color: #050505;
@@ -68,9 +65,9 @@ button{
 .book-container{
     display: flex;
     justify-content: space-between;
-    margin-left: 80px;
     flex-wrap: wrap;
     width: 80%;
+    margin-left: 80px;
 }
 
 .book-set{
@@ -87,3 +84,6 @@ button{
     margin-top: 8px;
 }
 
+#dislikes{
+    border-bottom: 2px solid black;
+}
