@@ -135,5 +135,18 @@ function submit() {
     })
 }
 
+async function delete_user() {
+    const response = await axios({
+        method: 'delete',
+        url: '/deleteUser',
+    })
+    if (response.data.result) {
+        location.href = '/';
+        alert('회원이 탈퇴 되셨습니다');
+    } else {
+        console.log('Interval error');
+    }
+}
+
 selectPhoto();
 uploadPhoto();
