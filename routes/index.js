@@ -43,13 +43,13 @@ router.get('/follower', controller.follower);
 //팔로워 전체보기
 
 // 읽은 책 전체보기
-router.get('/viewAll', controller.viewAll);
+router.get('/viewAll/:u_id', controller.viewAll);
 
 // 좋아요한 책 전체보기
-router.get('/viewLikes', controller.viewLikes);
+router.get('/viewLikes/', controller.viewLikes);
 
 // 싫어요한 책 전체보기
-router.get('/viewDislikes', controller.viewDislikes);
+router.get('/viewDislikes/', controller.viewDislikes);
 
 // 다른 사람 계정 페이지
 router.get('/otherpage', controller.otherpage);
