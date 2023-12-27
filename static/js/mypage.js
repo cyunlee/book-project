@@ -159,9 +159,11 @@ async function delete_user() {
 
 function following() {
     followingList.classList.remove('hidden4');
+    followerList.classList.add('hidden5');
 }
 
 function follower() {
+    followingList.classList.add('hidden4');
     followerList.classList.remove('hidden5');
 }
 
