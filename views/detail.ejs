@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/detail.css">
+    <title>Document</title>
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+		<div id="top">
+            <a href='/main'><img src="../static/img/logo.png"></a>
+
+        </div>
+    <!-- <h1>상세페이지</h1> -->
+    <div class="bookshelf">
+        <div class="bookCard" id="bookResult">
+        </div>
+    </div>
+<!-- 
+    <form class="bookComment">
+        <div class="myComment" id="insertComment">
+            <p>임시 댓글</p>
+            <input type="text" placeholder="댓글 내용을 입력해주세요." class="initComm" id="commentMine">
+            <input type="submit" class="btn" value="댓글쓰기">
+        </div>
+    </form> -->
+
+    <div>
+        <form name="comment-form" id="commentForm">
+            <input type="text" id="comment_id" name="u_id" placeholder="id" disabled>
+            <input type="text" id="comment_content" name="c_content" placeholder="댓글을 남겨보세요"><br>
+            <button type="button" onclick="addComment();">댓글 입력하기</button>
+        </form>
+        <div id="comment-box"></div>
+    </div>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const isbn = urlParams.get('isbn');
+
+        console.log(isbn); // 출력: 9788954699075
+        document.addEventListener("DOMContentLoaded", () => {
+            loadView();
+                
+        });
+
+
+        function loadView() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isbn = urlParams.get('isbn');
+            console.log(isbn); // 출력: 9788954699075
+
+
+            $.ajax({
+                method: 'get',
+                url: '/getDetail',
+                data: {
+                    ItemId: `${isbn}`,
+                }
+            }).done((res) => {
+                console.log('알라딘 brendnew res >', res);
+                const detailItem = res.items[0];
+                const resultBox = document.getElementById('bookResult');
+                //let contentDiv = document.createElement('div');
+                //let img = document.createElement('img');
+
+                //contentDiv.textContent=detailItem.title;
+                //img.src=detailItem.cover;
+
+                //resultBox.appendChild(contentDiv);
+                //resultBox.appendChild(img);
+                const html = 
+                `<div class="bookImage" id="bookCover">
+                        <img src="${detailItem.cover}" id="bookCoverImg">
+                    </div>
+                <div class="bookBlock" id="block">
+                    <div class="bookTitle" id="title">
+                        <p>${detailItem.title}</p>
+                    </div>
+                    <div class="bookSide" id=sideResult>
+                        <table style="width:100%" class="bookTable" id=resultTable>
+                            <tr>
+                                <td>지은이</td>
+                                <td>|</td>
+                                <td>${detailItem.author}</td>
+                            </tr>
+                            <tr>
+                                <td>출판사</td>
+                                <td>|</td>
+                                <td>${detailItem.publisher}</td>
+                            </tr>
+                            <tr>
+                                <td>ISBN</td>
+
+                                <td>|</td>
+                                <td>${detailItem.isbn}</td>
+                            </tr>
+                        </table>
+                        <hr>
+                        <div class="bookDes" id="description">
+                            <p>${detailItem.description}</p>
+                        </div>
+                        <div class="thumbButton">
+                            <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp">
+                            <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown">
+                        </div>
+                    </div>
+                </div>
+                `
+                resultBox.insertAdjacentHTML('beforeend', html);
+                
+                const form = document.forms['comment-form'];
+                const commentForm = document.querySelector('#commentForm');
+                form.u_id.value = res.id;
+
+                if(res.id==false){
+                    commentForm.style.display='none';
+                }else{
+                    commentForm.style.display='block';
+                }
+                
+            });
+
+            axios({
+                method: 'post',
+                url: '/getComments',
+                data: {
+                    c_isbn: `${isbn}`,
+                },
+            }).then((res) => {
+                console.log('getComments res.data > ', res.data)
+                const commentItem = res.data.comments;
+                const id = res.data.id;
+
+                const form = document.forms['comment-form'];
+                const commentBox = document.getElementById('comment-box');
+
+                if(commentItem.length ==0){
+                    removeAllChildren(commentBox);
+                    commentBox.innerHTML='<div class="default-message">작성한 댓글이 없습니다. 로그인 후 사용해주세요.<div>'
+                }else{
+                    const parentComments = commentItem.filter(item => !item.parent_c_no);
+                    const childComments = commentItem.filter(item => item.parent_c_no);
+
+                    parentComments.forEach(i => {
+                        // 부모 댓글 출력
+                        const html = `
+                            <div id="div_${i.c_no}" class="comment-wrapper">
+                                <div class="comment_inner_wrapper">
+                                    <div class="comment_id comment">${i.u_id}</div>
+                                    <div class="comment_content comment">${i.c_content}</div>
+                                    <div class="comment_date comment">${i.c_date}</div>
+                                    <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${i.c_no},${i.u_id},${id});">답글쓰기</button>
+                                </div>
+                                <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
+                            </div>
+                        `;
+                        commentBox.insertAdjacentHTML('beforeend', html);
+
+                        // 대댓글 출력
+                        const parentCommentChildren = childComments.filter(childComment => childComment.parent_c_no === i.c_no);
+                        // console.log('childComments',childComments);
+                        console.log('parentCommentChildren',parentCommentChildren);
+                        parentCommentChildren.forEach(childComment => {
+                            console.log('childComment > ',childComment);
+                            const childHtml = `
+                                <div id="div_${childComment.c_no}" class="comment-wrapper reply-comment">
+                                    <div class="comment_inner_wrapper">
+                                        <div class="comment_id comment">${childComment.u_id}</div>
+                                        <div class="comment_content comment"><span>${i.u_id}</span>  ${childComment.c_content}</div>
+                                        <div class="comment_date comment">${childComment.c_date}</div>
+                                        <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${childComment.c_no},${childComment.u_id},${id});">답글쓰기</button>
+                                    </div>
+                                    <img id ="morevert_${childComment.c_no}" class="morevert" src="../static/img/morevert.png">
+                                </div>
+                            `;
+                            commentBox.insertAdjacentHTML('beforeend', childHtml);
+
+
+                            const btnBox = document.createElement('div');
+                            const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${childComment.c_no},'${childComment.u_id}','${childComment.c_content}');" >수정</button><br>
+                                <button type="button" class="editBtn"  onclick="deleteComment(${childComment.c_no})">삭제</button>`
+                            btnBox.insertAdjacentHTML('beforeend', btnHtml);
+                            btnBox.classList.add('box-show');
+
+                            const toggleBtn = document.querySelector(`#morevert_${childComment.c_no}`);
+                            toggleBtn.after(btnBox);
+                            toggleBtn.addEventListener('click', () => {
+                                editToggle(`${childComment.c_no}`);
+                            })
+                        });
+
+
+                        // morevert 버튼을 눌렀을 때 나올 버튼 박스
+                        const btnBox = document.createElement('div');
+                        const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${i.c_no},'${i.u_id}','${i.c_content}');" >수정</button><br>
+                            <button type="button" class="editBtn"  onclick="deleteComment(${i.c_no})">삭제</button>`
+                        btnBox.insertAdjacentHTML('beforeend', btnHtml);
+                        btnBox.classList.add('box-show');
+
+                        const toggleBtn = document.querySelector(`#morevert_${i.c_no}`);
+                        toggleBtn.after(btnBox);
+                        toggleBtn.addEventListener('click', () => {
+                            editToggle(`${i.c_no}`);
+                        })
+                        form.reset();
+
+                    });
+                }
+                
+            })
+        }
+
+        function editToggle(no) {
+            const toggleBtn = document.querySelector(`#morevert_${no}`);
+            let btnShow = document.querySelector(`#morevert_${no} + .box-show`);
+            // const btnShow = document.querySelector('.box-show');
+            toggleBtn.classList.toggle('morevertToggle');
+            if (toggleBtn.classList.contains('morevertToggle')) {
+                btnShow.style.display = 'inline-block';
+            } else {
+                btnShow.style.display = 'none';
+            }
+        }
+
+        function addComment() {
+            console.log('isbn', `${isbn}`);
+            const form = document.forms['comment-form'];
+
+            if(form.c_content.value ==''){
+                alert('댓글을 입력해주세요!');
+            }else{
+                axios({
+                method: 'post',
+                url: '/writeComment',
+                data: {
+                    c_isbn: isbn,
+                    u_id: form.u_id.value,
+                    c_content: form.c_content.value,
+                }
+                }).then((res) => {
+                    console.log('댓글 작성 성공:', res);
+                    const commentBox = document.querySelector('#comment-box');
+                    const resultBox = document.querySelector('#bookResult');
+                    removeAllChildren(resultBox);
+                    removeAllChildren(commentBox);
+                    loadView();
+
+                }).catch((error) => {
+                    console.error('댓글 작성 실패:', error);
+                });
+            }
+
+           
+        }
+
+        function editBox(no, id, content) {
+            const originalBox = document.querySelector(`#div_${no}`);
+            removeAllChildren(originalBox);
+            const html = `
+                <div class="editBox-id">${id}</div>
+                <form name="edit-form" class="inputBox">
+                    <input type ="text" name="c_content" value="${content}" class="editBox-content">
+                    <button type="button" onclick="editComment(${no})" class="edit-btn">확인</button>
+                </form>
+                `
+            originalBox.insertAdjacentHTML('beforeend', html);
+            // originalBox.appendChild(inputBox);
+        }
+
+        function editComment(no) {
+            console.log(no);
+            const form = document.forms['edit-form'];
+            axios({
+                method: 'patch',
+                url: '/updateComment',
+                data: {
+                    c_no: `${no}`,
+                    c_content: form.c_content.value,
+                },
+            }).then((res) => {
+                const commentBox = document.querySelector('#comment-box');
+                const resultBox = document.querySelector('#bookResult');
+                removeAllChildren(resultBox);
+                removeAllChildren(commentBox);
+                loadView();
+
+            })
+        }
+
+        function deleteComment(no) {
+            console.log(no);
+            axios({
+                method: 'delete',
+                url: '/deleteComment',
+                data: {
+                    c_no: `${no}`,
+                },
+            }).then((res) => {
+                const commentBox = document.querySelector('#comment-box');
+                const resultBox = document.querySelector('#bookResult');
+                removeAllChildren(resultBox);
+                removeAllChildren(commentBox);
+                loadView();
+
+            })
+
+        }
+
+        function removeAllChildren(element) {
+        if (element) {
+            while (element.firstChild) {
+                removeAllChildren(element.firstChild);
+                element.removeChild(element.firstChild);
+            }
+        }
+    }
+        
+    function replyToggle(no,replyNo, id,userid) {
+        if (`<%= id%>` == 'false') {
+            alert('로그인 후 사용가능한 기능입니다.');
+        } else {
+            const replyBox = document.querySelector(`#div_${replyNo}`);
+            const existingReplyInput = replyBox.nextElementSibling;
+
+            if (existingReplyInput && existingReplyInput.classList.contains('reply-input')) {
+                // 이미 추가된 경우, 삭제
+                existingReplyInput.remove();
+            } else {
+                // 추가되지 않은 경우, 추가
+                const html = `
+                    <div class="comment-wrapper reply-input">
+                        <div class="editBox-id">${userid}</div>
+                        <form name="reply-form" class="inputBox">
+                            <input type="hidden" name="u_id" value="${userid}">
+                            <input type ="text" name="c_content" placeholder="${id}님께 답글쓰기" class="editBox-content">
+                            <button type="button" onclick="addReply(${no}, ${id})" class="edit-btn">확인</button>
+                        </form>
+                    </div>
+                `;
+                replyBox.insertAdjacentHTML('afterend', html);
+            }
+        }
+    }
+
+    function addReply(no, id){
+        const form = document.forms['reply-form'];
+        const content = form.c_content.value;
+        console.log(content);
+        if(content==''){
+            alert('댓글을 입력해주세요');
+        }else{
+            axios({
+                method: 'post',
+                url: '/writeReply',
+                data: {
+                    c_isbn: isbn,
+                    u_id: form.u_id.value,
+                    c_content: form.c_content.value,
+                    parent_c_no:no,
+                }
+            }).then((res) => {
+                    console.log('댓글 작성 성공:', res);
+                    const commentBox = document.querySelector('#comment-box');
+                    const resultBox = document.querySelector('#bookResult');
+                    removeAllChildren(resultBox);
+                    removeAllChildren(commentBox);
+                    loadView();
+
+                }).catch((error) => {
+                    console.error('댓글 작성 실패:', error);
+                });
+        }
+    }
+    </script>
+</body>
+
+</html>
