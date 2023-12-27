@@ -194,12 +194,15 @@ exports.upload_patch=async (req,res)=>{
 	try {
 		// const path = req.file.path;
 		console.log('req.body > ',req.body);
+		const delUser = await User.findOne({where:{u_id:req.body.id}})
+		if(delUser.u_profile){
+			fs.unlinkSync(delUser.u_profile)
+		}
 		const uploadProfile = await User.update({
 			u_profile:req.body.path,
 		},{
 			where:{u_id:req.body.id,}
 		})
-	
 		res.send(uploadProfile);
 	} catch (error) {
 		console.log(error);
@@ -210,8 +213,11 @@ exports.upload_patch=async (req,res)=>{
 exports.delete_user = async (req, res) => {
 	try {
 		const tokenId = await tokenCheck(req);
+		const delUser = await User.findOne({where:{u_id:tokenId}})
+		if(delUser.u_profile){
+			fs.unlinkSync(delUser.u_profile)
+		}
 		await User.destroy({where: {u_id : tokenId}})
-		fs.rmdirSync(`./static/img/${tokenId}`);
 		res.send({result : true});
 	} catch (error) {
 		res.send('Internal Server Error! : ', error);

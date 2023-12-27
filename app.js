@@ -33,7 +33,7 @@ const tokenCheck = async (req) => {
 const uploadDetail = multer({
     storage: multer.diskStorage({
         destination(req, file, done){
-            done(null, `static/img/${tokenCheck(req)}`);
+            done(null, 'static/img');
         },
         filename(req, file, done){
             const ext = path.extname(file.originalname);
