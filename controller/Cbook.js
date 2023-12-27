@@ -163,6 +163,7 @@ exports.post_comment = async (req,res)=>{
   try{
     const tokenId = await tokenCheck(req);
     const{c_isbn, u_id, c_content}=req.body;
+    console.log(req.body)
     const newComment = await Comment.create({
       c_isbn,
       u_id,
