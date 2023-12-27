@@ -232,4 +232,8 @@
     .replyToggle{
         display: none;
     }
+    .comment-wrapper.reply-comment{
+        width: calc(80% - 30px);
+        margin-left: 30px;
+    }
 }
