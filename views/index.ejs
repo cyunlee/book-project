@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="static/js/login.js"></script>
-
+	<script src="static/js/follow.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<title>index</title>
 </head>
 <body>
@@ -16,7 +17,18 @@
 	<% } %>
 	<% if (isLogin) { %>
 		<a href="/mypage">마이페이지</a>
-		<p><%=id%>님 환영합니다!</p>
+		<p><%=id%>님 환영합니다!</p><br><br><br>
+
+		팔로우할 사람: <input id="follow" type="text"><button onclick="follow()">팔로우</button>
+		<br>
+		언팔<button onclick="unfollow()">언팔로우</button><br>
+		당신의 팔로워: 
+		<br>
+		당신의 팔로잉:
+		<br>
+
+
+		<br><br><br>
 		<button type='button' onclick='logout()'>
 		로그아웃</button>
 

@@ -23,7 +23,7 @@ async function nameCheck() {
             namediv.innerHTML='<span style="color: red; font-size: 12px;">중복된 닉네임이 있습니다</span>';
         } else {
             namediv.innerHTML='';
-            namediv.innerHTML='<span style="color: red; font-size: 12px;">사용 가능한 닉네임입니다</span>';
+            namediv.innerHTML='<span style="color: blue; font-size: 12px;">사용 가능한 닉네임입니다</span>';
         }
     } catch (error){
         console.log(error);
@@ -49,7 +49,7 @@ async function idCheck() {
             iddiv.innerHTML='<span style="color: red; font-size: 12px;">중복된 아이디가 있습니다</span>';
         } else {
             iddiv.innerHTML='';
-            iddiv.innerHTML='<span style="color: red; font-size: 12px;">사용 가능한 아이디입니다</span>';
+            iddiv.innerHTML='<span style="color: blue; font-size: 12px;">사용 가능한 아이디입니다</span>';
         }
     } catch (error){
         console.log(error);

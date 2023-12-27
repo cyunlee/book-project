@@ -128,8 +128,8 @@ exports.get_detail= async (req,res)=>{
       },
     });
 
-    console.log('Cbook getDetail response > ',response);
-    console.log('Cbook getDetail tokenId > ',tokenId);
+    // console.log('Cbook getDetail response > ',response.data.item);
+    // console.log('Cbook getDetail tokenId > ',tokenId);
     const items = response.data.item;
 
     res.send({items,id:tokenId});
