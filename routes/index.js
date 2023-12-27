@@ -3,9 +3,11 @@ const router = express.Router();
 const controller = require('../controller/Cmain');
 const bookController = require('./../controller/Cbook');
 const chatController = require('./../controller/Cchat');
+const followController = require('./../controller/Cfollow');
 const cookieParser = require('cookie-parser');
 
 router.use(cookieParser());
+
 
 
 // 임시 링크
@@ -116,5 +118,8 @@ router.delete('/deleteBad', controller.deleteBad);
 // 유저들이 이 책과 함께 좋아한 다른 책 렌더
 router.get('/otherLikes', controller.otherLikes);
 
+// 팔로우 클릭시
+router.post('/follow', followController.follow);
+router.post('/unfollow', followController.unfollow);
 
 module.exports = router;

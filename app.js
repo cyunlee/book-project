@@ -7,12 +7,33 @@ const path = require('path');
 // const upload = multer({
 //     dest: 'uploads/',
 // });
+const jwt = require('jsonwebtoken');
+
+const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
+
+const tokenCheck = async (req) => {
+	const token = req.cookies.jwtCookie;
+	if (!token) {
+		return false;
+	} else {
+		const result = jwt.verify(token, jwtSecret);
+		const checkID = await User.findOne({
+			where: { u_id: result.id }
+		})
+		if (checkID) {
+			return (result.id);
+		} else {
+			return false;
+		}
+	}
+}
+
 
 // multer 세부 설정
 const uploadDetail = multer({
     storage: multer.diskStorage({
         destination(req, file, done){
-            done(null, 'static/img');
+            done(null, `static/img/${tokenCheck(req)}`);
         },
         filename(req, file, done){
             const ext = path.extname(file.originalname);
