@@ -48,16 +48,12 @@
         <div class="resultList">
             <% if(searchData && searchData.length > 0) { %>
                 <% searchData.forEach(ele => { %>
-                    <div class="result">
-                        <a href="/detailGo?isbn=<%= ele.isbn %>">
-                            <div class="coverBox">
-                                <img class="img" src="<%= ele.cover  %>" alt="">
-                            </div>
-                        </a>
+                    <div class="result" onclick="formSubmit('<%= ele.isbn%>')">
+                        <div class="coverBox">
+                            <img class="img" src="<%= ele.cover  %>" alt="">
+                        </div>
                         <div class="detailText">
-                            <a href="/detailGo?isbn=<%= ele.isbn %>">
-                                <p class="title"><%= ele.title %></p>
-                            </a>
+                            <p class="title"><%= ele.title %></p>
                             <p class="author"><%= ele.author %></p>
                             <div class="pub">
                                 <p class="publisher"><%= ele.publisher %></p>
@@ -94,12 +90,12 @@
     
 </main>
     <script>
-        // function formSubmit(isbn) {
-        //     const form = document.forms['searchDetail'];
-        //     form.isbn.value = isbn;
+        function formSubmit(isbn) {
+            const form = document.forms['searchDetail'];
+            form.isbn.value = isbn;
 
-        //     form.submit()
-        // }
+            form.submit()
+        }
     </script>
 
 </body>
