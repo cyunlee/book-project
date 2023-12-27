@@ -22,9 +22,9 @@
 		팔로우할 사람: <input id="follow" type="text"><button onclick="follow()">팔로우</button>
 		<br>
 		언팔<button onclick="unfollow()">언팔로우</button><br>
-		당신의 팔로워: 
+		당신의 팔로워: <a href="" id="follower"></a>
 		<br>
-		당신의 팔로잉:
+		당신의 팔로잉: <a href="" id="following"></a>
 		<br>
 
 
@@ -44,7 +44,9 @@
 	</form>
 	<!-- 그런데 검색 기능 책 제목으로만 할 건지, 제목+저자로 할 건지 정하기
 	/ 일단 제목으로만 검색되게 설정해둠-->
-
+	<script>
+		follow_set();
+	</script>
 
 </body>
 </html>
