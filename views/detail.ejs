@@ -30,7 +30,7 @@
         </div>
     </form>
 
-    <div>
+    <div class="comment-area">
         <form name="comment-form" id="commentForm">
             <input type="text" name="u_id" placeholder="id"><br>
             <input type="text" name="c_content" placeholder="content"><br>
@@ -84,20 +84,19 @@
                     <div class="bookSide" id=sideResult>
                         <table style="width:100%" class="bookTable" id=resultTable>
                             <tr>
-                                <td>지은이</td>
+                                <td class="subTitle">지은이</td>
                                 <td>|</td>
-                                <td>${detailItem.author}</td>
+                                <td class="subDes">${detailItem.author}</td>
                             </tr>
                             <tr>
-                                <td>출판사</td>
+                                <td class="subTitle">출판사</td>
                                 <td>|</td>
-                                <td>${detailItem.publisher}</td>
+                                <td class="subDes">${detailItem.publisher}</td>
                             </tr>
                             <tr>
-                                <td>ISBN</td>
-
+                                <td class="subTitle">ISBN</td>
                                 <td>|</td>
-                                <td>${detailItem.isbn}</td>
+                                <td class="subDes">${detailItem.isbn}</td>
                             </tr>
                         </table>
                         <hr>
