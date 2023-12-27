@@ -31,8 +31,11 @@
 		</div>
 		<div class="top_h2">어쩌라고 저쩌라고 어쩌라고 저쩌라고<br>검색해 검색해 검색</div>
 		<div id="top_ad">
-			<input type="text" id="title" name="title" placeholder="통합 검색">
-			<button type="button" id="searchBtn" onclick="search();">검색</button>
+			<!-- <form action="/searchList" method="get"> -->
+				<input type="text" id="title" name="title" placeholder="통합 검색">
+				<!-- <button type="button" id="searchBtn" onclick="search();">검색</button> -->
+				<button id="searchBtn">검색</button>
+			</form>
 		</div>
 		<div id="result"></div>
 		<div class="top_explain">찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요</div>
@@ -60,12 +63,13 @@
 			<div class="box">
 				<div class ="index">리뷰 순위</div>
 			</div>
-
+			
 		</section>
 
 		<section class="content_box" id="liked_best_section">
 			<div class="box">
 				<div class ="index">좋아요 베스트</div>	
+				<div id="like-result" class="box-section"></div>
 			</div>
 
 		</section>
@@ -107,6 +111,7 @@
             const resultBox = document.getElementById('result');
             const bestResultBox = document.getElementById('best-result');
             const newResultBox = document.getElementById('new-result');
+            const likeResultBox = document.getElementById('like-result');
 			const searchBox = document.getElementById('search');
 
 			console.log(`버튼 토큰 아이디 > <%= id%>`);
@@ -129,12 +134,11 @@
             }).done((res) => {
                     console.log('알라딘 bestseller >' , res);
                     res.forEach(a => {
-                        // console.log('알라딘 bestseller cover >',a.cover[0]);
-                        console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
+                        console.log('알라딘 bestseller a.isbn > ',a.isbn);
 
                         let html = `
                         <div class="each-selection">
-                            <button type="button" onclick="detail(${a.isbn13})">
+                            <button type="button" onclick="detail('${a.isbn}')">
                                 <img src="${a.cover}">
                                 <div>${a.title}</div>
                             </button>
@@ -149,21 +153,50 @@
             method:'get',
             url:'/brendNew',
             }).done((res) => {
-                    console.log('알라딘 brendnew res >' , res);
-                    res.forEach(a => {
-                        console.log('알라딘 brendnew a.isbn13 > ',a.isbn13);
-                        let html = `
-                        <div class="each-selection">
-                            <button type="button" onclick="detail(${a.isbn13})">
-                                <img src="${a.cover}">
-                                <div>${a.title}</div>
-                            </button>
-                        </div>
-                        `;
-                        newResultBox.insertAdjacentHTML('beforeend',html);
-                    });
-                });
+				console.log('알라딘 brendnew res >' , res);
+				res.forEach(a => {
+					console.log('알라딘 brendnew a.isbn > ',a.isbn);
+					let html = `
+					<div class="each-selection">
+						<button type="button" onclick="detail('${a.isbn}')">
+							<img src="${a.cover}">
+							<div>${a.title}</div>
+						</button>
+					</div>
+					`;
+					newResultBox.insertAdjacentHTML('beforeend',html);
+				});
+			});
+
+			// 프론트에서 받기
+			$.ajax({
+			method:'get',
+			url:'/mostLike',
+			}).done((res) => {
+				if(res.length==0){
+					let html =`
+						<div style="text-align:center; width:100%; height:30vh; line-height:30vh;">
+							좋아요한 책이 없어요!
+						</div>`
+					likeResultBox.insertAdjacentHTML('beforeend',html);
+				}else{
+					console.log('좋아요 res >' , res);
+					res.forEach(a => {
+						console.log('좋아요 a.isbn > ',a.isbn);
+						let html = `
+						<div class="each-selection">
+							<button type="button" onclick="detail(${a.isbn})">
+								<img src="${a.cover}">
+								<div>${a.title}</div>
+							</button>
+						</div>
+						`;
+						likeResultBox.insertAdjacentHTML('beforeend',html);
+					});
+				}					
         });
+
+	});
 
 		eventTitle.addEventListener("focus",()=>{
 			const resultBox = document.getElementById('result');
@@ -180,6 +213,7 @@
             search();
         });
         
+		
         // 책 검색 함수(알라딘 책 검색 api)
         function search() {
             // const title = document.getElementById('title').value;
@@ -195,10 +229,10 @@
                 console.log('res >' , res);
                 // console.log('object >', JSON.parse(res));
                 res.forEach(a => {
-                    console.log('알라딘 bestseller a.isbn13 > ',a.isbn13);
+                    console.log('알라딘 bestseller a.isbn > ',a.isbn);
                         let html = `
                         <div>
-                            <button type="button" onclick="detail(${a.isbn13})">
+                            <button type="button" onclick="detail('${a.isbn}')">
                                 
                                 <div>${a.title}</div>
                             </button>
@@ -223,6 +257,7 @@
         
         function detail(isbn){
             const detailBox = document.getElementById('detail-result');
+			console.log(isbn);
             $.ajax({
                 method:'get',
                 url:'/getDetail',
@@ -230,9 +265,10 @@
                     ItemId:`${isbn}`,
                 }
             }).done((res)=>{
+				// console.log(isbn);
                 console.log(res);
-                console.log('res detail aaaaaaaaaaa > ',res.items[0].isbn13);
-                location.href=`/detailGo?isbn13=${res.items[0].isbn13}`;
+                console.log('res detail aaaaaaaaaaa > ',res.items[0].isbn);
+                location.href=`/detailGo?isbn=${isbn}`;
             })
         }
     </script>

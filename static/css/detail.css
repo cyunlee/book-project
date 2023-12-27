@@ -7,28 +7,37 @@
     background-color: white;
 } */
 
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+.notosanskr * {
+    font-family: 'Noto Sans KR', sans-serif;
+}
 
 @media screen and (min-width: 100px) {
-    body{
-        padding:0;
-        margin:0;
+    body {
+        padding: 0;
+        margin: 0;
         background-color: #F1F3F8;
     }
-    #top{
+
+    #top {
         height: 100px;
-        width:100%;
+        width: 100%;
         background-color: #040c37;
-        position:relative;
+        position: relative;
     }
-    #top a{
+
+    #top a {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
-    #top a img{
+
+    #top a img {
         height: 60px;
     }
+
     .bookshelf {
         min-width: 480px;
         height: 600px;
@@ -41,19 +50,22 @@
         /*border: 1px solid lightgray;*/
         display: flex;
     }
+
     .bookCard {
         max-width: 1280px;
         display: flex;
         justify-content: space-between;
     }
+
     .bookImage {
-        min-width: 150px;
         min-height: 210px;
         max-width: 400px;
         max-height: 600px;
-        width: 28vw;
-        height: 33vw;
-        margin: 20px;
+        width: 25vw;
+        height: 34vw;
+        margin-top: 45px;
+        margin-left: 20px;
+        margin-right: 20px;
         /*top: 200px+30vw;
         left: 100px+30vw;*/
         border: 1px solid grey;
@@ -62,25 +74,28 @@
         object-fit: cover;
         /*position: absolute;*/
     }
-    .bookImage > img {
+
+    .bookImage>img {
         /*object-fit: cover;*/
         min-width: 150px;
         min-height: 210px;
         max-width: 400px;
         max-height: 600px;
-        width: 28vw;
-        height: 33vw;
+        width: 25vw;
+        height: 34vw;
         object-fit: fill;
         overflow: clip;
     }
-    
+
     .bookTitle {
-        max-width: 630px;
+        max-width: 440px;
         max-height: 80px;
+        margin-left: 15px;
+        margin-right: 15px;
         overflow: hidden;
     }
 
-    .bookTitle > p {
+    .bookTitle>p {
         font-family: 'Noto Sans KR';
         font-size: 36pt;
         margin-top: 10px;
@@ -89,58 +104,95 @@
         font-weight: 600;
 
     }
+
     .bookBlock {
         display: flex;
         flex-direction: column;
         margin: 30px;
     }
+
     .bookSide {
         /*display: block;*/
         max-width: 600px;
         max-height: 540px;
-        overflow: hidden;
         padding: 30px 60px;
     }
-    table, th, td { border: 0px solid black; border-collapse: collapse; font-family: 'Noto Sans KR'; font-size: 15pt; text-align: left;}
-    th, td {
+
+    table,
+    th,
+    td {
+        border: 0px solid black;
+        border-collapse: collapse;
+        font-family: 'Noto Sans KR';
+        font-size: 15pt;
+        text-align: left;
+    }
+
+    th,
+    td {
         padding: 10px 15px;
     }
+
+    .subTitle {
+        min-width: 90px;
+    }
+
+    tr {
+        max-height: 50px;
+        overflow: hidden;
+    }
+
+    .subDes {
+        max-height: 50px;
+        overflow: hidden;
+    }
+
     .bookTable {
         padding: 50px;
     }
+
     hr {
         margin-top: 15px;
         margin-bottom: 15px;
         z-index: 2;
     }
+
     .bookDes {
         margin: 10px;
-        font-family: 'Noto Sans KR'; 
+        font-family: 'Noto Sans KR';
         font-size: 15pt;
+        min-width: 216px;
+        min-height: 216px;
+        overflow: hidden;
     }
+
     .thumbButton {
         z-index: 10;
         position: relative;
     }
-    .thumbButton > img {
+
+    .thumbButton>img {
         max-width: 50px;
         max-height: 50px;
     }
+
     .thumbButton {
         display: flex;
     }
 
     .bookComment {
-        width: 800px;
+        display: none;
+        /*width: 800px;
         margin: 20px;
         padding: 50px;
         position: relative;
         background-color: rgb(243, 243, 243);
         border: 1px solid lightgray;
         border-radius: 16px;
-        display: flex;
-        flex-direction: column;
+        flex-direction: column;*/
     }
+
+    /*
     .myComment > p {
         margin-left: 20px;
         font-size: 12pt;
@@ -154,14 +206,15 @@
     .btn {
         display: block;
         margin-left: 20px;
-    }
+    }*/
     .divWrapper {
-        width: 500px;
+        width: 54vw;
         height: fit-content;
     }
 
     .comment {
-        width: 500px;
+        width: 54vw;
+        display: inline-block;
         height: fit-content;
     }
 
@@ -181,30 +234,35 @@
     }
 
     .comment_inner_wrapper {
-        width: 500px;
+        width: 54vw;
         display: inline-block;
     }
 
     .comment-wrapper {
         position: relative;
-        border: 1px solid black;
-        width: 80%;
-        height: 100px;
+
+        /* border: 1px solid black; */
+        width: 54vw;
+        /* height: 100px; */
+        height: fit-content;
+        margin-top: 2vw;
+        padding-bottom: 2vw;
     }
 
     .comment {
         display: inline-block;
+        height: fit-content;
     }
 
     .morevert {
         position: absolute;
         right: 0;
-        top:0;
+        top: 0;
     }
 
     .editBox-content {
         width: 98%;
-        height: 90%;
+        height: 100%;
     }
 
     .inputBox {
@@ -219,16 +277,115 @@
         position: absolute;
         bottom: 0;
         right: 0;
-        margin-bottom: 10px;
-        margin-right: 20px;
+        margin-bottom: 2vw;
+        margin-right: 2vw;
     }
-    .applyBtn{
+
+    .applyBtn {
         background-color: #f1f3f8;
-        border:none;
-        color:gray;
+        border: none;
+        color: gray;
         cursor: pointer;
+        padding:0;
     }
-    .replyToggle{
+
+    .replyToggle {
         display: none;
     }
+
+    .comment-wrapper.reply-comment {
+        width: calc(54vw - 40px);
+        padding-left: 40px;
+    }
+
+    div.comment-wrapper:not(:last-child) {
+        /* 스타일 적용 */
+        border-bottom: 2px solid #b2b4b7;
+    }
+
+    #commentForm {
+        margin-top: 3vh;
+        width: 54vw;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 20vh;
+
+    }
+
+    #comment_id {
+        width: 7vw;
+        position: absolute;
+        height: 13vh;
+        background-color: #f1f3f8;
+    }
+
+    #comment_content {
+        width: 46vw;
+        height:13vh;
+        background-color:#f1f3f8;
+        text-align: center;
+        font-size: 18px;
+    }    
+    
+    #comment_content{
+        width: calc(46vw - 15px);
+        right: 0;
+        position: absolute;
+        height: 13vh;
+        background-color: #f1f3f8;
+        border: 2px solid #b2b4b7;
+    }
+
+    form[name="comment-form"]>button {
+        width: 54vw;
+        right: 0;
+        position: absolute;
+        background-color: #b2b4b7;
+        top: 13vh;
+        border: none;
+    }
+
+    #comment-box {
+        /*display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 20vh;*/
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50vw;
+    }
+
+
+    #commentForm button{
+        position: absolute;
+        bottom: 5px;
+        width: 100%;
+        height: 5vh;
+        border: none;
+        background-color: #d7d7d7;
+        color: black;
+    }
+
+    #commentForm button:hover{
+        background-color: #040c37;
+        color:white;
+        font-weight: 600;
+    }
+
+    #comment-box{
+        margin-bottom: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .default-message{
+        text-align: center;
+        height: 250px;
+        line-height: 250px;
+    }
+    .comment_id{
+        font-weight: 600x;
+    }
+
 }

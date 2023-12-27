@@ -1,0 +1,20 @@
+body{
+    padding:0;
+    margin:0;
+    background-color: #F1F3F8;
+}
+#top{
+    height: 100px;
+    width:100%;
+    background-color: #040c37;
+    position:relative;
+}
+#top a{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#top a img{
+    height: 60px;
+}

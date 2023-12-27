@@ -36,6 +36,14 @@ router.post('/nameCheck_post', controller.nameCheck)
 router.post('/idCheck_post', controller.idCheck)
 router.delete('/deleteUser', controller.delete_user);
 
+//팔로잉 전체보기
+router.get('/following', controller.following);
+
+//팔로워 전체보기
+router.get('/follower', controller.follower);
+
+//팔로워 전체보기
+
 // 읽은 책 전체보기
 router.get('/viewAll', controller.viewAll);
 
@@ -62,6 +70,9 @@ router.get('/bestSeller',bookController.get_bestSeller);
 
 // 추천 신간 가져오기
 router.get('/brendNew',bookController.get_brendNew);
+
+// 좋아요 랭킹 가져오기
+router.get('/mostLike', controller.mostLike);
 
 // 상세 페이지
 router.get('/detailGo',bookController.go_detail);

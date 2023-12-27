@@ -1,4 +1,4 @@
-const {Sequelize,User, Comment} = require('../models/index');
+const {Sequelize,User, Comment, Book} = require('../models/index');
 const axios = require('axios');
 const jwt = require('jsonwebtoken');
 
@@ -44,7 +44,7 @@ exports.get_books=async (req, res) => {
           totalResults:'5'
         },
       });
-      console.log('Cbook getBooks response > ',response.data.item);
+      // console.log('Cbook getBooks response > ',response.data.item);
       const items = response.data.item;
       res.json(items);
     
@@ -93,7 +93,7 @@ exports.get_brendNew = async (req,res)=>{
         Cover:'Big',
       },
     });
-    //console.log('Cbook getBrendNew response > ',response.data.item);
+    // console.log('Cbook getBrendNew response > ',response.data.item);
     const items = response.data.item;
     res.json(items);
 
@@ -102,6 +102,7 @@ exports.get_brendNew = async (req,res)=>{
     res.status(500).send('Internal Server Error');
   }
 }
+
 
 // 상세페이지로 이동
 exports.go_detail = async (req,res)=>{
@@ -121,7 +122,7 @@ exports.get_detail= async (req,res)=>{
         ttbkey: 'ttbwonluvv0940001',
         ItemId: isbn,
         version: '20131101',
-        ItemIdType:'ISBN13',
+        ItemIdType:'ISBN',
         Output:'JS',
         Cover:'Big',
       },
@@ -144,13 +145,14 @@ exports.get_detail= async (req,res)=>{
 exports.get_comments = async (req,res)=>{
   try {
     console.log('isbn > ',req.body.c_isbn);
+    const tokenId = await tokenCheck(req);
     const comments = await Comment.findAll({
       where:{
         c_isbn:req.body.c_isbn,
       }
     })
 
-    res.send(comments);
+    res.send({comments,id:tokenId});
   } catch (error) {
     console.log(error)
     res.send("Internal Server Error!")
@@ -162,13 +164,14 @@ exports.post_comment = async (req,res)=>{
   try{
     const tokenId = await tokenCheck(req);
     const{c_isbn, u_id, c_content}=req.body;
+    console.log(req.body)
     const newComment = await Comment.create({
       c_isbn,
       u_id,
       c_content,
       c_date: Sequelize.literal('CURRENT_TIMESTAMP'),
     })
-    res.send(newComment);
+    res.send({data:newComment,id:tokenId});
     // res.send('hi');
   }catch(err){
       console.log(err)
