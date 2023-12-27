@@ -19,6 +19,54 @@
     <!-- <h1>상세페이지</h1> -->
     <div class="bookshelf">
         <div class="bookCard" id="bookResult">
+            <div class="bookImage" id="bookCover">
+                <img src="${detailItem.cover}" id="bookCoverImg">
+            </div>
+        <div class="bookBlock" id="block">
+            <div class="bookTitle" id="title">
+                <p id="dTitle">${detailItem.title}</p>
+            </div>
+            <div class="bookSide" id=sideResult>
+                <table style="width:100%" class="bookTable" id=resultTable>
+                    <tr>
+                        <td>지은이</td>
+                        <td>|</td>
+                        <td id="dAuthor">${detailItem.author}</td>
+                    </tr>
+                    <tr>
+                        <td>출판사</td>
+                        <td>|</td>
+                        <td id="dPub">${detailItem.publisher}</td>
+                    </tr>
+                    <tr>
+                        <td>ISBN</td>
+
+                        <td>|</td>
+                        <td id="dIsbn">${detailItem.isbn}</td>
+                    </tr>
+                </table>
+                <hr>
+                <div class="bookDes" id="description">
+                    <p id="Ddescription">${detailItem.description}</p>
+                </div>
+                <div class="thumbButton">
+                    <button class="like" id="like">좋아요할래
+                        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+                    </button>
+                    <button class="likeA">좋아요취소
+                        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+                    </button>
+                
+                    <button class="bad">싫어요할래
+                        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+                    </button>
+                    <button class="badA">싫어요취소
+                        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+                    </button>
+                </div>
+            </div>
+        </div>
+        
         </div>
     </div>
 <!-- 
@@ -29,6 +77,11 @@
             <input type="submit" class="btn" value="댓글쓰기">
         </div>
     </form> -->
+
+    <div class="listBox">
+        <p class="ptag"></p>
+        <div class="itemList"></div>
+    </div>
 
     <div>
         <form name="comment-form" id="commentForm">
@@ -41,6 +94,9 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const isbn = urlParams.get('isbn');
+        const idFor = '<%= idFor %>';
+        const isLogin = '<%= isLogin %>';
+
 
         console.log(isbn); // 출력: 9788954699075
         document.addEventListener("DOMContentLoaded", () => {
@@ -73,7 +129,7 @@
 
                 //resultBox.appendChild(contentDiv);
                 //resultBox.appendChild(img);
-                const html = 
+                /* const html = 
                 `<div class="bookImage" id="bookCover">
                         <img src="${detailItem.cover}" id="bookCoverImg">
                     </div>
@@ -111,8 +167,26 @@
                     </div>
                 </div>
                 `
-                resultBox.insertAdjacentHTML('beforeend', html);
+                resultBox.insertAdjacentHTML('beforeend', html); */
                 
+                const bookCoverImg = document.getElementById('bookCoverImg');
+                bookCoverImg.src = `${detailItem.cover}`;
+
+                const dTitle = document.getElementById('dTitle');
+                dTitle.textContent = `${detailItem.title}`;
+
+                const dAuthor = document.getElementById('dAuthor');
+                dAuthor.textContent = `${detailItem.author}`;
+
+                const dPub = document.getElementById('dPub');
+                dPub.textContent = `${detailItem.publisher}`;
+
+                const dIsbn = document.getElementById('dIsbn');
+                dIsbn.textContent = `${detailItem.isbn}`;
+
+                const Ddescription = document.getElementById('Ddescription');
+                Ddescription.textContent = `${detailItem.description}`;
+
                 const form = document.forms['comment-form'];
                 const commentForm = document.querySelector('#commentForm');
                 form.u_id.value = res.id;
@@ -378,7 +452,168 @@
                 });
         }
     }
+    
+    // 좋아요 싫어요 버튼
+    const like = document.querySelector('.like');
+    const likeA = document.querySelector('.likeA');
+    const bad = document.querySelector('.bad');
+    const badA = document.querySelector('.badA');
 
+    // 렌더될 때 좋아요 싫어요 평가 데이터 조회
+    (async () => {
+        if(isLogin == 'true') {
+        try {
+            const ratingData = await axios({
+                url: '/ratingData',
+                method: 'get',
+                params: {
+                    b_isbn: isbn,
+                    u_id: idFor
+                }
+            })
+            console.log('이 책에 남긴 평가 데이터>',ratingData.data);
+            if(ratingData.data == 'like') {
+                // alert('like!');
+                like.style.display = 'none';
+                likeA.style.display = 'inline-block';
+                bad.disabled = true; 
+            } else if(ratingData.data == 'bad') {
+                bad.style.display = 'none';
+                badA.style.display = 'inline-block';
+                like.disabled = true;
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    })();
+
+    // 렌더될 때 좋아요 기반 책 리스트
+    (async () => {
+        try{
+            const otherLikes = await axios({
+                url: '/otherLikes',
+                method: 'get',
+                params: {
+                    b_rating : 'like',
+                    u_id: idFor,
+                    b_isbn: isbn
+                }
+            })
+            console.log(otherLikes);
+            console.log('!!!>', otherLikes.data);
+            const newData = otherLikes.data;
+            // console.log(newData);
+                if(otherLikes)
+                    { const ptag = document.querySelector('.ptag');
+                    ptag.innerText = '유저들이 이 책과 함께 좋아한 다른 책'
+
+                        // 받아온 데이터를 forEach문을 사용하여 화면에 표시
+                    newData.forEach(item => {
+                        const itemList = document.querySelector('.itemList');
+                        itemList.innerHTML += `
+                            <div class="item">
+                                <a href="/detailGo?isbn=${item.isbn}">
+                                    <div class="coverBox">
+                                        <img src="${item.cover}">
+                                    </div>
+                                    <p>${item.title}</p>
+                                </a>
+                            </div>
+                            `;
+                    });
+                }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    )();
+    
+    // 좋아요 버튼 누를 때 데이터 전송
+    like.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            like.style.display = 'none';
+            likeA.style.display = 'inline-block';
+            bad.disabled = true; 
+            // db로 전송
+            // 내용 : 좋아요 누름!
+            // alert('db에 좋아요 평가 전송!')  // 테스트
+            console.log('id, rating >',idFor, "like");
+            axios({
+                url: '/createLike',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'like',
+                }
+            })
+        }
+        
+        })
+    
+    // 좋아요 취소
+    likeA.addEventListener('click', (e) => {
+        likeA.style.display = 'none';
+        like.style.display = 'inline-block';
+        bad.disabled = false; 
+        // db로 전송
+        // 내용 : 좋아요 취소!
+        axios({
+                url: '/deleteLike',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'like'
+                }
+            })
+    })
+    
+    // 싫어요
+    bad.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            bad.style.display = 'none';
+            badA.style.display = 'inline-block';
+            like.disabled = true; 
+            // db로 전송
+            // 내용 : 싫어요 누름!
+            // alert('db에 싫어요 평가 전송!')
+            axios({
+                url: '/createBad',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'bad',
+                }
+            })
+        }
+        })
+
+    // 싫어요 취소
+    badA.addEventListener('click', (e) => {
+        badA.style.display = 'none';
+        bad.style.display = 'inline-block';
+        like.disabled = false; 
+        // db로 전송
+        // 내용 : 싫어요 취소!
+        axios({
+                url: '/deleteBad',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'bad'
+                }
+            })
+        })
     </script>
 </body>
 

@@ -176,7 +176,7 @@
         position: relative;
     }
 
-    .thumbButton>img {
+    .thumbButton>button>img {
         max-width: 50px;
         max-height: 50px;
     }
@@ -184,6 +184,45 @@
     .thumbButton {
         display: flex;
     }
+
+    .thumbButton>button {
+        border: 0;
+        outline: none;
+        background-color: inherit;
+    }
+
+    .likeA {
+        display: none;
+    }
+
+    .badA {
+        display: none;
+    }
+
+    .itemList {
+        display: flex;
+    }
+
+    .item {
+        width: 17vw;
+    }
+
+    .coverBox {
+        width: 17vw;
+        height: 25vw;
+        background-color: white;
+        display: flex;
+        align-items: center;
+    }
+
+    .coverBox img {
+        width: 17vw;
+    }
+
+    a {
+        text-decoration: none;
+    }
+    a:visited { color: black; }
 
     .bookComment {
         display: none;

@@ -108,7 +108,9 @@ exports.get_brendNew = async (req,res)=>{
 exports.go_detail = async (req,res)=>{
   const tokenId = await tokenCheck(req);
   console.log('tokenid > ',tokenId);
-  res.render('detail',{id:tokenId})
+  if(!tokenId) {
+    res.render('detail',{id:tokenId, idFor: null, isLogin: false})}
+    else {res.render('detail',{id:tokenId, idFor: tokenId, isLogin: true})}
 }
 
 // 상세페이지 내용 불러오기
