@@ -240,12 +240,13 @@
 
     .comment-wrapper {
         position: relative;
-        border-top: none;
-        border-right: none;
-        border-left: none;
-        border-bottom: 1px solid black;
-        height: 100px;
 
+        /* border: 1px solid black; */
+        width: 54vw;
+        /* height: 100px; */
+        height: fit-content;
+        margin-top: 2vw;
+        padding-bottom: 2vw;
     }
 
     .comment {
@@ -374,6 +375,9 @@
 
     #comment-box{
         margin-bottom: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     .default-message{
         text-align: center;
