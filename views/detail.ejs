@@ -33,7 +33,7 @@
     <div>
         <form name="comment-form" id="commentForm">
             <input type="text" id="comment_id" name="u_id" placeholder="id" disabled>
-            <input type="text" id="comment_content" name="c_content" placeholder="content"><br>
+            <input type="text" id="comment_content" name="c_content" placeholder="댓글을 남겨보세요"><br>
             <button type="button" onclick="addComment();">댓글 입력하기</button>
         </form>
         <div id="comment-box"></div>
@@ -133,79 +133,85 @@
                 },
             }).then((res) => {
                 console.log('getComments res.data > ', res.data)
-                const commentItem = res.data;
-                console.log(commentItem);
+                const commentItem = res.data.comments;
+                const id = res.data.id;
 
                 const form = document.forms['comment-form'];
                 const commentBox = document.getElementById('comment-box');
 
-                const parentComments = commentItem.filter(item => !item.parent_c_no);
-                const childComments = commentItem.filter(item => item.parent_c_no);
+                if(commentItem.length ==0){
+                    removeAllChildren(commentBox);
+                    commentBox.innerHTML='<div class="default-message">작성한 댓글이 없습니다. 로그인 후 사용해주세요.<div>'
+                }else{
+                    const parentComments = commentItem.filter(item => !item.parent_c_no);
+                    const childComments = commentItem.filter(item => item.parent_c_no);
 
-                parentComments.forEach(i => {
-                    // 부모 댓글 출력
-                    const html = `
-                        <div id="div_${i.c_no}" class="comment-wrapper">
-                            <div class="comment_inner_wrapper">
-                                <div class="comment_id comment">${i.u_id}</div>
-                                <div class="comment_content comment">${i.c_content}</div>
-                                <div class="comment_date comment">${i.c_date}</div>
-                                <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${i.u_id});">답글쓰기</button>
-                            </div>
-                            <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
-                        </div>
-                    `;
-                    commentBox.insertAdjacentHTML('beforeend', html);
-
-                    // 대댓글 출력
-                    const parentCommentChildren = childComments.filter(childComment => childComment.parent_c_no === i.c_no);
-                    // console.log('childComments',childComments);
-                    console.log('parentCommentChildren',parentCommentChildren);
-                    parentCommentChildren.forEach(childComment => {
-                        console.log('childComment > ',childComment);
-                        const childHtml = `
-                            <div id="div_${childComment.c_no}" class="comment-wrapper reply-comment">
+                    parentComments.forEach(i => {
+                        // 부모 댓글 출력
+                        const html = `
+                            <div id="div_${i.c_no}" class="comment-wrapper">
                                 <div class="comment_inner_wrapper">
-                                    <div class="comment_id comment">${childComment.u_id}</div>
-                                    <div class="comment_content comment"><span>${i.u_id}</span>  ${childComment.c_content}</div>
-                                    <div class="comment_date comment">${childComment.c_date}</div>
-                                    <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${childComment.u_id});">답글쓰기</button>
+                                    <div class="comment_id comment">${i.u_id}</div>
+                                    <div class="comment_content comment">${i.c_content}</div>
+                                    <div class="comment_date comment">${i.c_date}</div>
+                                    <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},null,${i.u_id},${id});">답글쓰기</button>
                                 </div>
-                                <img id ="morevert_${childComment.c_no}" class="morevert" src="../static/img/morevert.png">
+                                <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
                             </div>
                         `;
-                        commentBox.insertAdjacentHTML('beforeend', childHtml);
+                        commentBox.insertAdjacentHTML('beforeend', html);
+
+                        // 대댓글 출력
+                        const parentCommentChildren = childComments.filter(childComment => childComment.parent_c_no === i.c_no);
+                        // console.log('childComments',childComments);
+                        console.log('parentCommentChildren',parentCommentChildren);
+                        parentCommentChildren.forEach(childComment => {
+                            console.log('childComment > ',childComment);
+                            const childHtml = `
+                                <div id="div_${childComment.c_no}" class="comment-wrapper reply-comment">
+                                    <div class="comment_inner_wrapper">
+                                        <div class="comment_id comment">${childComment.u_id}</div>
+                                        <div class="comment_content comment"><span>${i.u_id}</span>  ${childComment.c_content}</div>
+                                        <div class="comment_date comment">${childComment.c_date}</div>
+                                        <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${childComment.c_no},${childComment.u_id},${id});">답글쓰기</button>
+                                    </div>
+                                    <img id ="morevert_${childComment.c_no}" class="morevert" src="../static/img/morevert.png">
+                                </div>
+                            `;
+                            commentBox.insertAdjacentHTML('beforeend', childHtml);
 
 
+                            const btnBox = document.createElement('div');
+                            const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${childComment.c_no},'${childComment.u_id}','${childComment.c_content}');" >수정</button><br>
+                                <button type="button" class="editBtn"  onclick="deleteComment(${childComment.c_no})">삭제</button>`
+                            btnBox.insertAdjacentHTML('beforeend', btnHtml);
+                            btnBox.classList.add('box-show');
+
+                            const toggleBtn = document.querySelector(`#morevert_${childComment.c_no}`);
+                            toggleBtn.after(btnBox);
+                            toggleBtn.addEventListener('click', () => {
+                                editToggle(`${childComment.c_no}`);
+                            })
+                        });
+
+
+                        // morevert 버튼을 눌렀을 때 나올 버튼 박스
                         const btnBox = document.createElement('div');
-                        const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${childComment.c_no},'${childComment.u_id}','${childComment.c_content}');" >수정</button><br>
-                            <button type="button" class="editBtn"  onclick="deleteComment(${childComment.c_no})">삭제</button>`
+                        const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${i.c_no},'${i.u_id}','${i.c_content}');" >수정</button><br>
+                            <button type="button" class="editBtn"  onclick="deleteComment(${i.c_no})">삭제</button>`
                         btnBox.insertAdjacentHTML('beforeend', btnHtml);
                         btnBox.classList.add('box-show');
 
-                        const toggleBtn = document.querySelector(`#morevert_${childComment.c_no}`);
+                        const toggleBtn = document.querySelector(`#morevert_${i.c_no}`);
                         toggleBtn.after(btnBox);
                         toggleBtn.addEventListener('click', () => {
-                            editToggle(`${childComment.c_no}`);
+                            editToggle(`${i.c_no}`);
                         })
+                        form.reset();
+
                     });
-
-
-                    // morevert 버튼을 눌렀을 때 나올 버튼 박스
-                    const btnBox = document.createElement('div');
-                    const btnHtml = `<button type="button" class="editBtn" onclick="editBox(${i.c_no},'${i.u_id}','${i.c_content}');" >수정</button><br>
-                        <button type="button" class="editBtn"  onclick="deleteComment(${i.c_no})">삭제</button>`
-                    btnBox.insertAdjacentHTML('beforeend', btnHtml);
-                    btnBox.classList.add('box-show');
-
-                    const toggleBtn = document.querySelector(`#morevert_${i.c_no}`);
-                    toggleBtn.after(btnBox);
-                    toggleBtn.addEventListener('click', () => {
-                        editToggle(`${i.c_no}`);
-                    })
-                    form.reset();
-
-                });
+                }
+                
             })
         }
 
@@ -314,11 +320,11 @@
         }
     }
         
-    function replyToggle(no, id) {
+    function replyToggle(no,replyNo, id,userid) {
         if (`<%= id%>` == 'false') {
             alert('로그인 후 사용가능한 기능입니다.');
         } else {
-            const replyBox = document.querySelector(`#div_${no}`);
+            const replyBox = document.querySelector(`#div_${replyNo}`);
             const existingReplyInput = replyBox.nextElementSibling;
 
             if (existingReplyInput && existingReplyInput.classList.contains('reply-input')) {
@@ -328,10 +334,10 @@
                 // 추가되지 않은 경우, 추가
                 const html = `
                     <div class="comment-wrapper reply-input">
-                        <div class="editBox-id" id="reply_${no}">${id}</div>
+                        <div class="editBox-id">${userid}</div>
                         <form name="reply-form" class="inputBox">
-                            <input type="hidden" name="u_id" value="${id}">
-                            <input type ="text" name="c_content" class="editBox-content">
+                            <input type="hidden" name="u_id" value="${userid}">
+                            <input type ="text" name="c_content" placeholder="${id}님께 답글쓰기" class="editBox-content">
                             <button type="button" onclick="addReply(${no}, ${id})" class="edit-btn">확인</button>
                         </form>
                     </div>

@@ -171,6 +171,7 @@ font-family: 'Noto Sans KR', sans-serif;
 
     .comment {
         width: 54vw;
+        display: inline-block;
         height: fit-content;
     }
 
@@ -206,10 +207,7 @@ font-family: 'Noto Sans KR', sans-serif;
         padding-bottom: 2vw;
     }
 
-    .comment {
-        display: inline-block;
-        height:fit-content;
-    }
+
 
     .morevert {
         position: absolute;
@@ -242,6 +240,7 @@ font-family: 'Noto Sans KR', sans-serif;
         border:none;
         color:gray;
         cursor: pointer;
+        padding:0;
     }
     .replyToggle{
         display: none;
@@ -271,15 +270,18 @@ font-family: 'Noto Sans KR', sans-serif;
         position: absolute;
         height:13vh;
         background-color:#f1f3f8;
+        text-align: center;
+        font-size: 18px;
     }    
     
     #comment_content{
-        width: 46vw;
+        width: calc(46vw - 15px);
         right: 0;
         position: absolute;
-        height:13vh;
-        background-color:#f1f3f8;
-        border:2px solid #b2b4b7;
+        height: 13vh;
+        background-color: #f1f3f8;
+        border: 2px solid #b2b4b7;
+        padding-left: 15px;
     }
 
     #commentForm button{
@@ -296,6 +298,18 @@ font-family: 'Noto Sans KR', sans-serif;
         background-color: #040c37;
         color:white;
         font-weight: 600;
+    }
+
+    #comment-box{
+        margin-bottom: 50px;
+    }
+    .default-message{
+        text-align: center;
+        height: 250px;
+        line-height: 250px;
+    }
+    .comment_id{
+        font-weight: 600x;
     }
     
 }
