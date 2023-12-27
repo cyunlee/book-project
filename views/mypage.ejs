@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/mypage.css" />
     <script defer src="/static/js/mypage.js"></script>
+    <script src="static/js/follow.js"></script>
     <!-- in HEAD -->
     <link
       rel="stylesheet"
@@ -60,12 +61,12 @@
       <div class="info">
         <div class="following-container" onclick="following()">
           <div class="info-text">팔로잉</div>
-          <div class="number">55</div>
+          <div class="number"></div>
         </div>
         <div class="line"></div>
         <div class="follower-container" onclick="follower()">
           <div class="info-text">팔로워</div>
-          <div class="number">100</div>
+          <div class="number"></div>
         </div>
         <div class="line"></div>
         <div class="wish-container">
@@ -83,102 +84,12 @@
         <div class="following-title">Following list</div>
         <div class="close4" onclick="closeFollowing()">&times;</div>
         <div class="followings-container">
-          <div class="following-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="following-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="following-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="following-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="follower-list hidden5">
         <div class="follower-title">Follower list</div>
         <div class="close5" onclick="closeFollower()">&times;</div>
         <div class="followers-container">
-          <div class="follower-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="follower-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="follower-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="follower-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="follower-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
-          <div class="follower-account">
-            <div class="account-image">
-              <img src="" alt="프로필 사진">
-            </div>
-            <div class="account-info">
-              <div class="account-name">name</div>
-              <div class="account-id">@id</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -326,6 +237,8 @@
     </div>
 
     <script>
+      follow_set();
+      follow_list_set();
       document.querySelector(".name").innerHTML = `<%= userInfo.u_name %>`;
       document.querySelector(".id").innerHTML = `<%= '@' + userInfo.u_id %>`;
       console.log(check);

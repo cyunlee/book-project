@@ -50,7 +50,7 @@ exports.unfollow = async (req, res) => {
 	}
 }
 
-exports.follow_get = async (req, res) => {
+exports.follow_number_get = async (req, res) => {
 	const myId = await tokenCheck(req);
 	let followingNum = 0;
 	let followerNum = 0;
@@ -62,6 +62,22 @@ exports.follow_get = async (req, res) => {
 	followerObj.forEach(user => {
 		followerNum++;
 	})
-	console.log(`followerNum: ${followerNum}, followingNum: ${followingNum}`)
 	res.send({followingNum : followingNum,  followerNum : followerNum});
+}
+
+exports.follow_list_get = async (req, res) => {
+	const myId = await tokenCheck(req);
+	const followingInfos = [];
+	const followerInfos = [];
+	const followingObj = await Following.findAll({where:{u_id : myId}});
+	for (const user of followingObj){
+		const temp = await User.findOne({where:{u_id: user.following}})
+		followingInfos.push(temp);
+	}
+	const followerObj = await Follower.findAll({where:{u_id : myId}});
+	for (const user of followerObj){
+		const temp = await User.findOne({where:{u_id: user.follower}})
+		followerInfos.push(temp);
+	}
+	res.send({followingObj : followingInfos,  followerObj : followerInfos});
 }
