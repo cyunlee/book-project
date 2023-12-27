@@ -56,13 +56,14 @@
         <div class="id"></div>
       </div>
       <br />
+
       <div class="info">
-        <div class="following-container" onclick="location.href='/following'">
+        <div class="following-container" onclick="following()">
           <div class="info-text">팔로잉</div>
           <div class="number">55</div>
         </div>
         <div class="line"></div>
-        <div class="follower-container" onclick="location.href='/follower'">
+        <div class="follower-container" onclick="follower()">
           <div class="info-text">팔로워</div>
           <div class="number">100</div>
         </div>
@@ -78,6 +79,108 @@
         </div>
       </div>
       <br />
+      <div class="following-list hidden4">
+        <div class="following-title">Following list</div>
+        <div class="close4" onclick="closeFollowing()">&times;</div>
+        <div class="followings-container">
+          <div class="following-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="following-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="following-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="following-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="follower-list hidden5">
+        <div class="follower-title">Follower list</div>
+        <div class="close5" onclick="closeFollower()">&times;</div>
+        <div class="followers-container">
+          <div class="follower-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="follower-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="follower-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="follower-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="follower-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+          <div class="follower-account">
+            <div class="account-image">
+              <img src="" alt="프로필 사진">
+            </div>
+            <div class="account-info">
+              <div class="account-name">name</div>
+              <div class="account-id">@id</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <br />
     <div class="categories">
@@ -185,7 +288,10 @@
         </div>
         <br />
         <div class="all-container">
-          <button class="all" onclick="location.href='/viewAll'">
+          <button
+            class="all"
+            onclick="location.href=`/viewAll/<%=userInfo.u_id%>`;"
+          >
             전체보기
           </button>
         </div>

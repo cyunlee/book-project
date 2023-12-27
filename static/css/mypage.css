@@ -404,3 +404,134 @@ h3{
     background-size: cover;
 }
 
+.following-list{
+    position: absolute;
+    top: 540px;
+    left: 250px;
+    width: 300px;
+    height: 420px;
+    background-color: #F1F3F8;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+}
+
+.following-title{
+    position: relative;
+    width: 300px;
+    height: 50px;
+    background-color: #040C37;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.follower-list{
+    position: absolute;
+    top: 540px;
+    left: 530px;
+    width: 300px;
+    height: 420px;
+    background-color: #F1F3F8;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+}
+
+.follower-title{
+    position: relative;
+    width: 300px;
+    height: 50px;
+    background-color: #040C37;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.followings-container{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 300px;
+    height: 370px;
+    overflow: auto;
+}
+
+.followers-container{
+    width: 300px;
+    height: 370px;
+    overflow: auto;
+    padding-top: 15px;
+}
+
+.follower-account{
+    width: 280px;
+    height: 80px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.following-account{
+    width: 280px;
+    height: 80px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.close4{
+    font-size: 24px;
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.close5{
+    font-size: 24px;
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.hidden4{
+    display: none;
+}
+
+.hidden5{
+    display: none;
+}
+
+.account-id{
+    color: #ADADAD;
+}
+.account-image{
+    width: 80px;
+    height: 80px;
+    margin-right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.account-image img {
+    min-width: 65px;
+    max-width: 65px;
+    max-height: 65px;
+    min-height: 65px;
+    border-radius: 50%;
+    border: 1px solid lightgrey;
+}
+.account-info{
+    margin-top: 8px;
+}
