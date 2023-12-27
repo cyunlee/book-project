@@ -197,12 +197,10 @@ font-family: 'Noto Sans KR', sans-serif;
 
     .comment-wrapper {
         position: relative;
-        left: 50%;
         /* border: 1px solid black; */
         width: 54vw;
         /* height: 100px; */
         height: fit-content;
-        transform: translateX(-50%);
         margin-top: 2vw;
         padding-bottom: 2vw;
     }
@@ -302,6 +300,9 @@ font-family: 'Noto Sans KR', sans-serif;
 
     #comment-box{
         margin-bottom: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     .default-message{
         text-align: center;
