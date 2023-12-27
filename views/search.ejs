@@ -13,13 +13,29 @@
 
 
 <body>
-    <h1>검색 결과 페이지</h1>
+    <div id="top">
+        <a href='/main'><img src="../static/img/logo.png"></a>
 
-    <h2>검색창</h2>
-	<form action="/searchList" method="get">
+    </div>
+    <!-- <h1>검색 결과 페이지</h1> -->
+
+    <!-- <h2>검색창</h2> -->
+
+    <!-- <div class="top_h2">어쩌라고 저쩌라고 어쩌라고 저쩌라고<br>검색해 검색해 검색</div> -->
+		<div id="top_ad">
+			<form action="/searchList" method="get">
+				<input type="text" id="title" name="title" placeholder="통합 검색" value="<%= query || '' %>">
+				<!-- <button type="button" id="searchBtn" onclick="search();">검색</button> -->
+				<button id="searchBtn">검색</button>
+			</form>
+		</div>
+		<div id="result"></div>
+		<div class="top_explain">찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요</div>
+
+	<!-- <form action="/searchList" method="get">
 		<input type="text" name="title" id="" value="<%= query || '' %>">
 		<button>검색</button>
-	</form>
+	</form> -->
 
 
 <main>
@@ -45,7 +61,7 @@
                                 <p class="pubDate"><%= ele.pubDate %></p>
                             </div>
                             <p class="isbn">ISBN <%= ele.isbn  %></p>
-                            <p class="description"></p>
+                            <p class="description"><%= ele.description  %></p>
                             <p class="categoryName"></p>
                         </div>
                     </div>
