@@ -13,6 +13,17 @@ const sequelize = new Sequelize(
 const User = require('./User')(sequelize, Sequelize);
 const Comment = require('./Comment')(sequelize,Sequelize);
 const Book = require('./Book')(sequelize,Sequelize);
+const OtherUser = require('./OtherUser')(sequelize, Sequelize);
+const Follower = require('./Follower')(sequelize,Sequelize)
+const Following = require('./Following')(sequelize,Sequelize)
+
+// 유저자신과 상대의 다:다 설정(팔로우)
+User.belongsToMany(OtherUser, { through: Follower, as: 'UsersFollowers' });
+OtherUser.belongsToMany(User, { through: Follower });
+
+// 유저자신과 상대의 다:다 설정(팔로잉)
+User.belongsToMany(OtherUser, {through: Following, as: 'UsersFollwings'});
+OtherUser.belongsToMany(User, {through: Following});
 
 // 유저와 댓글 1:다 설정
 User.hasMany(Comment, {
@@ -58,7 +69,9 @@ Book.belongsTo(User,{
 db.User = User;
 db.Comment = Comment;
 db.Book = Book;
-
+db.OtherUser = OtherUser;
+db.Follower = Follower;
+db.Following = Following;
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 

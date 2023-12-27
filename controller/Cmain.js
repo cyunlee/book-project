@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { Op } = require('sequelize');
-const { User, Book, Comment } = require('../models/index');
+const { User, Book, Comment, OtherUser } = require('../models/index');
 const model = require('../models/index');
 const axios = require('axios')
 const bcrypt = require('bcrypt');
@@ -31,7 +31,6 @@ const tokenCheck = async (req) => {
 		}
 	}
 }
-
 
 //로그인 성공해서 jwt 갖고있을시 서버에서 토큰을 조회해서 확인되면 user이름 홈화면에 반영되어 렌더되도록.
 exports.main = async (req, res) => {
@@ -123,6 +122,7 @@ exports.signup_post = async (req, res) => {
 		else {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
 			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
+			await OtherUser.create({u_id : u_id});
 			fs.mkdirSync(`./static/img/${u_id}`);
 			res.send({result : true});
 

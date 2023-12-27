@@ -69,7 +69,7 @@ exports.get_bestSeller = async (req,res)=>{
       },
     });
 
-    console.log('Cbook getBestSeller response > ',response.data.item);
+    // console.log('Cbook getBestSeller response > ',response.data.item);
     const items = response.data.item;
     res.json(items);
 
@@ -93,7 +93,7 @@ exports.get_brendNew = async (req,res)=>{
         Cover:'Big',
       },
     });
-    console.log('Cbook getBrendNew response > ',response.data.item);
+    //console.log('Cbook getBrendNew response > ',response.data.item);
     const items = response.data.item;
     res.json(items);
 
@@ -127,8 +127,8 @@ exports.get_detail= async (req,res)=>{
       },
     });
 
-    console.log('Cbook getDetail response > ',response.data.item);
-    console.log('Cbook getDetail tokenId > ',tokenId);
+    // console.log('Cbook getDetail response > ',response.data.item);
+    // console.log('Cbook getDetail tokenId > ',tokenId);
     const items = response.data.item;
 
     res.send({items,id:tokenId});
