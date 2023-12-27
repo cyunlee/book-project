@@ -19,6 +19,15 @@ const closeBtn1 = document.querySelector('.close1');
 const closeBtn2 = document.querySelector('.close2');
 const closeBtn3 = document.querySelector('.close3');
 
+const followingContainer = document.querySelector('.following-container');
+const follwerContainer = document.querySelector('.follower-container');
+
+const followingList = document.querySelector('.following-list');
+const followerList = document.querySelector('.follower-list');
+
+const closeFollowingBtn = document.querySelector('.close4');
+const closeFollowerBtn = document.querySelector('.close5');
+
 function showSearch1() {
     top1.addEventListener('click', () => {
         search1.classList.remove('hidden1');
@@ -148,6 +157,21 @@ async function delete_user() {
     }
 }
 
+function following() {
+    followingList.classList.remove('hidden4');
+}
+
+function follower() {
+    followerList.classList.remove('hidden5');
+}
+
+function closeFollowing() {
+    followingList.classList.add('hidden4');
+}
+
+function closeFollower() {
+    followerList.classList.add('hidden5');
+}
 
 selectPhoto();
 uploadPhoto();

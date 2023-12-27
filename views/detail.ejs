@@ -30,7 +30,7 @@
         </div>
     </form> -->
 
-    <div class="comment-area">
+    <div>
         <form name="comment-form" id="commentForm">
             <input type="text" id="comment_id" name="u_id" placeholder="id" disabled>
             <input type="text" id="comment_content" name="c_content" placeholder="댓글을 남겨보세요"><br>
@@ -84,19 +84,20 @@
                     <div class="bookSide" id=sideResult>
                         <table style="width:100%" class="bookTable" id=resultTable>
                             <tr>
-                                <td class="subTitle">지은이</td>
+                                <td>지은이</td>
                                 <td>|</td>
-                                <td class="subDes">${detailItem.author}</td>
+                                <td>${detailItem.author}</td>
                             </tr>
                             <tr>
-                                <td class="subTitle">출판사</td>
+                                <td>출판사</td>
                                 <td>|</td>
-                                <td class="subDes">${detailItem.publisher}</td>
+                                <td>${detailItem.publisher}</td>
                             </tr>
                             <tr>
-                                <td class="subTitle">ISBN</td>
+                                <td>ISBN</td>
+
                                 <td>|</td>
-                                <td class="subDes">${detailItem.isbn}</td>
+                                <td>${detailItem.isbn}</td>
                             </tr>
                         </table>
                         <hr>
@@ -153,7 +154,7 @@
                                     <div class="comment_id comment">${i.u_id}</div>
                                     <div class="comment_content comment">${i.c_content}</div>
                                     <div class="comment_date comment">${i.c_date}</div>
-                                    <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},null,${i.u_id},${id});">답글쓰기</button>
+                                    <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${i.c_no},'${i.u_id}','${id}');">답글쓰기</button>
                                 </div>
                                 <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
                             </div>
@@ -172,7 +173,7 @@
                                         <div class="comment_id comment">${childComment.u_id}</div>
                                         <div class="comment_content comment"><span>${i.u_id}</span>  ${childComment.c_content}</div>
                                         <div class="comment_date comment">${childComment.c_date}</div>
-                                        <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${childComment.c_no},${childComment.u_id},${id});">답글쓰기</button>
+                                        <button type="button" class="applyBtn" id="replyBtn" onclick="replyToggle(${i.c_no},${childComment.c_no},'${childComment.u_id}','${id}');">답글쓰기</button>
                                     </div>
                                     <img id ="morevert_${childComment.c_no}" class="morevert" src="../static/img/morevert.png">
                                 </div>
@@ -318,6 +319,7 @@
             }
         }
     }
+
         
     function replyToggle(no,replyNo, id,userid) {
         if (`<%= id%>` == 'false') {
@@ -337,7 +339,7 @@
                         <form name="reply-form" class="inputBox">
                             <input type="hidden" name="u_id" value="${userid}">
                             <input type ="text" name="c_content" placeholder="${id}님께 답글쓰기" class="editBox-content">
-                            <button type="button" onclick="addReply(${no}, ${id})" class="edit-btn">확인</button>
+                            <button type="button" onclick="addReply(${no}, '${id}')" class="edit-btn">확인</button>
                         </form>
                     </div>
                 `;
@@ -375,6 +377,7 @@
                 });
         }
     }
+
     </script>
 </body>
 
