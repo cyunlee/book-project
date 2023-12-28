@@ -282,11 +282,7 @@
         display: block;
         margin-left: 20px;
     }*/
-    .divWrapper {
-        width: 54vw;
-        height: fit-content;
-    }
-
+   
     .comment {
         width: 54vw;
         display: inline-block;
@@ -306,17 +302,17 @@
         right: 30px;
         border: 1px black solid;
         z-index: 100;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .comment_inner_wrapper {
         width: 54vw;
-        display: flex;
-        flex-direction: column;
+        display: inline-block;
     }
 
     .comment-wrapper {
         position: relative;
-
         /* border: 1px solid black; */
         width: 54vw;
         /* height: 100px; */
@@ -325,15 +321,12 @@
         padding-bottom: 2vw;
     }
 
-    .comment {
-        display: inline-block;
-        height: fit-content;
-    }
+
 
     .morevert {
         position: absolute;
         right: 0;
-        top: 0;
+        top:0;
     }
 
     .editBox-content {
@@ -356,47 +349,39 @@
         margin-bottom: 2vw;
         margin-right: 2vw;
     }
-
-    .applyBtn {
+    .applyBtn{
         background-color: #f1f3f8;
-        border: none;
-        color: gray;
+        border:none;
+        color:gray;
         cursor: pointer;
         padding:0;
     }
-
-    .replyToggle {
+    .replyToggle{
         display: none;
     }
-
-    .comment-wrapper.reply-comment {
-        /*width: calc(54vw - 40px);*/
+    .comment-wrapper.reply-comment{
+        width: calc(54vw - 40px);
+        padding-left: 40px;
     }
 
     div.comment-wrapper:not(:last-child) {
         /* 스타일 적용 */
         border-bottom: 2px solid #b2b4b7;
-    }
+      }
 
-    #commentForm {
+    #commentForm{
         margin-top: 3vh;
-        width: 54vw;
-        position: relative;
-        left: 50%;
+        width:54vw;
+        position:relative;
+        left:50%;
         transform: translateX(-50%);
         height: 20vh;
 
     }
 
-    #comment_id {
+    #comment_id{
         width: 7vw;
         position: absolute;
-        height: 13vh;
-        background-color: #f1f3f8;
-    }
-
-    #comment_content {
-        width: 46vw;
         height:13vh;
         background-color:#f1f3f8;
         text-align: center;
@@ -410,27 +395,8 @@
         height: 13vh;
         background-color: #f1f3f8;
         border: 2px solid #b2b4b7;
+        padding-left: 15px;
     }
-
-    form[name="comment-form"]>button {
-        width: 54vw;
-        right: 0;
-        position: absolute;
-        background-color: #b2b4b7;
-        top: 13vh;
-        border: none;
-    }
-
-    #comment-box {
-        /*display: flex;
-        align-items: center;
-        flex-direction: column;
-        height: 20vh;*/
-        position: absolute;
-        transform: translateX(-50%);
-        left: 50vw;
-    }
-
 
     #commentForm button{
         position: absolute;
@@ -461,15 +427,6 @@
     }
     .comment_id{
         font-weight: 600x;
-    }
-    .comment_inner_wrapper>img {
-        /*reply 아이콘*/
-        width: 60px;
-        height: 60px;
-        position: absolute;
-    }
-    .comment_inner_wrapper > .comment {
-        padding-left: 80px;
     }
 
     .bMarkSet > button {
