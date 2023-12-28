@@ -285,26 +285,42 @@
     }*/
    
     .comment {
-        width: 54vw;
+        width: 44vw;
         display: inline-block;
-        height: fit-content;
+        min-height: 30px;
+        max-height: fit-content;
+        margin-left: 50px;
+        line-height: 30px;
+        word-break: break-all; /* 추가 */
+    }
+    .rcomment{
+        width: 40vw;
+        display: inline-block;
+        min-height: 30px;
+        max-height: fit-content;
+        margin-left: 50px;
+        line-height: 30px;
+        word-break: break-all; /* 추가 */
     }
 
     .morevertToggle {
-        background-color: aqua;
+        
     }
 
     .box-show {
-        width: 70px;
-        height: 50px;
+        width: 75px;
+        height: 60px;
         display: none;
         position: absolute;
         top: 26px;
-        right: 30px;
-        border: 1px black solid;
+        right: 10px;
+        /* border: 1px black solid; */
         z-index: 100;
         flex-wrap: wrap;
         justify-content: center;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 1px 1px 1px 1px #80808045;
     }
 
     .comment_inner_wrapper {
@@ -318,8 +334,8 @@
         width: 54vw;
         /* height: 100px; */
         height: fit-content;
-        margin-top: 2vw;
-        padding-bottom: 2vw;
+        margin-top: 3vh;
+        padding-bottom: 3vh;
     }
 
 
@@ -331,24 +347,61 @@
     }
 
     .editBox-content {
-        width: 98%;
-        height: 100%;
+        /* width: 98%;
+        height: 100%; */
+        width: calc(100% - 90px);
+        right: 0;
+        position: absolute;
+        height: 13vh;
+        background-color: #ffffff;
+        border: 2px solid #b2b4b7;
+        padding-left: 20px;
+        padding-top: 24px;
+        padding: 24px 20px 0 20px;
     }
 
     .inputBox {
-        height: 100px;
+        height: 17vh;
     }
 
     .editBox-id {
         position: absolute;
+        padding-top: 20px;
+        padding-left: 70px;
+        z-index: 100;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .reply-comment .editBox-id{
+        padding-left:30px;
     }
 
     .edit-btn {
         position: absolute;
         bottom: 0;
         right: 0;
-        margin-bottom: 2vw;
-        margin-right: 2vw;
+        margin-bottom: 5vh;
+        margin-right: 2vh;
+        background-color: transparent;
+        border: none;
+        font-weight: 700;
+        color: #9c9c9c;
+        width: 8vh;
+    }
+    .edit-btn:hover{
+        color:#040c37;
+    }
+
+    .editBtn{
+        background-color: transparent;
+        border: 0;
+        cursor:pointer;
+        width: 100%;
+        padding:1px;
+    }
+    .editBtn:hover{
+        background-color: #d7d7d7;
     }
     .applyBtn{
         background-color: #f1f3f8;
@@ -356,6 +409,7 @@
         color:gray;
         cursor: pointer;
         padding:0;
+        margin-left: 3vh;
     }
     .replyToggle{
         display: none;
@@ -376,27 +430,35 @@
         position:relative;
         left:50%;
         transform: translateX(-50%);
-        height: 20vh;
+        height: 22vh;
 
     }
 
     #comment_id{
-        width: 7vw;
+        width: calc(100% - 26px);
         position: absolute;
-        height:13vh;
-        background-color:#f1f3f8;
-        text-align: center;
-        font-size: 18px;
+        height: 1vh;
+        background-color: #f1f3f8;
+        text-align: left;
+        /* font-size: 18px; */
+        z-index: 100;
+        padding-left: 20px;
+        border: none;
+        top: 10px;
+        left: 1px;
+        padding-top: 17px;
+        font-weight: 600;
     }    
     
     #comment_content{
-        width: calc(46vw - 15px);
+        width: calc(100% - 25px);
         right: 0;
         position: absolute;
-        height: 13vh;
+        height: 12vh;
         background-color: #f1f3f8;
         border: 2px solid #b2b4b7;
-        padding-left: 15px;
+        padding-left: 20px;
+        padding-top: 24px;
     }
 
     #commentForm button{
@@ -428,6 +490,13 @@
     }
     .comment_id{
         font-weight: 600x;
+    }
+    .comment-profile{
+        width: 5vh;
+        height: 5vh;
+        border-radius: 50%;
+        position: absolute;
+        top: 5px;
     }
 
     .bMarkSet > button {

@@ -153,7 +153,11 @@ exports.get_comments = async (req,res)=>{
     const comments = await Comment.findAll({
       where:{
         c_isbn:req.body.c_isbn,
-      }
+      },
+	  include: [{
+        model: User,
+        attributes: ['u_profile'],
+      }],
     })
 
     res.send({comments,id:tokenId});

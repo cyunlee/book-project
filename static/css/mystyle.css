@@ -276,7 +276,9 @@ li > img {
 }
 #result{
 	background-color: white;
-	width: calc( 40% + 10vh + 80px);
+	width: calc( 50vh + 10vh + 80px);
+	/* height:40vh; */
+	/* overflow: scroll; */
 	position: absolute;
 	z-index: 200;
 	left: 50%;
