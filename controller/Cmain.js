@@ -5,6 +5,7 @@ const model = require('../models/index');
 const axios = require('axios')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const exp = require('constants');
 
 const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
@@ -197,15 +198,15 @@ exports.viewAll = async (req, res) => {
 			// console.log('@@@@@@@@@@@@@@@@', myBooksResponse);
 			// 각각의 응답에서 데이터 추출 및 처리
 
-			const booksViewall = myBooksResponse.map(res => res.data.item);
-			// console.log('$$$$$$$$$$',booksViewall);
-			const viewAllData = booksViewall.map(innerArray => innerArray[0]);
+		const booksViewall = myBooksResponse.map(res => res.data.item);
+		// console.log('$$$$$$$$$$',booksViewall);
+		const viewAllData = booksViewall.map(innerArray => innerArray[0]);
 
-			res.render('viewAll', { viewAllData });
-		}
-	} catch (err) {
-		console.error(err);
+		res.render('viewAll', {viewAllData});
 	}
+} catch(err) {
+	console.error(err);
+}
 };
 
 exports.viewLikes = (req, res) => {
@@ -288,7 +289,6 @@ exports.get_my_comments = async (req, res) => {
 }
 
 // 검색 결과
-
 exports.searchList = async (req, res) => {
 	console.log('Cmain search req.query >', req.query);
 	const query = req.query.title
@@ -329,7 +329,7 @@ exports.searchList = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
 // 검색 결과 -> 특정 책 클릭
 exports.searchDetail = async (req, res) => {
@@ -362,13 +362,12 @@ exports.searchDetail = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
-// 평가 데이터 렌더(좋아요, 싫어요)
+// 좋아요 싫어요 유무 렌더
 exports.ratingData = async (req, res) => {
 	console.log('rating query >', req.query);
 	const { b_isbn, u_id } = req.query;
-
 	try {
 		const result = await Book.findOne({
 			attributes: ['b_rating'],
@@ -392,7 +391,7 @@ exports.ratingData = async (req, res) => {
 		res.status(500).send('서버 오류');
 	}
 
-}
+};
 
 // 좋아요
 exports.createLike = async (req, res) => {
@@ -409,7 +408,7 @@ exports.createLike = async (req, res) => {
 		res.send('Internal Server Error!')
 	}
 
-}
+};
 
 // 좋아요 취소
 exports.deleteLike = async (req, res) => {
@@ -424,7 +423,7 @@ exports.deleteLike = async (req, res) => {
 		console.error(err);
 		res.send('Internal Server Error!')
 	}
-}
+};
 
 // 싫어요
 exports.createBad = async (req, res) => {
@@ -439,7 +438,7 @@ exports.createBad = async (req, res) => {
 		res.send('Internal Server Error!')
 	}
 
-}
+};
 
 // 싫어요 취소
 exports.deleteBad = async (req, res) => {
@@ -454,7 +453,7 @@ exports.deleteBad = async (req, res) => {
 		console.error(err);
 		res.send('Internal Server Error!')
 	}
-}
+};
 
 // 유저들이 이 책과 함께 좋아한 다른 책 렌더
 exports.otherLikes = async (req, res) => {
@@ -529,7 +528,7 @@ exports.otherLikes = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
 // 메인 페이지에 좋아요 많은 책 렌더
 exports.mostLike = async (req, res) => {
@@ -578,9 +577,9 @@ exports.mostLike = async (req, res) => {
 
 			res.send(mainLikes);
 
-		}
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ error: 'Internal Server Error' });
-	}
-};
+    }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
