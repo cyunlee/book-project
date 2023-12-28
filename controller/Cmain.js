@@ -176,6 +176,52 @@ exports.otherpage = (req, res) => {
 	res.render('otherpage');
 }
 
+//나의 위시리스트
+exports.myWish = async (req, res) => {
+    const {u_id, b_wish} = req.query
+    try{
+        const myWish = await Book.findAll({
+            attributes: ['b_isbn'],
+            where: {
+                u_id, b_wish
+            }
+        })
+        // console.log('———내 위시리스트————',myWish);
+        if(myWish=='') {
+            res.send('위시리스트에 추가한 책이 없습니다.')
+        } else {
+            const myWishIsbn = myWish.map(wish => wish.b_isbn);
+            // console.log('여기!!!!!!!!!!!!!!!!!', myWishIsbn);
+            const myWishData = myWishIsbn.map(isbn => {
+                return axios({
+                    method: 'get',
+                    url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+                    params: {
+                        ttbkey: 'ttbclue91204001',
+                        ItemId: isbn,
+                        ItemIdType: 'ISBN',
+                        Output: 'JS',
+                        Cover: 'Big',
+                        Version: 20131101
+                    }
+                });
+            });
+            const myWishResponse = await Promise.all(myWishData);
+            // console.log('@@@@@@@@@@@@@@@@', myWishResponse);
+            // 각각의 응답에서 데이터 추출 및 처리
+            const wishBooks = myWishResponse.map(res => res.data.item);
+            // console.log('$$$$$$$$$$',wishBooks);
+            const myWishList = wishBooks.map(innerArray => innerArray[0]);
+            // console.log('!@#%^&^%$#@#$%^&*&^%$#', myWishList);
+            res.send(myWishList);
+        }
+    } catch(err) {
+        console.error(err);
+    }
+
+}
+
+
 exports.getViewAllData = async(req, res) => {
 	const u_id = req.query.u_id;
 try{
