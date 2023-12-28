@@ -1,34 +1,3 @@
-async function follow() {
-	const otherUser = document.querySelector('#id').value;
-	otherUser = otherUser.substr(1)
-	console.log('idCheck>>>>>', otherUser);
-	try {
-		await axios({
-			method: "POST",
-			url: "/follow",
-			data: {
-				followingId: otherUser
-			}
-		});	} catch (error) {
-		console.log('interval error : ',error);
-	}
-}
-
-async function unfollow() {
-	const otherUser = document.querySelector('#follow').value;
-	try {
-		await axios({
-			method: "POST",
-			url: "/unfollow",
-			data: {
-				followingId: otherUser
-			}
-		});
-	} catch (error) {
-		console.log('interval error : ',error);
-	}
-}
-
 async function follow_set(otherId){
     const follower = document.querySelector('.follower-container .number')
     const following = document.querySelector('.following-container .number')
