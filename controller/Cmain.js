@@ -157,7 +157,6 @@ exports.otherpage = async (req, res) => {
 		const OtherUserInfo = await User.findOne({
 			where: { u_id : otherId}
 		})
-		console.log('>>>>>>',OtherUserInfo);
 		res.render('otherpage', {userInfo : OtherUserInfo});
 	} catch (error) {
 		console.log('interval error : ',error);
@@ -170,10 +169,6 @@ exports.following = (req, res) => {
 
 exports.follower = (req, res) => {
 	res.render('follower');
-}
-
-exports.otherpage = (req, res) => {
-	res.render('otherpage');
 }
 
 exports.getViewAllData = async(req, res) => {

@@ -87,3 +87,15 @@ exports.follow_list_get = async (req, res) => {
 	}
 	res.send({followingObj : followingInfos,  followerObj : followerInfos});
 }
+
+exports.followBtnCheck = async (req, res) => {
+	const otherId = req.body.otherId;
+	console.log('check>>>>>>>>>>>>>>>>>>>>>>>>>>',otherId);
+	const myId = await tokenCheck(req);
+	const check = Follower.findOne({where:{u_id : myId, follower: otherId}})
+	if (check) {
+		res.send({result : true})
+	} else {
+		res.send({result : false})
+	}
+}

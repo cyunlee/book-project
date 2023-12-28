@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/static/css/otherpage.css" />
     <script defer src="/static/js/mypage.js"></script>
     <script src="/static/js/follow.js"></script>
-    <script src="/static/js/otherpage.js"></script>
+    <!-- <script src="/static/js/otherpage.js"></script> -->
 
     <!-- in HEAD -->
     <link
@@ -69,6 +69,7 @@
         <div class="line"></div>
         <div class="read-container">
           <div class="info-text">읽은 책</div>
+          <a href=""></a>
           <div class="number">100</div>
         </div>
       </div>
@@ -195,9 +196,69 @@
 
     <script>
       const otherId = '<%= userInfo.u_id%>';
-      console.log('ddddd>>>>>',otherId);
       follow_set(otherId);
       follow_list_set(otherId);
+      followBtnSet(otherId);
+      const followBtn = document.querySelector('.follow');
+      const unfollowBtn = document.querySelector('.unfollow');
+
+      // async function followBtnSet(otherId) {
+      //   try {
+      //     const response = await axios({
+      //       method: "GET",
+      //       url: "/followBtnCheck",
+      //       data: {
+      //         otherId : otherId
+      //       }
+      //     })
+      //     if (response.data.result) {
+      //       followBtn.classList.remove('hidden');
+      //       unfollowBtn.classList.add('hidden');
+      //     }
+      //   } catch (error) {
+      //     console.log('interval error : ',error);
+      //   }
+      // }
+
+      // async function follow() {
+      //   followBtn.addEventListener('click', () => {
+      //         followBtn.classList.add('hidden');
+      //         unfollowBtn.classList.remove('hidden');
+      //     });
+      //   try {
+      //     const response = await axios({
+      //       method: "POST",
+      //       url: "/follow",
+      //       data: {
+      //         followingId: otherId
+      //       }
+      //     })
+      //     location.href = `/otherpage/:${otherId}`;
+      //   } catch (error) {
+      //       console.log('interval error : ',error);
+      //     }
+      // }
+
+      // async function unfollow() {
+      //   unfollowBtn.addEventListener('click', () => {
+      //         followBtn.classList.remove('hidden');
+      //         unfollowBtn.classList.add('hidden');
+      //     });
+      //   try {
+      //     const response = await axios({
+      //       method: "POST",
+      //       url: "/unfollow",
+      //       data: {
+      //         followingId: otherId
+      //       }
+      //     })
+      //     location.href = `/otherpage/:${otherId}`;
+      //   } catch (error) {
+      //     console.log('interval error : ',error);
+      //   }
+      // }
+
+
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
         // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
