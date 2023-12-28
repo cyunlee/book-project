@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/static/css/mypage.css" />
-  <script defer src="/static/js/mypage.js"></script>
-  <script src="static/js/follow.js"></script>
-  <!-- in HEAD -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/mypage.css" />
+    <script defer src="/static/js/mypage.js"></script>
+    <script src="static/js/follow.js"></script>
+    <script src="static/js/viewAll.js"></script>
+    <!-- in HEAD -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
   <!-- axios cdn -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -106,6 +108,16 @@
         </div>
         <div class="close2" onclick="close2()">&times;</div>
       </div>
+      <br />
+      <div class="following-list hidden4">
+        <div class="following-title">Following list</div>
+        <div class="close4" onclick="closeFollowing()">&times;</div>
+        <div class="followings-container"></div>
+      </div>
+      <div class="follower-list hidden5">
+        <div class="follower-title">Follower list</div>
+        <div class="close5" onclick="closeFollower()">&times;</div>
+        <div class="followers-container"></div>
       <div class="hidden3 lifelist-search" id="search3">
         <div class="lifelist-container">
           <input type="text" class="lifelist-input" placeholder="검색할 top3책을 입력해주세요." />
@@ -140,40 +152,10 @@
       </div>
     </div>
 
-    <br />
-    <div class="category">
-      <h3>읽은 책</h3>
-      <div class="bookstack-list">
-        <div class="bookstack ten">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack nine">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack eight">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack seven">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack six">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack five">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack four">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack three">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack two">
-          <div class="bookstack-title"></div>
-        </div>
-        <div class="bookstack one">
-          <div class="bookstack-title">소비의 심리학</div>
-        </div>
+      <br />
+      <div class="category">
+        <h3>읽은 책</h3>
+        <div class="bookstack-list"> </div>
       </div>
       <br />
       <div class="all-container">
@@ -278,4 +260,32 @@
   loadComment();
 </script>
 
+    <script>
+      follow_set();
+      follow_list_set();
+      const uID = '<%= userInfo.u_id %>';
+      get_data_and_stack(uID);
+      document.querySelector(".name").innerHTML = `<%= userInfo.u_name %>`;
+      document.querySelector(".id").innerHTML = `<%= '@' + userInfo.u_id %>`;
+      console.log(check);
+      new Swiper(".swiper", {
+        // 다양한 옵션 설정,
+        // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
+        slidesPerView: 3,
+        spaceBetween: 20,
+        navigation: {
+          prevEl: ".swiper-button-prev",
+          nextEl: ".swiper-button-next",
+        },
+      });
+      function check() {
+        const check = document
+          .querySelector(".image-setting")
+          .getAttribute("src");
+        console.log(check);
+      }
+
+    </script>
+    <button onclick="delete_user()">회원탈퇴</button>
+  </body>
 </html>

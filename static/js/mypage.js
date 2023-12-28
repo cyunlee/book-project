@@ -177,3 +177,5 @@ function closeFollower() {
 
 selectPhoto();
 uploadPhoto();
+
+

@@ -354,7 +354,7 @@ h3{
 }
 .bookstack{
     width: 360px;
-    height: 60px;
+    height: fit-content;
     border: 1px solid lightgrey;
     background-color: white;
     display: flex;
