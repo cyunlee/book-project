@@ -301,8 +301,12 @@
                     });
                 }
                 
-            })
-        }
+            });
+    
+    };
+
+
+
 
         function editToggle(no) {
             const toggleBtn = document.querySelector(`#morevert_${no}`);
@@ -516,7 +520,7 @@
             console.log('!!!>', otherLikes.data);
             const newData = otherLikes.data;
             // console.log(newData);
-                if(otherLikes)
+                if(!otherLikes.data.length == 0){
                     { const ptag = document.querySelector('.ptag');
                     ptag.innerText = '유저들이 이 책과 함께 좋아한 다른 책'
 
@@ -535,6 +539,8 @@
                             `;
                     });
                 }
+                }
+                    
         } catch(err) {
             console.log(err)
         }
@@ -631,7 +637,6 @@
     // 위시 버튼
     const bMark = document.querySelector('.bMark');
     const bMarkA = document.querySelector('.bMarkA');
-    console.log('-------------',bMark);
 
     // 위시 유무 렌더
     (async () => {
@@ -696,6 +701,24 @@
                 }
             })
     });
+    
+    // 위시리스트 책 조회 테스트중
+(async () => {
+        try {
+            const viewAll = await axios({
+                url: '/myWish',
+                method: 'get',
+                params: {
+                    u_id : id, // 이건 예시고 요청 페이지에서 선언해둔 id 변수 이름으로 대체해주세요!
+                    b_wish : 'wish'
+                }
+            })
+            console.log('내가 읽은 모든 책>',viewAll);
+        } catch(err) {
+            console.log(err)
+        }
+    
+    })();
     </script>
 </body>
 

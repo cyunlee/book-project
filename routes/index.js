@@ -113,26 +113,29 @@ router.get('/searchDetail', controller.searchDetail);
 
 
 // 좋아요 싫어요 유무 렌더
-router.get('/ratingData', controller.ratingData);
+router.get('/ratingData', bookController.ratingData);
 
 // 좋아요, 좋아요 취소, 싫어요, 싫어요 취소
-router.post('/createLike', controller.createLike);
-router.delete('/deleteLike', controller.deleteLike);
-router.post('/createBad', controller.createBad); 
-router.delete('/deleteBad', controller.deleteBad);
+router.post('/createLike', bookController.createLike);
+router.delete('/deleteLike', bookController.deleteLike);
+router.post('/createBad', bookController.createBad); 
+router.delete('/deleteBad', bookController.deleteBad);
 
 // 유저들이 이 책과 함께 좋아한 다른 책 렌더
-router.get('/otherLikes', controller.otherLikes);
+router.get('/otherLikes', bookController.otherLikes);
 
 // 팔로우 클릭시
 router.post('/follow', followController.follow);
 router.post('/unfollow', followController.unfollow);
 
 // 북마크 유무 렌더
-router.get('/wishData', controller.wishData);
+router.get('/wishData', bookController.wishData);
 
 // 위시, 위시 취소
-router.post('/createWish', controller.createWish);
-router.delete('/deleteWish', controller.deleteWish);
+router.post('/createWish', bookController.createWish);
+router.delete('/deleteWish', bookController.deleteWish);
+
+// 나의 위시리스트
+router.get('/myWish', controller.myWish);
 
 module.exports = router;
