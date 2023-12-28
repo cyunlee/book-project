@@ -346,172 +346,6 @@ exports.searchDetail = async (req, res) => {
 	}
 };
 
-// 좋아요 싫어요 유무 렌더
-exports.ratingData = async (req, res) => {
-	console.log('rating query >', req.query);
-	const { b_isbn, u_id } = req.query;
-	try {
-		const result = await Book.findOne({
-			attributes: ['b_rating'],
-			where: {
-				b_isbn: b_isbn, u_id: u_id
-			},
-			raw: true
-		})
-		// console.log('Cmain ratingData>', result.b_rating);
-		if (!result) {
-			res.send('평가하지 않음')
-		} else {
-			console.log('------이 책에 남긴 평가------', result.b_rating)
-			res.send(result.b_rating)
-		}
-		// console.log(result)
-	} catch (error) {
-		// 오류 처리
-		console.log('--------------')
-		console.error(error);
-		res.status(500).send('서버 오류');
-	}
-
-};
-
-// 좋아요
-exports.createLike = async (req, res) => {
-	try {
-		console.log('좋아요 데이터 전송', req.body);
-		const { b_isbn, u_id, b_rating } = req.body;
-		// const newBook = 
-		await Book.create({
-			b_isbn, u_id, b_rating
-		})
-		// res.send(newBook)
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-
-};
-
-// 좋아요 취소
-exports.deleteLike = async (req, res) => {
-	try {
-		const { b_isbn, u_id, b_rating } = req.body;
-		await Book.destroy({
-			where: {
-				b_isbn, u_id, b_rating
-			}
-		})
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-};
-
-// 싫어요
-exports.createBad = async (req, res) => {
-	try {
-		console.log('싫어요 데이터 전송', req.body);
-		const { b_isbn, u_id, b_rating } = req.body;
-		await Book.create({
-			b_isbn, u_id, b_rating
-		})
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-
-};
-
-// 싫어요 취소
-exports.deleteBad = async (req, res) => {
-	try {
-		const { b_isbn, u_id, b_rating } = req.body;
-		await Book.destroy({
-			where: {
-				b_isbn, u_id, b_rating
-			}
-		})
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-};
-
-// 유저들이 이 책과 함께 좋아한 다른 책 렌더
-exports.otherLikes = async (req, res) => {
-	console.log('----좋아요 기반 데이터 쿼리----', req.query);
-	const { b_isbn, b_rating, u_id } = req.query;
-	try {
-		const likeUser = await Book.findAll({
-			attributes: ['u_id'],
-			where: {
-				b_isbn, b_rating,
-				u_id: {
-					[Op.not]: u_id 
-				},
-			},
-			order: model.sequelize.random(),
-			limit: 1,
-			raw: true,
-		})
-		console.log('---------findall---------')
-		console.log(likeUser[0])
-		if (likeUser == '') {
-			// res.send('이 책을 좋아한 유저가 없음')
-		} else {
-			const isbnResult = await Book.findAll({
-				attributes: ['b_isbn'],
-				where: {
-					u_id: likeUser[0].u_id,
-					b_rating: 'like',
-					b_isbn: {
-						[Op.not]: b_isbn
-					}
-				},
-				order: model.sequelize.random(),
-				limit: 5,
-				raw: true
-			})
-			// console.log(likeUser[0].u_id)
-			// res.send(isbnResult);
-
-			// console.log(isbnResult);
-			const isbnList = isbnResult.map(result => result.b_isbn);
-			console.log('map 메서드 적용>', isbnList);
-			// res.send(isbnList);
-
-			const isbnDetail = isbnList.map(isbn => {
-				return axios({
-					method: 'get',
-					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
-					params: {
-						ttbkey: 'ttbclue91204001',
-						ItemId: isbn,
-						ItemIdType: 'ISBN',
-						Output: 'JS',
-						Cover: 'Big',
-						Version: 20131101
-					}
-				});
-			});
-			// 모든 요청이 완료될 때까지 기다리기
-			const isbnDetailResponses = await Promise.all(isbnDetail);
-			// console.log('-----await Promise.all------',isbnDetailResponses);
-
-			// 각각의 응답에서 데이터 추출 및 처리
-			const bookDetails = isbnDetailResponses.map(response => response.data.item);
-			console.log('----bookDetails----',bookDetails); // [[{}], [{}], ...]
-			const newData = bookDetails.map(innerArray => innerArray[0]);
-			// const newData = bookDetails[0];
-			// console.log('--------각각의 알라딘 데이터--------', newData);
-			res.send(newData);
-		}
-
-	} catch (err) {
-		console.log(err)
-	}
-};
-
 // 메인 페이지에 좋아요 많은 책 렌더
 exports.mostLike = async (req, res) => {
     try {
@@ -566,62 +400,47 @@ exports.mostLike = async (req, res) => {
     }
 };
 
-// 위시 유무 렌더
-exports.wishData = async (req, res) => {
-	console.log('------------wishData query', req.query);
-	const {b_isbn, u_id, b_wish} = req.query
-	try {
-		const wishResult = await Book.findOne({
-			attributes: ['b_wish'],
+//mywish테스트
+exports.myWish = async (req, res) => {
+	const {u_id, b_wish} = req.query
+	try{
+        const myWish = await Book.findAll({
+			attributes: ['b_isbn'],
 			where: {
-				b_isbn,
-				u_id,
-				b_wish,
-			},
-			raw: true
-		})
-		console.log('Cmain wishData>', wishResult);
-		if (!wishResult) {
-			res.send('평가하지 않음')
-		} else {
-			console.log('------이 책에 위시를 했니??????------', wishResult.b_wish)
-			res.send(wishResult.b_wish)
-		}
-
-		// console.log(wishResult)
-	} catch (error) {
-		// 오류 처리
-		console.log('--------------')
-		console.error(error);
-		res.status(500).send('서버 오류');
-	}
-};
-
-// 북마크
-exports.createWish = async (req, res) => {
-	try {
-		console.log('-------------위시 데이터 전송', req.body);
-		const { b_isbn, u_id, b_wish } = req.body;
-		await Book.create({
-			b_isbn, u_id, b_wish
-		})
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-};
-
-// 위시 취소
-exports.deleteWish = async (req, res) => {
-	try {
-		const { b_isbn, u_id, b_wish } = req.body;
-		await Book.destroy({
-			where: {
-				b_isbn, u_id, b_wish
+				u_id, b_wish
 			}
 		})
-	} catch (err) {
+		// console.log('------내 위시리스트---------',myWish);
+		if(myWish=='') {
+			res.send('위시리스트에 추가한 책이 없습니다.')
+		} else {
+			const myWishIsbn = myWish.map(wish => wish.b_isbn);
+			// console.log('여기!!!!!!!!!!!!!!!!!', myWishIsbn);
+			const myWishData = myWishIsbn.map(isbn => {
+				return axios({
+					method: 'get',
+					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+					params: {
+						ttbkey: 'ttbclue91204001',
+						ItemId: isbn,
+						ItemIdType: 'ISBN',
+						Output: 'JS',
+						Cover: 'Big',
+						Version: 20131101
+					}
+				});
+			});
+			const myWishResponse = await Promise.all(myWishData);
+			// console.log('@@@@@@@@@@@@@@@@', myWishResponse);
+			// 각각의 응답에서 데이터 추출 및 처리
+			const wishBooks = myWishResponse.map(res => res.data.item);
+			// console.log('$$$$$$$$$$',wishBooks);
+			const myWishList = wishBooks.map(innerArray => innerArray[0]);
+			// console.log('!@#%^&^%$#@#$%^&*&^%$#', myWishList);
+			res.send(myWishList);
+		}
+    } catch(err) {
 		console.error(err);
-		res.send('Internal Server Error!')
 	}
-};
+
+}
