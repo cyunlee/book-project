@@ -51,7 +51,10 @@ exports.unfollow = async (req, res) => {
 }
 
 exports.follow_number_get = async (req, res) => {
-	const myId = await tokenCheck(req);
+	let myId = await tokenCheck(req);
+	if (req.query.otherId) {
+		myId = req.query.otherId;
+	}
 	let followingNum = 0;
 	let followerNum = 0;
 	const followingObj = await Following.findAll({where:{u_id : myId}});
@@ -66,7 +69,10 @@ exports.follow_number_get = async (req, res) => {
 }
 
 exports.follow_list_get = async (req, res) => {
-	const myId = await tokenCheck(req);
+	let myId = await tokenCheck(req);
+	if (req.query.otherId) {
+		myId = req.query.otherId;
+	}
 	const followingInfos = [];
 	const followerInfos = [];
 	const followingObj = await Following.findAll({where:{u_id : myId}});

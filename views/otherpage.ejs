@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/otherpage.css" />
+    <script defer src="/static/js/mypage.js"></script>
+    <script src="/static/js/follow.js"></script>
+
     <!-- in HEAD -->
     <link
       rel="stylesheet"
@@ -11,8 +14,13 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <script defer src="/static/js/otherpage.js"></script>
+    
 
-    <title>MyPage</title>
+    <!-- axios cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <title>OtherPage</title>
   </head>
 
   <body>
@@ -23,27 +31,35 @@
     <div class="profile-container">
       <div class="profile">
         <div class="profile-image">
-          <img
-            class="image-setting"
-            src="/static/img/default-profile.png"
-            alt="프로필 사진"
-          />
+          <% if (!userInfo.u_profile) { %>
+            <img
+              class="image-setting"
+              src="/static/img/default-profile.png"
+              alt="프로필 사진"
+            />
+            <% } else { %>
+            <img
+              class="image-setting"
+              src="<%= '/' + userInfo.u_profile %>"
+              alt="프로필 사진"
+            />
+            <% } %>
         </div>
-        <div class="name">이름</div>
-        <div class="id">아이디</div>
+        <div class="name"><%= userInfo.u_name %></div>
+        <div class="id"><%= '@' + userInfo.u_id %></div>
         <button class="follow" onclick="follow()">follow</button>
         <button class="unfollow hidden" onclick="unfollow()">unfollow</button>
       </div>
       <br />
       <div class="info">
-        <div class="following-container">
+        <div class="following-container" onclick="following()">
           <div class="info-text">팔로잉</div>
-          <div class="number">55</div>
+          <div class="number"></div>
         </div>
         <div class="line"></div>
-        <div class="follower-container">
+        <div class="follower-container" onclick="follower()">
           <div class="info-text">팔로워</div>
-          <div class="number">100</div>
+          <div class="number"></div>
         </div>
         <div class="line"></div>
         <div class="wish-container">
@@ -57,6 +73,18 @@
         </div>
       </div>
       <br />
+      <div class="following-list hidden4">
+        <div class="following-title">Following list</div>
+        <div class="close4" onclick="closeFollowing()">&times;</div>
+        <div class="followings-container">
+        </div>
+      </div>
+      <div class="follower-list hidden5">
+        <div class="follower-title">Follower list</div>
+        <div class="close5" onclick="closeFollower()">&times;</div>
+        <div class="followers-container">
+        </div>
+      </div>
     </div>
     <br />
     <div class="categories">
@@ -166,6 +194,10 @@
     </div>
 
     <script>
+      const otherId = '<%= userInfo.u_id%>';
+      console.log('ddddd>>>>>',otherId);
+      follow_set(otherId);
+      follow_list_set(otherId);
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
         // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
