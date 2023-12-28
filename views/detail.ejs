@@ -77,14 +77,6 @@
         
         </div>
     </div>
-<!-- 
-    <form class="bookComment">
-        <div class="myComment" id="insertComment">
-            <p>임시 댓글</p>
-            <input type="text" placeholder="댓글 내용을 입력해주세요." class="initComm" id="commentMine">
-            <input type="submit" class="btn" value="댓글쓰기">
-        </div>
-    </form> -->
 
     <div class="listBox">
         <div class="listText">
@@ -97,6 +89,7 @@
 
     <div>
         <form name="comment-form" id="commentForm">
+            <!-- <div class="comment-profile"></div> -->
             <input type="text" id="comment_id" name="u_id" placeholder="id" disabled>
             <input type="text" id="comment_content" name="c_content" placeholder="댓글을 남겨보세요"><br>
             <button type="button" onclick="addComment();">댓글 입력하기</button>
@@ -235,14 +228,31 @@
                     const childComments = commentItem.filter(item => item.parent_c_no);
 
                     parentComments.forEach(i => {
+                        console.log(i.User.u_profile);
+                        let userProfile ='';
+                        if(`${i.User.u_profile}`=='null'){
+                            userProfile =`../static/img/default-profile.png`;
+                        }else{
+                            userProfile = `${i.User.u_profile}`;
+                        }
+
+                        let checkUser ='';
+                        if (id == `${i.u_id}`){
+                            checkUser=`/mypage`;
+                        }else{
+                            checkUser=`/otherpage/:${i.u_id}`;
+                        }
                         // 부모 댓글 출력
                         const html = `
                             <div id="div_${i.c_no}" class="comment-wrapper">
                                 <div class="comment_inner_wrapper">
-                                    <div class="comment_id comment">${i.u_id}</div>
+                                    <a href="${checkUser}"><img class="comment-profile" src="${userProfile}"></a>
+                                    <a href="${checkUser}"><div class="comment_id comment">${i.u_id}</div></a>
                                     <div class="comment_content comment">${i.c_content}</div>
-                                    <div class="comment_date comment">${i.c_date}</div>
-                                    <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${i.c_no},'${i.u_id}','${id}');">답글쓰기</button>
+                                    <div class="comment_date comment">${i.c_date}
+                                        <button type="button" class="applyBtn" onclick="replyToggle(${i.c_no},${i.c_no},'${i.u_id}','${id}');">답글쓰기</button>    
+                                    </div>
+                                   
                                 </div>
                                 <img id ="morevert_${i.c_no}" class="morevert" src="../static/img/morevert.png">
                             </div>
@@ -255,13 +265,28 @@
                         // console.log('parentCommentChildren',parentCommentChildren);
                         parentCommentChildren.forEach(childComment => {
                             // console.log('childComment > ',childComment);
+                            let childUserProfile ='';
+                            if(`${childComment.User.u_profile}`=='null'){
+                                childUserProfile =`../static/img/default-profile.png`;
+                            }else{
+                                childUserProfile = `${childComment.User.u_profile}`;
+                            }
+
+                            let childCheckUser ='';
+                            if (id == `${childComment.u_id}`){
+                                childCheckUser=`/mypage`;
+                            }else{
+                                childCheckUser=`/otherpage/:${childComment.u_id}`;
+                            }
                             const childHtml = `
-                                <div id="div_${childComment.c_no}" class="comment-wrapper reply-comment">
-                                    <div class="comment_inner_wrapper">
-                                        <div class="comment_id comment">${childComment.u_id}</div>
-                                        <div class="comment_content comment"><span>${i.u_id}</span>  ${childComment.c_content}</div>
-                                        <div class="comment_date comment">${childComment.c_date}</div>
-                                        <button type="button" class="applyBtn" id="replyBtn" onclick="replyToggle(${i.c_no},${childComment.c_no},'${childComment.u_id}','${id}');">답글쓰기</button>
+                            <div id="div_${childComment.c_no}" class="comment-wrapper reply-comment">
+                                <div class="comment_inner_wrapper">
+                                    <a href="${childCheckUser}"><img class="comment-profile" src="${childUserProfile}"></a>
+                                        <a href="${childCheckUser}"><div class="comment_id comment">${childComment.u_id}</div></a>
+                                        <div class="comment_content rcomment"><span>${i.u_id}</span>  ${childComment.c_content}</div>
+                                        <div class="comment_date comment">${childComment.c_date}
+                                          <button type="button" class="applyBtn" id="replyBtn" onclick="replyToggle(${i.c_no},${childComment.c_no},'${childComment.u_id}','${id}');">답글쓰기</button>
+                                        </div>
                                     </div>
                                     <img id ="morevert_${childComment.c_no}" class="morevert" src="../static/img/morevert.png">
                                 </div>

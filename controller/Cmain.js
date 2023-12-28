@@ -151,12 +151,66 @@ exports.mypage = async (req, res) => {
 
 exports.otherpage = async (req, res) => {
 	let otherId = req.params.other_id;
+
+	console.log(otherId)
 	otherId = otherId.substr(1);
 	try {
 		const OtherUserInfo = await User.findOne({
 			where: { u_id : otherId}
 		})
-		res.render('otherpage', {userInfo : OtherUserInfo});
+
+		const tokenId = await tokenCheck(req);
+		const getTop1 = await LifeBook.findAll({
+			attributes: ['l_no','l_cover'],
+			where: {
+				u_id: otherId,
+				l_ranking: 1,
+			},
+			order: [[model.sequelize.literal('l_no'), 'DESC']],
+			limit:1
+		});
+		const getTop2 = await LifeBook.findAll({
+			attributes: ['l_no','l_cover'],
+			where: {
+				u_id: otherId,
+				l_ranking: 2,
+			},
+			order: [[model.sequelize.literal('l_no'), 'DESC']],
+			limit:1
+			
+		});
+		const getTop3 = await LifeBook.findAll({
+			attributes: ['l_no','l_cover'],
+			where: {
+				u_id: otherId,
+				l_ranking: 3,
+			},
+			order: [[model.sequelize.literal('l_no'), 'DESC']],
+			limit:1
+		});
+		console.log(getTop1);
+		// console.log(getTop1);
+		let img1 ='';
+		let img2 ='';
+		let img3 ='';
+		if(getTop1.length==0){
+			img1 ='../static/img/no-data.jpg';
+		}else{
+			img1 = getTop1.l_cover;
+		}
+		if(getTop2.length==0){
+			img2 ='../static/img/no-data.jpg';
+		}else{
+			img2 = getTop2.l_cover;
+		}
+		if(getTop3.length==0){
+			img3 ='../static/img/no-data.jpg';
+		}else{
+			img3 = getTop3.l_cover;
+		}
+
+		
+		res.render('otherpage', {userInfo : OtherUserInfo,img1,img2,img3});
 	} catch (error) {
 		console.log('interval error : ',error);
 	}

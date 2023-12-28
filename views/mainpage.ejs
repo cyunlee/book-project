@@ -187,7 +187,7 @@
 						console.log('댓글 a.isbn > ',a.isbn);
 						let html = `
 						<div class="each-selection">
-							<button type="button" onclick="detail(${a.isbn})">
+							<button type="button" onclick="detail('${a.isbn}')">
 								<img src="${a.cover}">
 								<div>${a.title}</div>
 							</button>
@@ -215,7 +215,7 @@
 						console.log('좋아요 a.isbn > ',a.isbn);
 						let html = `
 						<div class="each-selection">
-							<button type="button" onclick="detail(${a.isbn})">
+							<button type="button" onclick="detail('${a.isbn}')">
 								<img src="${a.cover}">
 								<div>${a.title}</div>
 							</button>
@@ -228,19 +228,26 @@
 
 	});
 
-		eventTitle.addEventListener("focus",()=>{
+		// eventTitle.addEventListener("focus",()=>{
+		// 	const resultBox = document.getElementById('result');
+		// 	resultBox.innerHTML = '';
+		// 	if (eventTitle =''){
+		// 		resultBox.style.height='0px'
+		// 	}else{
+		// 		resultBox.style.height='40vh'
+		// 	}
+		// })
+        
+        // keyup 이벤트 발생시 내용들이 화면에 보이게
+        eventTitle.addEventListener("keyup", () => {
+            search();
 			const resultBox = document.getElementById('result');
 			resultBox.innerHTML = '';
 			if (eventTitle =''){
 				resultBox.style.height='0px'
 			}else{
-				resultBox.style.height='500px'
+				resultBox.style.height='40vh'
 			}
-		})
-        
-        // keyup 이벤트 발생시 내용들이 화면에 보이게
-        eventTitle.addEventListener("keyup", () => {
-            search();
         });
         
 		
