@@ -12,15 +12,63 @@
     <div class="container">
       <div class="button-set">
         <button id="all" onclick="location.href='/viewAll'">전체보기</button>
-        <button id="likes" onclick="location.href='/viewLikes'">좋아요</button>
-        <button id="dislikes" onclick="location.href='/viewDislikes'">
-          싫어요
-        </button>
       </div>
       <div class="line"></div>
       <div class="book-container">
-       
       </div>
     </div>
+
+    <script>
+      // {viewAllData: []}
+      var viewAllData = "<%=JSON.stringify(viewAllData)%>";
+      viewAllData = viewAllData.replaceAll('&#34;', '\"'); //따옴표 정상화(html 코드를 인코딩)
+      viewAllData = JSON.parse(viewAllData);
+      console.log(viewAllData);
+
+      const bookContainer = document.querySelector('.book-container');
+
+      const bookSet = [];
+      const book = [];
+      const bookTitle = [];
+
+      //위 세 개의 개수는 똑같음
+
+      //TODO:
+      //북타이틀 만들기
+      //북커버 만들기
+      //북세트 만들기
+
+      
+      
+      for(let i=0; i<viewAllData.length; i++){
+        const bookSetElement = document.createElement('div');
+        const bookElement = document.createElement('img');
+        const bookTitleElement = document.createElement('div');
+
+        bookSet.push(bookSetElement);
+        book.push(bookElement);
+        bookTitle.push(bookTitleElement);
+      }
+
+      console.log(bookSet);
+      console.log(book);
+      console.log(bookTitle);
+
+      for(let i=0; i<viewAllData.length; i++){
+        bookSet[i].classList.add('book-set');
+        book[i].classList.add('book');
+        bookTitle[i].classList.add('book-title');
+        
+        book[i].src = viewAllData[i].cover;
+        bookTitle[i].innerHTML = viewAllData[i].title;
+
+        bookSet[i].appendChild(book[i]);
+        bookSet[i].appendChild(bookTitle[i]);
+        bookContainer.appendChild(bookSet[i]);
+      }
+
+    
+
+    </script>
   </body>
 </html>
