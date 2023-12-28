@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/otherpage.css" />
-    <script defer src="/static/js/mypage.js"></script>
+    <!-- <script defer src="/static/js/mypage.js"></script> -->
     <script src="/static/js/follow.js"></script>
     <!-- <script src="/static/js/otherpage.js"></script> -->
 
@@ -198,7 +198,7 @@
       const otherId = '<%= userInfo.u_id%>';
       follow_set(otherId);
       follow_list_set(otherId);
-      followBtnSet(otherId);
+      // followBtnSet(otherId);
       const followBtn = document.querySelector('.follow');
       const unfollowBtn = document.querySelector('.unfollow');
 
