@@ -4,9 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/otherpage.css" />
-    <!-- <script defer src="/static/js/mypage.js"></script> -->
+    <script defer src="/static/js/otherpage.js"></script>
     <script src="/static/js/follow.js"></script>
-    <!-- <script src="/static/js/otherpage.js"></script> -->
 
     <!-- in HEAD -->
     <link
@@ -48,8 +47,8 @@
         
         <div class="name"><%= userInfo.u_name %></div>
         <div class="id"><%= '@' + userInfo.u_id %></div>
-        <button class="follow" onclick="follow()">follow</button>
-        <button class="unfollow hidden" onclick="unfollow()">unfollow</button>
+        <button id="followButton" onclick="follow()">follow</button>
+        <button id="unfollowButton" onclick="unfollow()">unfollow</button>
       </div>
       <br />
       <div class="info">
@@ -199,27 +198,9 @@
       const otherId = '<%= userInfo.u_id%>';
       follow_set(otherId);
       follow_list_set(otherId);
-      // followBtnSet(otherId);
-      const followBtn = document.querySelector('.follow');
-      const unfollowBtn = document.querySelector('.unfollow');
-
-      // async function followBtnSet(otherId) {
-      //   try {
-      //     const response = await axios({
-      //       method: "GET",
-      //       url: "/followBtnCheck",
-      //       data: {
-      //         otherId : otherId
-      //       }
-      //     })
-      //     if (response.data.result) {
-      //       followBtn.classList.remove('hidden');
-      //       unfollowBtn.classList.add('hidden');
-      //     }
-      //   } catch (error) {
-      //     console.log('interval error : ',error);
-      //   }
-      // }
+      followBtnSet(otherId);
+      // const followBtn = document.querySelector('.follow');
+      // const unfollowBtn = document.querySelector('.unfollow');
 
       // async function follow() {
       //   followBtn.addEventListener('click', () => {

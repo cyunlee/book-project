@@ -109,7 +109,6 @@ exports.login_post = async (req, res) => {
 	}
 }
 
-
 exports.signup_post = async (req, res) => {
 	try {
 		const { u_name, u_email, u_id, u_pw } = req.body;
@@ -119,15 +118,15 @@ exports.signup_post = async (req, res) => {
 		const newid = await User.findOne({
 			where: { u_id: u_id }
 		})
-		if (newname) res.send({ result: false, msg: 'name duplicated' })
-		else if (newid) res.send({ result: false, msg: 'id duplicated' })
-		else {
+		if (newname) {
+			res.send({ result: false, msg: 'name duplicated' })
+		} else if (newid) {
+			res.send({ result: false, msg: 'id duplicated' })
+		} else {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
 			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
 			await OtherUser.create({u_id : u_id});
 			res.send({result : true});
-
-
 		}
 	} catch (error) {
 		res.send(error);
