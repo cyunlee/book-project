@@ -207,7 +207,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        width: 100vw;
+        /* width: 100vh; */
         font-family: 'Noto Sans KR'
         /* padding-bottom: 5vh; */
         /* margin-bottom: 5vh; */
@@ -238,14 +238,16 @@
 
     .coverBox {
         width: 13vw;
-        height: 19.5vw;
+        height: 20vw;
         background-color: white;
         display: flex;
-        align-items: center;
+        align-items:end;
+        /* border: #b2b4b7 solid; */
     }
 
     .coverBox img {
         width: 13vw;
+        height: 19.5vw;
     }
 
     a {

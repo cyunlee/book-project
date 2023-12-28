@@ -251,6 +251,25 @@
             })
         })
 
+
+// 위시리스트 책 조회
+(async () => {
+        try {
+            const viewAll = await axios({
+                url: '/myWish',
+                method: 'get',
+                params: {
+                    u_id : id, // 이건 예시고 요청 페이지에서 선언해둔 id 변수 이름으로 대체해주세요!
+                    b_wish : 'wish'
+                }
+            })
+            console.log('내가 읽은 모든 책>',viewAll);
+        } catch(err) {
+            console.log(err)
+        }
+    
+    })();
+
 </script>
 
 
