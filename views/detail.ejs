@@ -22,51 +22,51 @@
             <div class="bookImage" id="bookCover">
                 <img src="${detailItem.cover}" id="bookCoverImg">
             </div>
-        <div class="bookBlock" id="block">
-            <div class="bookTitle" id="title">
-                <p id="dTitle">${detailItem.title}</p>
-                <img src="/static/img/bookmark-white.png" id="bookMarkImg" class="bookMarkPng">
-            </div>
-            <div class="bookSide" id=sideResult>
-                <table style="width:100%" class="bookTable" id=resultTable>
-                    <tr>
-                        <td>지은이</td>
-                        <td>|</td>
-                        <td id="dAuthor">${detailItem.author}</td>
-                    </tr>
-                    <tr>
-                        <td>출판사</td>
-                        <td>|</td>
-                        <td id="dPub">${detailItem.publisher}</td>
-                    </tr>
-                    <tr>
-                        <td>ISBN</td>
+            <div class="bookBlock" id="block">
+                <div class="bookTitle" id="title">
+                    <p id="dTitle">${detailItem.title}</p>
+                    <img src="/static/img/bookmark-white.png" id="bookMarkImg" class="bookMarkPng">
+                </div>
+                <div class="bookSide" id=sideResult>
+                    <table style="width:100%" class="bookTable" id=resultTable>
+                        <tr>
+                            <td>지은이</td>
+                            <td>|</td>
+                            <td id="dAuthor">${detailItem.author}</td>
+                        </tr>
+                        <tr>
+                            <td>출판사</td>
+                            <td>|</td>
+                            <td id="dPub">${detailItem.publisher}</td>
+                        </tr>
+                        <tr>
+                            <td>ISBN</td>
 
-                        <td>|</td>
-                        <td id="dIsbn">${detailItem.isbn}</td>
-                    </tr>
-                </table>
-                <hr>
-                <div class="bookDes" id="description">
-                    <p id="Ddescription">${detailItem.description}</p>
-                </div>
-                <div class="thumbButton">
-                    <button class="like" id="like">좋아요할래
-                        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
-                    </button>
-                    <button class="likeA">좋아요취소
-                        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
-                    </button>
-                
-                    <button class="bad">싫어요할래
-                        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
-                    </button>
-                    <button class="badA">싫어요취소
-                        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
-                    </button>
+                            <td>|</td>
+                            <td id="dIsbn">${detailItem.isbn}</td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <div class="bookDes" id="description">
+                        <p id="Ddescription">${detailItem.description}</p>
+                    </div>
+                    <div class="thumbButton">
+                        <button class="like" id="like">좋아요할래
+                            <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+                        </button>
+                        <button class="likeA">좋아요취소
+                            <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+                        </button>
+                    
+                        <button class="bad">싫어요할래
+                            <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+                        </button>
+                        <button class="badA">싫어요취소
+                            <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
         
         </div>
     </div>
@@ -126,6 +126,8 @@
                 console.log('알라딘 brendnew res >', res);
                 const detailItem = res.items[0];
                 const resultBox = document.getElementById('bookResult');
+
+                console.log(detailItem);
                 //let contentDiv = document.createElement('div');
                 //let img = document.createElement('img');
 
@@ -243,9 +245,9 @@
                         // 대댓글 출력
                         const parentCommentChildren = childComments.filter(childComment => childComment.parent_c_no === i.c_no);
                         // console.log('childComments',childComments);
-                        console.log('parentCommentChildren',parentCommentChildren);
+                        // console.log('parentCommentChildren',parentCommentChildren);
                         parentCommentChildren.forEach(childComment => {
-                            console.log('childComment > ',childComment);
+                            // console.log('childComment > ',childComment);
                             const childHtml = `
                                 <div id="div_${childComment.c_no}" class="comment-wrapper reply-comment">
                                     <div class="comment_inner_wrapper">
@@ -325,8 +327,6 @@
                 }).then((res) => {
                     console.log('댓글 작성 성공:', res);
                     const commentBox = document.querySelector('#comment-box');
-                    const resultBox = document.querySelector('#bookResult');
-                    removeAllChildren(resultBox);
                     removeAllChildren(commentBox);
                     loadView();
 
@@ -364,8 +364,8 @@
                 },
             }).then((res) => {
                 const commentBox = document.querySelector('#comment-box');
-                const resultBox = document.querySelector('#bookResult');
-                removeAllChildren(resultBox);
+                // const resultBox = document.querySelector('#bookResult');
+                // removeAllChildren(resultBox);
                 removeAllChildren(commentBox);
                 loadView();
 
@@ -382,8 +382,8 @@
                 },
             }).then((res) => {
                 const commentBox = document.querySelector('#comment-box');
-                const resultBox = document.querySelector('#bookResult');
-                removeAllChildren(resultBox);
+                // const resultBox = document.querySelector('#bookResult');
+                // removeAllChildren(resultBox);
                 removeAllChildren(commentBox);
                 loadView();
 
@@ -447,8 +447,8 @@
             }).then((res) => {
                     console.log('댓글 작성 성공:', res);
                     const commentBox = document.querySelector('#comment-box');
-                    const resultBox = document.querySelector('#bookResult');
-                    removeAllChildren(resultBox);
+                    // const resultBox = document.querySelector('#bookResult');
+                    // removeAllChildren(resultBox);
                     removeAllChildren(commentBox);
                     loadView();
 
