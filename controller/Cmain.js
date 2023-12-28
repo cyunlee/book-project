@@ -5,6 +5,7 @@ const model = require('../models/index');
 const axios = require('axios')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const exp = require('constants');
 
 const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
@@ -268,7 +269,6 @@ exports.delete_user = async (req, res) => {
 }
 
 // 검색 결과
-
 exports.searchList = async (req, res) => {
 	console.log('Cmain search req.query >', req.query);
 	const query = req.query.title
@@ -309,7 +309,7 @@ exports.searchList = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
 // 검색 결과 -> 특정 책 클릭
 exports.searchDetail = async (req, res) => {
@@ -342,13 +342,12 @@ exports.searchDetail = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
-// 평가 데이터 렌더(좋아요, 싫어요)
+// 좋아요 싫어요 유무 렌더
 exports.ratingData = async (req, res) => {
 	console.log('rating query >', req.query);
 	const { b_isbn, u_id } = req.query;
-
 	try {
 		const result = await Book.findOne({
 			attributes: ['b_rating'],
@@ -372,7 +371,7 @@ exports.ratingData = async (req, res) => {
 		res.status(500).send('서버 오류');
 	}
 
-}
+};
 
 // 좋아요
 exports.createLike = async (req, res) => {
@@ -389,7 +388,7 @@ exports.createLike = async (req, res) => {
 		res.send('Internal Server Error!')
 	}
 
-}
+};
 
 // 좋아요 취소
 exports.deleteLike = async (req, res) => {
@@ -404,7 +403,7 @@ exports.deleteLike = async (req, res) => {
 		console.error(err);
 		res.send('Internal Server Error!')
 	}
-}
+};
 
 // 싫어요
 exports.createBad = async (req, res) => {
@@ -419,7 +418,7 @@ exports.createBad = async (req, res) => {
 		res.send('Internal Server Error!')
 	}
 
-}
+};
 
 // 싫어요 취소
 exports.deleteBad = async (req, res) => {
@@ -434,7 +433,7 @@ exports.deleteBad = async (req, res) => {
 		console.error(err);
 		res.send('Internal Server Error!')
 	}
-}
+};
 
 // 유저들이 이 책과 함께 좋아한 다른 책 렌더
 exports.otherLikes = async (req, res) => {
@@ -509,7 +508,7 @@ exports.otherLikes = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
 // 메인 페이지에 좋아요 많은 책 렌더
 exports.mostLike = async (req, res) => {
@@ -563,4 +562,64 @@ exports.mostLike = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-  };
+};
+
+// 위시 유무 렌더
+exports.wishData = async (req, res) => {
+	console.log('------------wishData query', req.query);
+	const {b_isbn, u_id, b_wish} = req.query
+	try {
+		const wishResult = await Book.findOne({
+			attributes: ['b_wish'],
+			where: {
+				b_isbn,
+				u_id,
+				b_wish,
+			},
+			raw: true
+		})
+		console.log('Cmain wishData>', wishResult);
+		if (!wishResult) {
+			res.send('평가하지 않음')
+		} else {
+			console.log('------이 책에 위시를 했니??????------', wishResult.b_wish)
+			res.send(wishResult.b_wish)
+		}
+
+		// console.log(wishResult)
+	} catch (error) {
+		// 오류 처리
+		console.log('--------------')
+		console.error(error);
+		res.status(500).send('서버 오류');
+	}
+};
+
+// 북마크
+exports.createWish = async (req, res) => {
+	try {
+		console.log('-------------위시 데이터 전송', req.body);
+		const { b_isbn, u_id, b_wish } = req.body;
+		await Book.create({
+			b_isbn, u_id, b_wish
+		})
+	} catch (err) {
+		console.error(err);
+		res.send('Internal Server Error!')
+	}
+};
+
+// 위시 취소
+exports.deleteWish = async (req, res) => {
+	try {
+		const { b_isbn, u_id, b_wish } = req.body;
+		await Book.destroy({
+			where: {
+				b_isbn, u_id, b_wish
+			}
+		})
+	} catch (err) {
+		console.error(err);
+		res.send('Internal Server Error!')
+	}
+};

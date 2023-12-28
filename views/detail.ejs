@@ -25,7 +25,14 @@
         <div class="bookBlock" id="block">
             <div class="bookTitle" id="title">
                 <p id="dTitle">${detailItem.title}</p>
-                <img src="/static/img/bookmark-white.png" id="bookMarkImg" class="bookMarkPng">
+                <div class="bMarkSet">
+                    <button class="bMark">
+                        <img src="/static/img/bookmark-white.png" id="bookMarkImg" class="bookMarkPng">
+                    </button>
+                    <button class="bMarkA">
+                        <img src="/static/img/bookmark_fill.png" id="bookMarkImg" class="bookMarkPng">
+                    </button>
+                </div>
             </div>
             <div class="bookSide" id=sideResult>
                 <table style="width:100%" class="bookTable" id=resultTable>
@@ -464,7 +471,7 @@
     const bad = document.querySelector('.bad');
     const badA = document.querySelector('.badA');
 
-    // 렌더될 때 좋아요 싫어요 평가 데이터 조회
+    // 렌더될 때 좋아요 싫어요 유무 조회
     (async () => {
         if(isLogin == 'true') {
         try {
@@ -619,6 +626,76 @@
                 }
             })
         })
+    
+    
+    // 위시 버튼
+    const bMark = document.querySelector('.bMark');
+    const bMarkA = document.querySelector('.bMarkA');
+    console.log('-------------',bMark);
+
+    // 위시 유무 렌더
+    (async () => {
+        if(isLogin == 'true') {
+        try {
+            const wishData = await axios({
+                url: '/wishData',
+                method: 'get',
+                params: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_wish: 'wish'
+                }
+            })
+            console.log('이 책에 남긴 위시 데이터>',wishData.data);
+            if(wishData.data == 'wish') {
+                // alert('like!');
+                bMark.style.display = 'none';
+                bMarkA.style.display = 'inline-block';
+            } else if(wishData.data == '') {
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    })();
+
+    // 위시 설정
+    bMark.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            bMark.style.display = 'none';
+            bMarkA.style.display = 'inline-block';
+            // alert('db에 위시 평가 전송!')  // 테스트
+            console.log('id, wish >',idFor, "wish");
+            axios({
+                url: '/createWish',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_wish : 'wish',
+                }
+            })
+        }
+
+    });
+
+    // 위시 취소
+    bMarkA.addEventListener('click', (e) => {
+        bMarkA.style.display = 'none';
+        bMark.style.display = 'inline-block';
+        axios({
+                url: '/deleteWish',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_wish : 'wish'
+                }
+            })
+    });
     </script>
 </body>
 
