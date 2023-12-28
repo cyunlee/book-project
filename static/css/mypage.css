@@ -356,9 +356,10 @@ h3{
     width: 360px;
     height: fit-content;
     border: 1px solid lightgrey;
-    background-color: white;
+    background-size: cover;
     display: flex;
     justify-content: center;
+    border-radius: 16px;
 }
 .bookstack:hover{
     cursor: pointer;
@@ -366,7 +367,7 @@ h3{
 .bookstack-title{
     font-size: 18px;
     color: rgb(106, 106, 106);
-    background-color: rgb(233, 233, 233);
+    background-color: rgba(255, 255, 255, 0.8);
     width: fit-content;
     height: fit-content;
     margin: auto;

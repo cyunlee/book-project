@@ -31,6 +31,7 @@ async function get_data_and_stack(u_id) {
         title[i].classList.add('bookstack-title');
 
         title[i].innerHTML=data[i].title;
+        stack[i].style.backgroundImage="url(" + data[i].cover + ")";
 
         stack[i].appendChild(title[i]);
     }
