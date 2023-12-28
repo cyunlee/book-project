@@ -13,6 +13,7 @@ const sequelize = new Sequelize(
 const User = require('./User')(sequelize, Sequelize);
 const Comment = require('./Comment')(sequelize,Sequelize);
 const Book = require('./Book')(sequelize,Sequelize);
+const LifeBook = require('./LifeBook')(sequelize,Sequelize);
 const OtherUser = require('./OtherUser')(sequelize, Sequelize);
 const Follower = require('./Follower')(sequelize,Sequelize)
 const Following = require('./Following')(sequelize,Sequelize)
@@ -36,6 +37,19 @@ User.hasMany(Comment, {
 Comment.belongsTo(User, {
     foreignKey: 'u_id',  // Comment 테이블의 외래 키
     targetKey: 'u_id'    // User 테이블의 타겟 키
+});
+
+// 유저와 인생작 1:다 설정
+User.hasMany(LifeBook, {
+    foreignKey: 'u_id',  
+    sourceKey: 'u_id',    
+    onDelete:'CASCADE',
+    onUpdate:'CASCADE',     
+});
+
+LifeBook.belongsTo(User, {
+    foreignKey: 'u_id',  
+    targetKey: 'u_id' 
 });
 
 
@@ -69,6 +83,7 @@ Book.belongsTo(User,{
 db.User = User;
 db.Comment = Comment;
 db.Book = Book;
+db.LifeBook = LifeBook;
 db.OtherUser = OtherUser;
 db.Follower = Follower;
 db.Following = Following;

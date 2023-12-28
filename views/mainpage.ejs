@@ -113,6 +113,7 @@
             const resultBox = document.getElementById('result');
             const bestResultBox = document.getElementById('best-result');
             const newResultBox = document.getElementById('new-result');
+            const reviewResultBox = document.getElementById('review-result');
             const likeResultBox = document.getElementById('like-result');
 			const searchBox = document.getElementById('search');
 
@@ -169,6 +170,33 @@
 					newResultBox.insertAdjacentHTML('beforeend',html);
 				});
 			});
+
+			$.ajax({
+				method:'get',
+				url:'/mostComments',
+			}).done((res)=>{
+				if(res.length==0){
+					let html =`
+						<div style="text-align:center; width:100%; height:30vh; line-height:30vh;">
+							댓글을 단 책이 없어요!
+						</div>`
+					reviewResultBox.insertAdjacentHTML('beforeend',html);
+				}else{
+					console.log('댓글 res >' , res);
+					res.forEach(a => {
+						console.log('댓글 a.isbn > ',a.isbn);
+						let html = `
+						<div class="each-selection">
+							<button type="button" onclick="detail(${a.isbn})">
+								<img src="${a.cover}">
+								<div>${a.title}</div>
+							</button>
+						</div>
+						`;
+						reviewResultBox.insertAdjacentHTML('beforeend',html);
+					});
+				}
+			})
 
 			// 프론트에서 받기
 			$.ajax({
