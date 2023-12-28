@@ -18,6 +18,10 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    	<!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <title>MyPage</title>
   </head>
 
@@ -105,10 +109,12 @@
           <div class="lifelist-container">
             <input
               type="text"
+              id="lifelist1"
               class="lifelist-input"
               placeholder="검색할 top1책을 입력해주세요."
             />
-            <button class="lifelist-button">검색</button>
+            <button class="lifelist-button" onclick="lifeSearch(1);">검색</button>
+            <div class="lifelist-result" id="lifelist-result1"></div>
           </div>
           <div class="close1" onclick="close1()">&times;</div>
         </div>
@@ -116,10 +122,12 @@
           <div class="lifelist-container">
             <input
               type="text"
+              id="lifelist2"
               class="lifelist-input"
               placeholder="검색할 top2책을 입력해주세요."
             />
-            <button class="lifelist-button">검색</button>
+            <button class="lifelist-button" onclick="lifeSearch(2);">검색</button>
+            <div class="lifelist-result" id="lifelist-result2"></div>
           </div>
           <div class="close2" onclick="close2()">&times;</div>
         </div>
@@ -127,10 +135,12 @@
           <div class="lifelist-container">
             <input
               type="text"
+              id="lifelist3"
               class="lifelist-input"
               placeholder="검색할 top3책을 입력해주세요."
             />
-            <button class="lifelist-button">검색</button>
+            <button class="lifelist-button" onclick="lifeSearch(3);">검색</button>
+            <div class="lifelist-result" id="lifelist-result3"></div>
           </div>
           <div class="close3" onclick="close3()">&times;</div>
         </div>

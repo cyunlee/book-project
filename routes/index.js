@@ -38,6 +38,22 @@ router.delete('/deleteUser', controller.delete_user);
 router.get('/follow_number_get', followController.follow_number_get);
 router.get('/follow_list_get', followController.follow_list_get);
 
+
+// 인생작품 검색 결과 가져오기
+router.get('/lifeSearch',controller.get_lifeBooks);
+
+// 인생작품 등록하기
+router.post('/regLifeBook',controller.post_lifeBook);
+
+// top 렌더링하기
+router.get('/getTop',controller.get_top);
+
+// // top2 렌더링하기
+// router.get('/getTop2',controller.post_lifeBook);
+
+// // top3 렌더링하기
+// router.get('/getTop3',controller.post_lifeBook);
+
 // 다른사람 페이지(otherpage)
 router.get('/otherpage/:other_id', controller.otherpage);
 
@@ -81,6 +97,9 @@ router.get('/bestSeller',bookController.get_bestSeller);
 // 추천 신간 가져오기
 router.get('/brendNew',bookController.get_brendNew);
 
+// 댓글 많은 순으로 가져오기
+router.get('/mostComments',controller.get_mostComments);
+
 // 좋아요 랭킹 가져오기
 router.get('/mostLike', controller.mostLike);
 
@@ -94,7 +113,7 @@ router.get('/getDetail',bookController.get_detail);
 router.post('/getComments',bookController.get_comments);
 
 // 상세 페이지 댓글 작성
-router.post('/writeComment',bookController.post_comment)
+router.post('/writeComment',bookController.post_comment);
 
 // 상세 페이지 댓글 수정
 router.patch('/updateComment',bookController.patch_comment);
