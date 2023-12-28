@@ -100,7 +100,12 @@ main{
     font-size: 18px;
     font-weight: 600;
 }
-
+.mini {
+    margin: 1vw 0;
+}
+.mini > p {
+    font-size: 14px;
+} 
 .result {
     /* border: 1px solid; */
     /* width: 200px; */
@@ -205,6 +210,9 @@ a:visited { color: black; }
         font-size: 13px;
 
     }
+    .mini > p {
+        font-size: 11px;
+    } 
     .searchTitle {
         font-size: 16px;
     
@@ -222,12 +230,21 @@ a:visited { color: black; }
 }
 
 @media screen and (max-width : 666px) {
+    #top_ad {
+        margin-top: 5vh;
+    }
+    .top_explain{
+        margin :1vh auto 5vh auto;}
+
     .defaultText {
         margin: 10px;
         font-size: 10px;
     }
+    .mini > p {
+        font-size: 8px;
+    } 
     .searchTitle {
-        font-size: 15px;
+        font-size: 13px;
     }
     .detailText {
         margin: 0 20px;
@@ -258,6 +275,9 @@ a:visited { color: black; }
         margin: 0 15px;
         font-size: 9px;
     }
+    .mini > p {
+        font-size: 7px;
+    } 
     .description {
         display: none;
     }

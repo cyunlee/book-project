@@ -190,6 +190,9 @@
         outline: none;
         background-color: inherit;
     }
+    .thumbButton>button :hover{
+        cursor: pointer;
+    }
 
     .likeA {
         display: none;
@@ -204,7 +207,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        width: 100vw;
+        /* width: 100vh; */
         font-family: 'Noto Sans KR'
         /* padding-bottom: 5vh; */
         /* margin-bottom: 5vh; */
@@ -235,14 +238,16 @@
 
     .coverBox {
         width: 13vw;
-        height: 19.5vw;
+        height: 20vw;
         background-color: white;
         display: flex;
-        align-items: center;
+        align-items:end;
+        /* border: #b2b4b7 solid; */
     }
 
     .coverBox img {
         width: 13vw;
+        height: 19.5vw;
     }
 
     a {
@@ -465,5 +470,23 @@
     }
     .comment_inner_wrapper > .comment {
         padding-left: 80px;
+    }
+
+    .bMarkSet > button {
+        border: 0;
+        outline: none;
+        background-color: inherit;
+    }
+    .bMarkSet > button :hover {
+        cursor: pointer;
+    }
+    
+    .bMarkSet > button > img {
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    .bMarkA {
+        display: none;
     }
 }

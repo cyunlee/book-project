@@ -19,12 +19,6 @@
 		<a href="/mypage">마이페이지</a>
 		<p><%=id%>님 환영합니다!</p><br><br><br>
 
-		팔로우할 사람: <input id="follow" type="text"><button onclick="follow()">팔로우</button>
-		<br>
-		언팔<button onclick="unfollow()">언팔로우</button><br>
-		당신의 팔로워: <a href="" id="follower"></a>
-		<br>
-		당신의 팔로잉: <a href="" id="following"></a>
 		<br>
 
 
@@ -35,7 +29,9 @@
 		<button type='button' onclick="location.href='/makeRoom';">
 			소통방생성</button>
 	<% } %>
-	<a href="/otherpage">다른사람 페이지</a>
+	<input type="text" id="otherId" placeholder="다른사람id">
+	<button onclick="otherset()">다른사람세팅</button>
+	<a id="otherPage" href="">다른사람 페이지</a>
 	
 	<h2>임시 검색창</h2>
 	<form action="/searchList" method="get">
@@ -46,6 +42,11 @@
 	/ 일단 제목으로만 검색되게 설정해둠-->
 	<script>
 		follow_set();
+		function otherset() {
+			const doc = document.querySelector('#otherId');
+			const otherhref = document.querySelector('#otherPage');
+			otherhref.setAttribute('href', `/otherpage/:${doc.value}`)
+		}
 	</script>
 
 </body>

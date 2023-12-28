@@ -30,7 +30,7 @@
 			</form>
 		</div>
 		<div id="result"></div>
-		<div class="top_explain">찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요 찾고싶은 책을 입력헤주세요</div>
+		<div class="top_explain">찾고싶은 책을 입력해주세요</div>
 
 	<!-- <form action="/searchList" method="get">
 		<input type="text" name="title" id="" value="<%= query || '' %>">
@@ -41,8 +41,10 @@
 <main>
         <div class="defaultText">
             <p><span class="searchTitle">'<%= query %>' </span>검색 결과</p>
-                <p>검색 결과는 200 개까지 제공됩니다.</p>
-                <p>원하는 검색 결과를 찾지 못 했다면 보다 정확한 책 제목을 입력해보세요!</p>
+                <div class="mini">
+                    <p>검색 결과는 200 개까지 제공됩니다.</p>
+                    <p>원하는 검색 결과를 찾지 못 했다면 보다 정확한 책 제목을 입력해보세요!</p>
+                </div>
         </div>
     
         <div class="resultList">

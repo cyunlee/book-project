@@ -5,6 +5,7 @@ const model = require('../models/index');
 const axios = require('axios')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const exp = require('constants');
 
 const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
@@ -104,8 +105,9 @@ exports.login_post = async (req, res) => {
 			}
 		}
 	} catch (error) {
-	res.send(error);
-}}
+		res.send(error);
+	}
+}
 
 
 exports.signup_post = async (req, res) => {
@@ -123,8 +125,8 @@ exports.signup_post = async (req, res) => {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
 			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
 			await OtherUser.create({u_id : u_id});
-			fs.mkdirSync(`./static/img/${u_id}`);
 			res.send({result : true});
+
 
 		}
 	} catch (error) {
@@ -136,15 +138,29 @@ exports.signup = (req, res) => {
 	res.render('signup');
 }
 
-exports.mypage= async (req, res) =>{
+exports.mypage = async (req, res) => {
 	const id = await tokenCheck(req);
-	try{
+	try {
 		const userInfo = await User.findOne({
-			where: { u_id : id }
+			where: { u_id: id }
 		})
-		res.render('mypage', {userInfo : userInfo});
+		res.render('mypage', { userInfo: userInfo });
 	} catch (error) {
 		console.log(error);
+	}
+}
+
+exports.otherpage = async (req, res) => {
+	let otherId = req.params.other_id;
+	otherId = otherId.substr(1);
+	try {
+		const OtherUserInfo = await User.findOne({
+			where: { u_id : otherId}
+		})
+		console.log('>>>>>>',OtherUserInfo);
+		res.render('otherpage', {userInfo : OtherUserInfo});
+	} catch (error) {
+		console.log('interval error : ',error);
 	}
 }
 
@@ -160,11 +176,8 @@ exports.otherpage = (req, res) => {
 	res.render('otherpage');
 }
 
-// 내가 읽은 책(좋아요 싫어요 전부)
- exports.viewAll =  async(req, res) => {
-	//console.log('token 유무', req.cookies.jwtCookie);
-	console.log('req.params > ',req.params);
-	const {u_id} = req.params;
+exports.getViewAllData = async(req, res) => {
+	const u_id = req.query.u_id;
 try{
     const myBooks = await Book.findAll({
 		attributes: ['b_isbn'],
@@ -174,7 +187,7 @@ try{
 	})
 	// console.log('------내가읽은책~---------',myBooks);
 	if(myBooks=='') {
-		res.render('viewAll',{viewAllData: []})
+		res.send({viewAllData: []})
 	} else {
 		const myBooksIsbn = myBooks.map(book => book.b_isbn);
 		// console.log('여기!!!!!!!!!!!!!!!!!', myBooksIsbn);
@@ -199,6 +212,54 @@ try{
 		const booksViewall = myBooksResponse.map(res => res.data.item);
 		// console.log('$$$$$$$$$$',booksViewall);
 		const viewAllData = booksViewall.map(innerArray => innerArray[0]);
+		console.log(viewAllData)
+
+		// [{},{}]
+		res.send({viewAllData});
+	}
+} catch(err) {
+	console.error(err);
+}
+};
+// 내가 읽은 책(좋아요 싫어요 전부)
+exports.viewAll = async (req, res) => {
+	//console.log('token 유무', req.cookies.jwtCookie);
+	console.log('req.params > ', req.params);
+	const { u_id } = req.params;
+	try {
+		const myBooks = await Book.findAll({
+			attributes: ['b_isbn'],
+			where: {
+				u_id
+			}
+		})
+		// console.log('------내가읽은책~---------',myBooks);
+		if (myBooks == '') {
+			res.render('viewAll', { viewAllData: [] })
+		} else {
+			const myBooksIsbn = myBooks.map(book => book.b_isbn);
+			// console.log('여기!!!!!!!!!!!!!!!!!', myBooksIsbn);
+			const mybooksData = myBooksIsbn.map(isbn => {
+				return axios({
+					method: 'get',
+					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+					params: {
+						ttbkey: 'ttbclue91204001',
+						ItemId: isbn,
+						ItemIdType: 'ISBN',
+						Output: 'JS',
+						Cover: 'Big',
+						Version: 20131101
+					}
+				});
+			});
+			const myBooksResponse = await Promise.all(mybooksData);
+			// console.log('@@@@@@@@@@@@@@@@', myBooksResponse);
+			// 각각의 응답에서 데이터 추출 및 처리
+
+		const booksViewall = myBooksResponse.map(res => res.data.item);
+		// console.log('$$$$$$$$$$',booksViewall);
+		const viewAllData = booksViewall.map(innerArray => innerArray[0]);
 
 		res.render('viewAll', {viewAllData});
 	}
@@ -215,36 +276,36 @@ exports.viewDislikes = (req, res) => {
 	res.render('viewDislikes');
 }
 
-exports.upload_post= async (req, res)=>{
+exports.upload_post = async (req, res) => {
 
 	try {
 		const tokenId = await tokenCheck(req);
 
 		const path = req.file.path;
-		console.log('tokenId > ',tokenId);
-		console.log('req.file > ',req.file);
-		console.log('req.file.path > ',req.file.path);
+		console.log('tokenId > ', tokenId);
+		console.log('req.file > ', req.file);
+		console.log('req.file.path > ', req.file.path);
 
-		res.send({data:req.file,id:tokenId});
+		res.send({ data: req.file, id: tokenId });
 	} catch (error) {
 		console.log(error);
 		res.send('Internal Server Error!');
 	}
-	
+
 }
 
-exports.upload_patch=async (req,res)=>{
+exports.upload_patch = async (req, res) => {
 	try {
 		// const path = req.file.path;
-		console.log('req.body > ',req.body);
-		const delUser = await User.findOne({where:{u_id:req.body.id}})
-		if(delUser.u_profile){
+		console.log('req.body > ', req.body);
+		const delUser = await User.findOne({ where: { u_id: req.body.id } })
+		if (delUser.u_profile) {
 			fs.unlinkSync(delUser.u_profile)
 		}
 		const uploadProfile = await User.update({
-			u_profile:req.body.path,
-		},{
-			where:{u_id:req.body.id,}
+			u_profile: req.body.path,
+		}, {
+			where: { u_id: req.body.id, }
 		})
 		res.send(uploadProfile);
 	} catch (error) {
@@ -256,19 +317,40 @@ exports.upload_patch=async (req,res)=>{
 exports.delete_user = async (req, res) => {
 	try {
 		const tokenId = await tokenCheck(req);
-		const delUser = await User.findOne({where:{u_id:tokenId}})
-		if(delUser.u_profile){
+		const delUser = await User.findOne({ where: { u_id: tokenId } })
+		if (delUser.u_profile) {
 			fs.unlinkSync(delUser.u_profile)
 		}
 		await User.destroy({where: {u_id : tokenId}})
+		await OtherUser.destroy({where: {u_id : tokenId}})
+		await Follower.destroy({where: {u_id : tokenId}})
+		await Following.destroy({where: {u_id : tokenId}})
 		res.send({result : true});
 	} catch (error) {
 		res.send('Internal Server Error! : ', error);
 	}
 }
 
-// 검색 결과
+exports.get_my_comments = async (req, res) => {
+	try {
+		console.log('loadComment req ', req.body);
+		const userIDphrase=req.body.c_userID.split('@')[1];
+		console.log('loadComment serch ',userIDphrase)
+		const comments = await Comment.findAll({
+			where: {
+				u_id: userIDphrase,
+			}
+		})
 
+		res.send({ comments });
+		console.log('loadComment send ', comments);
+
+	} catch (error) {
+		res.send('Internal Server Error! : ', error);
+	}
+}
+
+// 검색 결과
 exports.searchList = async (req, res) => {
 	console.log('Cmain search req.query >', req.query);
 	const query = req.query.title
@@ -309,7 +391,7 @@ exports.searchList = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
 // 검색 결과 -> 특정 책 클릭
 exports.searchDetail = async (req, res) => {
@@ -342,174 +424,8 @@ exports.searchDetail = async (req, res) => {
 	} catch (err) {
 		console.log(err)
 	}
-}
+};
 
-// 평가 데이터 렌더(좋아요, 싫어요)
-exports.ratingData = async (req, res) => {
-	console.log('rating query >', req.query);
-	const { b_isbn, u_id } = req.query;
-
-	try {
-		const result = await Book.findOne({
-			attributes: ['b_rating'],
-			where: {
-				b_isbn: b_isbn, u_id: u_id
-			},
-			raw: true
-		})
-		// console.log('Cmain ratingData>', result.b_rating);
-		if (!result) {
-			res.send('평가하지 않음')
-		} else {
-			console.log('------이 책에 남긴 평가------', result.b_rating)
-			res.send(result.b_rating)
-		}
-		// console.log(result)
-	} catch (error) {
-		// 오류 처리
-		console.log('--------------')
-		console.error(error);
-		res.status(500).send('서버 오류');
-	}
-
-}
-
-// 좋아요
-exports.createLike = async (req, res) => {
-	try {
-		console.log('좋아요 데이터 전송', req.body);
-		const { b_isbn, u_id, b_rating } = req.body;
-		// const newBook = 
-		await Book.create({
-			b_isbn, u_id, b_rating
-		})
-		// res.send(newBook)
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-
-}
-
-// 좋아요 취소
-exports.deleteLike = async (req, res) => {
-	try {
-		const { b_isbn, u_id, b_rating } = req.body;
-		await Book.destroy({
-			where: {
-				b_isbn, u_id, b_rating
-			}
-		})
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-}
-
-// 싫어요
-exports.createBad = async (req, res) => {
-	try {
-		console.log('싫어요 데이터 전송', req.body);
-		const { b_isbn, u_id, b_rating } = req.body;
-		await Book.create({
-			b_isbn, u_id, b_rating
-		})
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-
-}
-
-// 싫어요 취소
-exports.deleteBad = async (req, res) => {
-	try {
-		const { b_isbn, u_id, b_rating } = req.body;
-		await Book.destroy({
-			where: {
-				b_isbn, u_id, b_rating
-			}
-		})
-	} catch (err) {
-		console.error(err);
-		res.send('Internal Server Error!')
-	}
-}
-
-// 유저들이 이 책과 함께 좋아한 다른 책 렌더
-exports.otherLikes = async (req, res) => {
-	console.log('----좋아요 기반 데이터 쿼리----', req.query);
-	const { b_isbn, b_rating, u_id } = req.query;
-	try {
-		const likeUser = await Book.findAll({
-			attributes: ['u_id'],
-			where: {
-				b_isbn, b_rating,
-				u_id: {
-					[Op.not]: u_id 
-				},
-			},
-			order: model.sequelize.random(),
-			limit: 1,
-			raw: true,
-		})
-		console.log('---------findall---------')
-		console.log(likeUser[0])
-		if (likeUser == '') {
-			// res.send('이 책을 좋아한 유저가 없음')
-		} else {
-			const isbnResult = await Book.findAll({
-				attributes: ['b_isbn'],
-				where: {
-					u_id: likeUser[0].u_id,
-					b_rating: 'like',
-					b_isbn: {
-						[Op.not]: b_isbn
-					}
-				},
-				order: model.sequelize.random(),
-				limit: 5,
-				raw: true
-			})
-			// console.log(likeUser[0].u_id)
-			// res.send(isbnResult);
-
-			// console.log(isbnResult);
-			const isbnList = isbnResult.map(result => result.b_isbn);
-			console.log('map 메서드 적용>', isbnList);
-			// res.send(isbnList);
-
-			const isbnDetail = isbnList.map(isbn => {
-				return axios({
-					method: 'get',
-					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
-					params: {
-						ttbkey: 'ttbclue91204001',
-						ItemId: isbn,
-						ItemIdType: 'ISBN',
-						Output: 'JS',
-						Cover: 'Big',
-						Version: 20131101
-					}
-				});
-			});
-			// 모든 요청이 완료될 때까지 기다리기
-			const isbnDetailResponses = await Promise.all(isbnDetail);
-			// console.log('-----await Promise.all------',isbnDetailResponses);
-
-			// 각각의 응답에서 데이터 추출 및 처리
-			const bookDetails = isbnDetailResponses.map(response => response.data.item);
-			console.log('----bookDetails----',bookDetails); // [[{}], [{}], ...]
-			const newData = bookDetails.map(innerArray => innerArray[0]);
-			// const newData = bookDetails[0];
-			// console.log('--------각각의 알라딘 데이터--------', newData);
-			res.send(newData);
-		}
-
-	} catch (err) {
-		console.log(err)
-	}
-}
 
 // 메인 페이지에 좋아요 많은 책 렌더
 exports.mostLike = async (req, res) => {
@@ -702,4 +618,50 @@ exports.get_top = async (req,res)=>{
 		console.error(error);
 		res.status(500).send('Internal Server Error');
 	}
+}
+
+
+//mywish테스트
+exports.myWish = async (req, res) => {
+	const {u_id, b_wish} = req.query
+	try{
+        const myWish = await Book.findAll({
+			attributes: ['b_isbn'],
+			where: {
+				u_id, b_wish
+			}
+		})
+		// console.log('------내 위시리스트---------',myWish);
+		if(myWish=='') {
+			res.send('위시리스트에 추가한 책이 없습니다.')
+		} else {
+			const myWishIsbn = myWish.map(wish => wish.b_isbn);
+			// console.log('여기!!!!!!!!!!!!!!!!!', myWishIsbn);
+			const myWishData = myWishIsbn.map(isbn => {
+				return axios({
+					method: 'get',
+					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+					params: {
+						ttbkey: 'ttbclue91204001',
+						ItemId: isbn,
+						ItemIdType: 'ISBN',
+						Output: 'JS',
+						Cover: 'Big',
+						Version: 20131101
+					}
+				});
+			});
+			const myWishResponse = await Promise.all(myWishData);
+			// console.log('@@@@@@@@@@@@@@@@', myWishResponse);
+			// 각각의 응답에서 데이터 추출 및 처리
+			const wishBooks = myWishResponse.map(res => res.data.item);
+			// console.log('$$$$$$$$$$',wishBooks);
+			const myWishList = wishBooks.map(innerArray => innerArray[0]);
+			// console.log('!@#%^&^%$#@#$%^&*&^%$#', myWishList);
+			res.send(myWishList);
+		}
+    } catch(err) {
+		console.error(err);
+	}
+
 }

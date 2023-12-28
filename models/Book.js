@@ -16,7 +16,11 @@ const BookModel = (sequelize,DataTypes)=>{
         },
         b_rating: {
             type: DataTypes.STRING(30),
-            allowNull: false
+            allowNull: true
+        },
+        b_wish: {
+            type: DataTypes.STRING(30),
+            allowNull: true
         },
     },{
         freezeTableName:true

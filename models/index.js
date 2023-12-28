@@ -19,7 +19,7 @@ const Follower = require('./Follower')(sequelize,Sequelize)
 const Following = require('./Following')(sequelize,Sequelize)
 
 // 유저자신과 상대의 다:다 설정(팔로우)
-User.belongsToMany(OtherUser, { through: Follower, as: 'UsersFollowers' });
+User.belongsToMany(OtherUser, { through: Follower, as: 'UsersFollowers', onDelete: 'CASCADE' });
 OtherUser.belongsToMany(User, { through: Follower });
 
 // 유저자신과 상대의 다:다 설정(팔로잉)
