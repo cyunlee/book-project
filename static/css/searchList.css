@@ -165,8 +165,10 @@ hr {
 }
 .pagination a {
     padding: 10px;
+}
+a {
     color: black;
-    text-decoration: none;
+    text-decoration: none
 }
 a:visited { color: black; }
 
