@@ -123,7 +123,6 @@ exports.signup_post = async (req, res) => {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
 			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
 			await OtherUser.create({u_id : u_id});
-			fs.mkdirSync(`./static/img/${u_id}`);
 			res.send({result : true});
 
 		}
@@ -148,16 +147,26 @@ exports.mypage= async (req, res) =>{
 	}
 }
 
+exports.otherpage = async (req, res) => {
+	let otherId = req.params.other_id;
+	otherId = otherId.substr(1);
+	try {
+		const OtherUserInfo = await User.findOne({
+			where: { u_id : otherId}
+		})
+		console.log('profile check?>>>>>>',OtherUserInfo.u_profile);
+		res.render('otherpage', {userInfo : OtherUserInfo});
+	} catch (error) {
+		console.log('interval error : ',error);
+	}
+}
+
 exports.following = (req, res) => {
 	res.render('following');
 }
 
 exports.follower = (req, res) => {
 	res.render('follower');
-}
-
-exports.otherpage = (req, res) => {
-	res.render('otherpage');
 }
 
 // 내가 읽은 책(좋아요 싫어요 전부)
@@ -261,6 +270,9 @@ exports.delete_user = async (req, res) => {
 			fs.unlinkSync(delUser.u_profile)
 		}
 		await User.destroy({where: {u_id : tokenId}})
+		await OtherUser.destroy({where: {u_id : tokenId}})
+		await Follower.destroy({where: {u_id : tokenId}})
+		await Following.destroy({where: {u_id : tokenId}})
 		res.send({result : true});
 	} catch (error) {
 		res.send('Internal Server Error! : ', error);
