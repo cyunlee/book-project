@@ -46,6 +46,9 @@ router.get('/follower', controller.follower);
 
 //팔로워 전체보기
 
+//읽은 책 전체 받아오기
+router.get('/getViewAllData', controller.getViewAllData);
+
 // 읽은 책 전체보기
 router.get('/viewAll/:u_id', controller.viewAll);
 

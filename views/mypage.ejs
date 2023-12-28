@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/static/css/mypage.css" />
     <script defer src="/static/js/mypage.js"></script>
     <script src="static/js/follow.js"></script>
+    <script src="static/js/viewAll.js"></script>
     <!-- in HEAD -->
     <link
       rel="stylesheet"
@@ -83,14 +84,12 @@
       <div class="following-list hidden4">
         <div class="following-title">Following list</div>
         <div class="close4" onclick="closeFollowing()">&times;</div>
-        <div class="followings-container">
-        </div>
+        <div class="followings-container"></div>
       </div>
       <div class="follower-list hidden5">
         <div class="follower-title">Follower list</div>
         <div class="close5" onclick="closeFollower()">&times;</div>
-        <div class="followers-container">
-        </div>
+        <div class="followers-container"></div>
       </div>
     </div>
     <br />
@@ -166,36 +165,6 @@
       <div class="category">
         <h3>읽은 책</h3>
         <div class="bookstack-list">
-          <div class="bookstack ten">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack nine">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack eight">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack seven">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack six">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack five">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack four">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack three">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack two">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack one">
-            <div class="bookstack-title">소비의 심리학</div>
-          </div>
         </div>
         <br />
         <div class="all-container">
@@ -239,6 +208,8 @@
     <script>
       follow_set();
       follow_list_set();
+      const uID = '<%= userInfo.u_id %>';
+      get_data_and_stack(uID);
       document.querySelector(".name").innerHTML = `<%= userInfo.u_name %>`;
       document.querySelector(".id").innerHTML = `<%= '@' + userInfo.u_id %>`;
       console.log(check);
@@ -258,6 +229,7 @@
           .getAttribute("src");
         console.log(check);
       }
+
     </script>
     <button onclick="delete_user()">회원탈퇴</button>
   </body>
