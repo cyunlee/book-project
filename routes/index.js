@@ -37,6 +37,7 @@ router.delete('/deleteUser', controller.delete_user);
 
 router.get('/follow_number_get', followController.follow_number_get);
 router.get('/follow_list_get', followController.follow_list_get);
+router.post('/getMyComments', controller.get_my_comments);
 
 // 다른사람 페이지(otherpage)
 router.get('/otherpage/:other_id', controller.otherpage);

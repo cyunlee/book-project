@@ -268,6 +268,25 @@ exports.viewAll = async (req, res) => {
 }
 };
 
+exports.get_my_comments = async (req, res) => {
+	try {
+		console.log('loadComment req ', req.body);
+		const userIDphrase=req.body.c_userID.split('@')[1];
+		console.log('loadComment serch ',userIDphrase)
+		const comments = await Comment.findAll({
+			where: {
+				u_id: userIDphrase,
+			}
+		})
+
+		res.send({ comments });
+		console.log('loadComment send ', comments);
+
+	} catch (error) {
+		res.send('Internal Server Error! : ', error);
+	}
+}
+
 exports.viewLikes = (req, res) => {
 	res.render('viewLikes');
 }
