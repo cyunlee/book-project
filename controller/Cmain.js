@@ -222,7 +222,8 @@ try{
     const myBooks = await Book.findAll({
 		attributes: ['b_isbn'],
 		where: {
-			u_id
+			u_id,
+			b_wish: null
 		}
 	})
 	// console.log('------내가읽은책~---------',myBooks);
@@ -270,10 +271,11 @@ exports.viewAll = async (req, res) => {
 		const myBooks = await Book.findAll({
 			attributes: ['b_isbn'],
 			where: {
-				u_id
+				u_id,
+				b_wish : null
 			}
 		})
-		// console.log('------내가읽은책~---------',myBooks);
+		// console.log('------내가읽은책-------',myBooks);
 		if (myBooks == '') {
 			res.render('viewAll', { viewAllData: [] })
 		} else {
