@@ -2,7 +2,6 @@ const express= require('express');
 const router = express.Router();
 const controller = require('../controller/Cmain');
 const bookController = require('./../controller/Cbook');
-// const chatController = require('./../controller/Cchat');
 const followController = require('./../controller/Cfollow');
 const cookieParser = require('cookie-parser');
 
@@ -99,8 +98,8 @@ router.delete('/deleteComment',bookController.delete_comment);
 router.post('/writeReply',bookController.post_reply);
 
 // 채팅방 신설
-// router.get('/makeRoom', chatController.make_room);
-// router.get('/chattingRoom', chatController.enter_chat_room);
+router.get('/makeRoom', chatController.make_room);
+router.get('/chattingRoom', chatController.enter_chat_room);
 
 // 검색 결과 페이지
 router.get('/searchList', controller.searchList);

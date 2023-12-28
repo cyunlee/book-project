@@ -53,9 +53,6 @@ app.use(express.json());
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 
-// const bookShelfRouter = require('./routes/bookMain');
-// app.use('/bookShelf', bookShelfRouter);
-
 // 프로필 사진 업로드
 // app.post('/upload', uploadDetail.single('userfile'), (req, res)=>{
 //     console.log(req.file);
