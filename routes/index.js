@@ -97,10 +97,6 @@ router.delete('/deleteComment',bookController.delete_comment);
 // 상세페이지 대댓글 작성
 router.post('/writeReply',bookController.post_reply);
 
-// 채팅방 신설
-router.get('/makeRoom', chatController.make_room);
-router.get('/chattingRoom', chatController.enter_chat_room);
-
 // 검색 결과 페이지
 router.get('/searchList', controller.searchList);
 
