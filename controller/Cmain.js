@@ -199,7 +199,9 @@ try{
 		const booksViewall = myBooksResponse.map(res => res.data.item);
 		// console.log('$$$$$$$$$$',booksViewall);
 		const viewAllData = booksViewall.map(innerArray => innerArray[0]);
+		console.log(viewAllData)
 
+		// [{},{}]
 		res.render('viewAll', {viewAllData});
 	}
 } catch(err) {
