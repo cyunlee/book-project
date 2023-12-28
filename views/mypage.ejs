@@ -126,7 +126,7 @@
       <!-- Slider container -->
       <div class="swiper">
         <!-- Additional required wrapper -->
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper" id="myLifeBook">
           <!-- Slides -->
           <div class="swiper-slide book"></div>
           <div class="swiper-slide book"></div>
@@ -253,34 +253,63 @@
     loadComment();
 
     async function delete_user() {
-    const response = await axios({
+      const response = await axios({
         method: 'delete',
         url: '/deleteUser',
-    })
-    if (response.data.result) {
+      })
+      if (response.data.result) {
         location.href = '/';
         alert('회원이 탈퇴 되셨습니다');
-    } else {
+      } else {
         console.log('Interval error');
+      }
     }
-}
-
+    const userIDphrase = userInfo_id.split('@')[1];
     // 위시리스트 책 데이터
     (async () => {
-        try {
-            const myWish = await axios({
-                url: '/myWish',
-                method: 'get',
-                params: {
-                    u_id : userInfo_id, // 이건 예시고 요청 페이지에서 선언해둔 id 변수 이름으로 대체해주세요!
-                    b_wish : 'wish'
-                }
-            })
-            console.log('내 위시리스트>',myWish.data);
-        } catch(err) {
-            console.log(err)
+      try {
+        const myWish = await axios({
+          url: '/myWish',
+          method: 'get',
+          params: {
+            u_id: userIDphrase, // 이건 예시고 요청 페이지에서 선언해둔 id 변수 이름으로 대체해주세요!
+            b_wish: 'wish'
+          }
+        })
+        console.log('내 위시리스트>', myWish.data);
+        const swiperWrapper = document.querySelector('#myLifeBook');
+        const swiperSlideQuery = document.querySelectorAll('.swiper-slide.book');
+        console.log('인생작 컨테이너 ', swiperWrapper);
+        console.log('스와이퍼 어레이 ', swiperSlideQuery);
+        console.log('스와이퍼 어레이 length ', swiperSlideQuery.length);
+        console.log('마이위시.데이타 ', myWish.data);
+
+        if (myWish.data.length <= 8) {
+          for (i = 0; i < myWish.data.length; i++) {
+            const swiperSlide = swiperSlideQuery[i];
+            swiperSlide.insertAdjacentHTML(
+              "beforeend",
+              `<img src = '${myWish.data[i].cover}'>`
+            )
+          }
+        } else {
+          for (i = 0; i < myWish.data.length; i++) {
+            swiperSlideQuery.forEach(element => {
+              element.remove()
+            });
+            swiperWrapper.insertAdjacentHTML(
+              "beforeend",
+              `<div class="swiper-slide review" role="group" aria-label="${i + 1} / ${res.data.comments.length}" style="width: 168.667px; margin-right: 20px;">
+                    <div class="text">${res.data.comments[i].c_content}</div>
+                  </div>`
+            )
+
+          }
         }
-    
+      } catch (err) {
+        console.log(err)
+      }
+
     })();
 
   </script>
