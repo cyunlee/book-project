@@ -90,13 +90,29 @@ function getLifeBook(){
         method:'get',
         url:'/getTop',
     }).then((res)=>{
-        const lifeBookCover1 =  res.data.getTop1[0].l_cover;
-        const lifeBookCover2 =  res.data.getTop2[0].l_cover;
-        const lifeBookCover3 =  res.data.getTop3[0].l_cover;
-        top1.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover1}">`;
-        top2.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover2}">`;
-        top3.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover3}">`;
-        console.log(lifeBookCover1);
+        console.log(res);
+        const lifeBookCover1 =  res.data.getTop1;
+        const lifeBookCover2 =  res.data.getTop2;
+        const lifeBookCover3 =  res.data.getTop3;
+        console.log(lifeBookCover1.length);
+        if(lifeBookCover1.length==0){
+            top1.innerHTML=`<img class="lifeBook-cover" src="../static/img/no-data.jpg">`;
+        }else{
+            top1.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover1[0].l_cover}">`;
+        }
+
+        if(lifeBookCover2==0){
+            top2.innerHTML=`<img class="lifeBook-cover" src="../static/img/no-data.jpg">`;
+        }else{
+            top2.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover2[0].l_cover}">`;
+        }
+
+        if(lifeBookCover3==0){
+            top3.innerHTML=`<img class="lifeBook-cover" src="../static/img/no-data.jpg">`;
+        }else{
+            top3.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover3[0].l_cover}">`;
+            console.log(lifeBookCover1);
+        }
     })
 }
 
