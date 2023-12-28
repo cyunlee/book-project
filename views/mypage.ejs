@@ -190,22 +190,15 @@
       <div class="category">
         <h3>내가 작성한 리뷰</h3>
         <!-- Slider container -->
-        <div class="swiper">
-          <!-- Additional required wrapper -->
-          <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide review">
-              <div class="text">너무 재미있게 읽었던 책이예요</div>
-            </div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-          </div>
-
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper" id="myReview">
+          <!-- Slides -->
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+        </div>
           <!-- 페이징 필요시 추가 -->
           <div class="swiper-pagination"></div>
           <!-- 이전, 다음 버튼 필요시 추가 -->
@@ -222,6 +215,8 @@
       get_data_and_stack(uID);
       document.querySelector(".name").innerHTML = `<%= userInfo.u_name %>`;
       document.querySelector(".id").innerHTML = `<%= '@' + userInfo.u_id %>`;
+      const userInfo_name = document.querySelector(".name").innerHTML;
+      const userInfo_id = document.querySelector(".id").innerHTML;
       console.log(check);
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
@@ -240,6 +235,50 @@
         console.log(check);
       }
 
+      function loadComment() {
+    axios({
+      method: 'post',
+      url: '/getMyComments',
+      data: {
+        c_userName: userInfo_name,
+        c_userID: userInfo_id
+      },
+    }).then((res) => {
+      console.log('loadComment res ',  res.data);
+        const swiperWrapper = document.querySelector('#myReview');
+        const swiperSlideQuery = document.querySelectorAll('.swiper-slide.review');
+        console.log('리뷰 컨테이너 ', swiperWrapper);
+        console.log('스와이퍼 어레이 ',swiperSlideQuery);
+        console.log('스와이퍼 어레이 length ',swiperSlideQuery.length);
+        console.log(res.data.comments.length);
+        
+        if(res.data.comments.length <= 4 ) {
+          for(i=0;i<res.data.comments.length; i++){
+            const swiperSlide = swiperSlideQuery[i];
+            swiperSlide.insertAdjacentHTML(
+              "beforeend",
+              `<div class="text">${res.data.comments[i].c_content}</div>`
+            )
+          }
+        } else {
+          for(i=0;i<res.data.comments.length; i++){
+            swiperSlideQuery.forEach(element => {
+              element.remove()
+            });
+              const lastSwiperSlide = swiperSlideQuery[swiperSlideQuery.length-1]
+              swiperWrapper.insertAdjacentHTML(
+                "beforeend",
+                `<div class="swiper-slide review" role="group" aria-label="${i+1} / ${res.data.comments.length}" style="width: 168.667px; margin-right: 20px;">
+                    <div class="text">${res.data.comments[i].c_content}</div>
+                  </div>`
+              )
+            
+          }
+        }
+    })
+  }
+  
+  loadComment();
     </script>
     <button onclick="delete_user()">회원탈퇴</button>
   </body>
