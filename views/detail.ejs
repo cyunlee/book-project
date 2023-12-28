@@ -19,6 +19,62 @@
     <!-- <h1>상세페이지</h1> -->
     <div class="bookshelf">
         <div class="bookCard" id="bookResult">
+            <div class="bookImage" id="bookCover">
+                <img src="${detailItem.cover}" id="bookCoverImg">
+            </div>
+        <div class="bookBlock" id="block">
+            <div class="bookTitle" id="title">
+                <p id="dTitle">${detailItem.title}</p>
+                <div class="bMarkSet">
+                    <button class="bMark">
+                        <img src="/static/img/bookmark-white.png" id="bookMarkImg" class="bookMarkPng">
+                    </button>
+                    <button class="bMarkA">
+                        <img src="/static/img/bookmark_fill.png" id="bookMarkImg" class="bookMarkPng">
+                    </button>
+                </div>
+            </div>
+            <div class="bookSide" id=sideResult>
+                <table style="width:100%" class="bookTable" id=resultTable>
+                    <tr>
+                        <td>지은이</td>
+                        <td>|</td>
+                        <td id="dAuthor">${detailItem.author}</td>
+                    </tr>
+                    <tr>
+                        <td>출판사</td>
+                        <td>|</td>
+                        <td id="dPub">${detailItem.publisher}</td>
+                    </tr>
+                    <tr>
+                        <td>ISBN</td>
+
+                            <td>|</td>
+                            <td id="dIsbn">${detailItem.isbn}</td>
+                        </tr>
+                    </table>
+                    <hr>
+                    <div class="bookDes" id="description">
+                        <p id="Ddescription">${detailItem.description}</p>
+                    </div>
+                    <div class="thumbButton">
+                        <button class="like" id="like">좋아요할래
+                            <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+                        </button>
+                        <button class="likeA">좋아요취소
+                            <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+                        </button>
+                    
+                        <button class="bad">싫어요할래
+                            <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+                        </button>
+                        <button class="badA">싫어요취소
+                            <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        
         </div>
     </div>
 <!-- 
@@ -29,6 +85,15 @@
             <input type="submit" class="btn" value="댓글쓰기">
         </div>
     </form> -->
+
+    <div class="listBox">
+        <div class="listText">
+            <p class="ptag"></p>
+        </div>
+        <div class="itemListSet">
+            <div class="itemList"></div>
+        </div>
+    </div>
 
     <div>
         <form name="comment-form" id="commentForm">
@@ -41,6 +106,9 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const isbn = urlParams.get('isbn');
+        const idFor = '<%= idFor %>';
+        const isLogin = '<%= isLogin %>';
+
 
         console.log(isbn); // 출력: 9788954699075
         document.addEventListener("DOMContentLoaded", () => {
@@ -65,6 +133,8 @@
                 console.log('알라딘 brendnew res >', res);
                 const detailItem = res.items[0];
                 const resultBox = document.getElementById('bookResult');
+
+                console.log(detailItem);
                 //let contentDiv = document.createElement('div');
                 //let img = document.createElement('img');
 
@@ -73,7 +143,7 @@
 
                 //resultBox.appendChild(contentDiv);
                 //resultBox.appendChild(img);
-                const html = 
+                /* const html = 
                 `<div class="bookImage" id="bookCover">
                         <img src="${detailItem.cover}" id="bookCoverImg">
                     </div>
@@ -111,8 +181,26 @@
                     </div>
                 </div>
                 `
-                resultBox.insertAdjacentHTML('beforeend', html);
+                resultBox.insertAdjacentHTML('beforeend', html); */
                 
+                const bookCoverImg = document.getElementById('bookCoverImg');
+                bookCoverImg.src = `${detailItem.cover}`;
+
+                const dTitle = document.getElementById('dTitle');
+                dTitle.textContent = `${detailItem.title}`;
+
+                const dAuthor = document.getElementById('dAuthor');
+                dAuthor.textContent = `${detailItem.author}`;
+
+                const dPub = document.getElementById('dPub');
+                dPub.textContent = `${detailItem.publisher}`;
+
+                const dIsbn = document.getElementById('dIsbn');
+                dIsbn.textContent = `${detailItem.isbn}`;
+
+                const Ddescription = document.getElementById('Ddescription');
+                Ddescription.textContent = `${detailItem.description}`;
+
                 const form = document.forms['comment-form'];
                 const commentForm = document.querySelector('#commentForm');
                 form.u_id.value = res.id;
@@ -164,9 +252,9 @@
                         // 대댓글 출력
                         const parentCommentChildren = childComments.filter(childComment => childComment.parent_c_no === i.c_no);
                         // console.log('childComments',childComments);
-                        console.log('parentCommentChildren',parentCommentChildren);
+                        // console.log('parentCommentChildren',parentCommentChildren);
                         parentCommentChildren.forEach(childComment => {
-                            console.log('childComment > ',childComment);
+                            // console.log('childComment > ',childComment);
                             const childHtml = `
                                 <div id="div_${childComment.c_no}" class="comment-wrapper reply-comment">
                                     <div class="comment_inner_wrapper">
@@ -246,8 +334,6 @@
                 }).then((res) => {
                     console.log('댓글 작성 성공:', res);
                     const commentBox = document.querySelector('#comment-box');
-                    const resultBox = document.querySelector('#bookResult');
-                    removeAllChildren(resultBox);
                     removeAllChildren(commentBox);
                     loadView();
 
@@ -285,8 +371,8 @@
                 },
             }).then((res) => {
                 const commentBox = document.querySelector('#comment-box');
-                const resultBox = document.querySelector('#bookResult');
-                removeAllChildren(resultBox);
+                // const resultBox = document.querySelector('#bookResult');
+                // removeAllChildren(resultBox);
                 removeAllChildren(commentBox);
                 loadView();
 
@@ -303,8 +389,8 @@
                 },
             }).then((res) => {
                 const commentBox = document.querySelector('#comment-box');
-                const resultBox = document.querySelector('#bookResult');
-                removeAllChildren(resultBox);
+                // const resultBox = document.querySelector('#bookResult');
+                // removeAllChildren(resultBox);
                 removeAllChildren(commentBox);
                 loadView();
 
@@ -368,8 +454,8 @@
             }).then((res) => {
                     console.log('댓글 작성 성공:', res);
                     const commentBox = document.querySelector('#comment-box');
-                    const resultBox = document.querySelector('#bookResult');
-                    removeAllChildren(resultBox);
+                    // const resultBox = document.querySelector('#bookResult');
+                    // removeAllChildren(resultBox);
                     removeAllChildren(commentBox);
                     loadView();
 
@@ -378,7 +464,238 @@
                 });
         }
     }
+    
+    // 좋아요 싫어요 버튼
+    const like = document.querySelector('.like');
+    const likeA = document.querySelector('.likeA');
+    const bad = document.querySelector('.bad');
+    const badA = document.querySelector('.badA');
 
+    // 렌더될 때 좋아요 싫어요 유무 조회
+    (async () => {
+        if(isLogin == 'true') {
+        try {
+            const ratingData = await axios({
+                url: '/ratingData',
+                method: 'get',
+                params: {
+                    b_isbn: isbn,
+                    u_id: idFor
+                }
+            })
+            console.log('이 책에 남긴 평가 데이터>',ratingData.data);
+            if(ratingData.data == 'like') {
+                // alert('like!');
+                like.style.display = 'none';
+                likeA.style.display = 'inline-block';
+                bad.disabled = true; 
+            } else if(ratingData.data == 'bad') {
+                bad.style.display = 'none';
+                badA.style.display = 'inline-block';
+                like.disabled = true;
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    })();
+
+    // 렌더될 때 좋아요 기반 책 리스트
+    (async () => {
+        try{
+            const otherLikes = await axios({
+                url: '/otherLikes',
+                method: 'get',
+                params: {
+                    b_rating : 'like',
+                    u_id: idFor,
+                    b_isbn: isbn
+                }
+            })
+            console.log(otherLikes);
+            console.log('!!!>', otherLikes.data);
+            const newData = otherLikes.data;
+            // console.log(newData);
+                if(otherLikes)
+                    { const ptag = document.querySelector('.ptag');
+                    ptag.innerText = '유저들이 이 책과 함께 좋아한 다른 책'
+
+                        // 받아온 데이터를 forEach문을 사용하여 화면에 표시
+                    newData.forEach(item => {
+                        const itemList = document.querySelector('.itemList');
+                        itemList.innerHTML += `
+                            <div class="item">
+                                <a href="/detailGo?isbn=${item.isbn}">
+                                    <div class="coverBox">
+                                        <img src="${item.cover}">
+                                    </div>
+                                    <p>${item.title}</p>
+                                </a>
+                            </div>
+                            `;
+                    });
+                }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    )();
+    
+    // 좋아요 버튼 누를 때 데이터 전송
+    like.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            like.style.display = 'none';
+            likeA.style.display = 'inline-block';
+            bad.disabled = true; 
+            // db로 전송
+            // 내용 : 좋아요 누름!
+            // alert('db에 좋아요 평가 전송!')  // 테스트
+            console.log('id, rating >',idFor, "like");
+            axios({
+                url: '/createLike',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'like',
+                }
+            })
+        }
+        
+        })
+    
+    // 좋아요 취소
+    likeA.addEventListener('click', (e) => {
+        likeA.style.display = 'none';
+        like.style.display = 'inline-block';
+        bad.disabled = false; 
+        // db로 전송
+        // 내용 : 좋아요 취소!
+        axios({
+                url: '/deleteLike',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'like'
+                }
+            })
+    })
+    
+    // 싫어요
+    bad.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            bad.style.display = 'none';
+            badA.style.display = 'inline-block';
+            like.disabled = true; 
+            // db로 전송
+            // 내용 : 싫어요 누름!
+            // alert('db에 싫어요 평가 전송!')
+            axios({
+                url: '/createBad',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'bad',
+                }
+            })
+        }
+        })
+
+    // 싫어요 취소
+    badA.addEventListener('click', (e) => {
+        badA.style.display = 'none';
+        bad.style.display = 'inline-block';
+        like.disabled = false; 
+        // db로 전송
+        // 내용 : 싫어요 취소!
+        axios({
+                url: '/deleteBad',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_rating : 'bad'
+                }
+            })
+        })
+    
+    
+    // 위시 버튼
+    const bMark = document.querySelector('.bMark');
+    const bMarkA = document.querySelector('.bMarkA');
+    console.log('-------------',bMark);
+
+    // 위시 유무 렌더
+    (async () => {
+        if(isLogin == 'true') {
+        try {
+            const wishData = await axios({
+                url: '/wishData',
+                method: 'get',
+                params: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_wish: 'wish'
+                }
+            })
+            console.log('이 책에 남긴 위시 데이터>',wishData.data);
+            if(wishData.data == 'wish') {
+                // alert('like!');
+                bMark.style.display = 'none';
+                bMarkA.style.display = 'inline-block';
+            } else if(wishData.data == '') {
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    })();
+
+    // 위시 설정
+    bMark.addEventListener('click', (e) => {
+        if(isLogin == 'false') {
+            alert('로그인이 필요한 기능입니다!')
+        }
+        else if(isLogin == 'true') {
+            bMark.style.display = 'none';
+            bMarkA.style.display = 'inline-block';
+            // alert('db에 위시 평가 전송!')  // 테스트
+            console.log('id, wish >',idFor, "wish");
+            axios({
+                url: '/createWish',
+                method: 'post',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_wish : 'wish',
+                }
+            })
+        }
+
+    });
+
+    // 위시 취소
+    bMarkA.addEventListener('click', (e) => {
+        bMarkA.style.display = 'none';
+        bMark.style.display = 'inline-block';
+        axios({
+                url: '/deleteWish',
+                method: 'delete',
+                data: {
+                    b_isbn: isbn,
+                    u_id: idFor,
+                    b_wish : 'wish'
+                }
+            })
+    });
     </script>
 </body>
 

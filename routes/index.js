@@ -2,7 +2,6 @@ const express= require('express');
 const router = express.Router();
 const controller = require('../controller/Cmain');
 const bookController = require('./../controller/Cbook');
-const chatController = require('./../controller/Cchat');
 const followController = require('./../controller/Cfollow');
 const cookieParser = require('cookie-parser');
 
@@ -41,6 +40,8 @@ router.get('/follow_list_get', followController.follow_list_get);
 
 // 다른사람 페이지(otherpage)
 router.get('/otherpage/:other_id', controller.otherpage);
+
+router.post('/getMyComments', controller.get_my_comments);
 
 //팔로잉 전체보기
 router.get('/following', controller.following);
@@ -101,10 +102,6 @@ router.delete('/deleteComment',bookController.delete_comment);
 // 상세페이지 대댓글 작성
 router.post('/writeReply',bookController.post_reply);
 
-// 채팅방 신설
-router.get('/makeRoom', chatController.make_room);
-router.get('/chattingRoom', chatController.enter_chat_room);
-
 // 검색 결과 페이지
 router.get('/searchList', controller.searchList);
 
@@ -112,7 +109,7 @@ router.get('/searchList', controller.searchList);
 router.get('/searchDetail', controller.searchDetail);
 
 
-// 평가 데이터 렌더(좋아요, 싫어요)
+// 좋아요 싫어요 유무 렌더
 router.get('/ratingData', controller.ratingData);
 
 // 좋아요, 좋아요 취소, 싫어요, 싫어요 취소
@@ -127,5 +124,12 @@ router.get('/otherLikes', controller.otherLikes);
 // 팔로우 클릭시
 router.post('/follow', followController.follow);
 router.post('/unfollow', followController.unfollow);
+
+// 북마크 유무 렌더
+router.get('/wishData', controller.wishData);
+
+// 위시, 위시 취소
+router.post('/createWish', controller.createWish);
+router.delete('/deleteWish', controller.deleteWish);
 
 module.exports = router;

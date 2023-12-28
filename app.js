@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 8000;
+const PORT = 8001;
 const db = require('./models/index');
 const multer = require('multer');
 const path = require('path');
@@ -52,9 +52,6 @@ app.use(express.json());
 
 const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
-
-const bookShelfRouter = require('./routes/bookMain');
-app.use('/bookShelf', bookShelfRouter);
 
 // 프로필 사진 업로드
 // app.post('/upload', uploadDetail.single('userfile'), (req, res)=>{
