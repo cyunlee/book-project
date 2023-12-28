@@ -105,8 +105,9 @@ exports.login_post = async (req, res) => {
 			}
 		}
 	} catch (error) {
-	res.send(error);
-}}
+		res.send(error);
+	}
+}
 
 
 exports.signup_post = async (req, res) => {
@@ -124,8 +125,8 @@ exports.signup_post = async (req, res) => {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
 			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
 			await OtherUser.create({u_id : u_id});
-			fs.mkdirSync(`./static/img/${u_id}`);
 			res.send({result : true});
+
 
 		}
 	} catch (error) {
@@ -137,15 +138,29 @@ exports.signup = (req, res) => {
 	res.render('signup');
 }
 
-exports.mypage= async (req, res) =>{
+exports.mypage = async (req, res) => {
 	const id = await tokenCheck(req);
-	try{
+	try {
 		const userInfo = await User.findOne({
-			where: { u_id : id }
+			where: { u_id: id }
 		})
-		res.render('mypage', {userInfo : userInfo});
+		res.render('mypage', { userInfo: userInfo });
 	} catch (error) {
 		console.log(error);
+	}
+}
+
+exports.otherpage = async (req, res) => {
+	let otherId = req.params.other_id;
+	otherId = otherId.substr(1);
+	try {
+		const OtherUserInfo = await User.findOne({
+			where: { u_id : otherId}
+		})
+		console.log('profile check?>>>>>>',OtherUserInfo.u_profile);
+		res.render('otherpage', {userInfo : OtherUserInfo});
+	} catch (error) {
+		console.log('interval error : ',error);
 	}
 }
 
@@ -161,11 +176,8 @@ exports.otherpage = (req, res) => {
 	res.render('otherpage');
 }
 
-// 내가 읽은 책(좋아요 싫어요 전부)
- exports.viewAll =  async(req, res) => {
-	//console.log('token 유무', req.cookies.jwtCookie);
-	console.log('req.params > ',req.params);
-	const {u_id} = req.params;
+exports.getViewAllData = async(req, res) => {
+	const u_id = req.query.u_id;
 try{
     const myBooks = await Book.findAll({
 		attributes: ['b_isbn'],
@@ -175,7 +187,7 @@ try{
 	})
 	// console.log('------내가읽은책~---------',myBooks);
 	if(myBooks=='') {
-		res.render('viewAll',{viewAllData: []})
+		res.send({viewAllData: []})
 	} else {
 		const myBooksIsbn = myBooks.map(book => book.b_isbn);
 		// console.log('여기!!!!!!!!!!!!!!!!!', myBooksIsbn);
@@ -203,6 +215,52 @@ try{
 		console.log(viewAllData)
 
 		// [{},{}]
+		res.send({viewAllData});
+	}
+} catch(err) {
+	console.error(err);
+}
+};
+// 내가 읽은 책(좋아요 싫어요 전부)
+exports.viewAll = async (req, res) => {
+	//console.log('token 유무', req.cookies.jwtCookie);
+	console.log('req.params > ', req.params);
+	const { u_id } = req.params;
+	try {
+		const myBooks = await Book.findAll({
+			attributes: ['b_isbn'],
+			where: {
+				u_id
+			}
+		})
+		// console.log('------내가읽은책~---------',myBooks);
+		if (myBooks == '') {
+			res.render('viewAll', { viewAllData: [] })
+		} else {
+			const myBooksIsbn = myBooks.map(book => book.b_isbn);
+			// console.log('여기!!!!!!!!!!!!!!!!!', myBooksIsbn);
+			const mybooksData = myBooksIsbn.map(isbn => {
+				return axios({
+					method: 'get',
+					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+					params: {
+						ttbkey: 'ttbclue91204001',
+						ItemId: isbn,
+						ItemIdType: 'ISBN',
+						Output: 'JS',
+						Cover: 'Big',
+						Version: 20131101
+					}
+				});
+			});
+			const myBooksResponse = await Promise.all(mybooksData);
+			// console.log('@@@@@@@@@@@@@@@@', myBooksResponse);
+			// 각각의 응답에서 데이터 추출 및 처리
+
+		const booksViewall = myBooksResponse.map(res => res.data.item);
+		// console.log('$$$$$$$$$$',booksViewall);
+		const viewAllData = booksViewall.map(innerArray => innerArray[0]);
+
 		res.render('viewAll', {viewAllData});
 	}
 } catch(err) {
@@ -218,36 +276,36 @@ exports.viewDislikes = (req, res) => {
 	res.render('viewDislikes');
 }
 
-exports.upload_post= async (req, res)=>{
+exports.upload_post = async (req, res) => {
 
 	try {
 		const tokenId = await tokenCheck(req);
 
 		const path = req.file.path;
-		console.log('tokenId > ',tokenId);
-		console.log('req.file > ',req.file);
-		console.log('req.file.path > ',req.file.path);
+		console.log('tokenId > ', tokenId);
+		console.log('req.file > ', req.file);
+		console.log('req.file.path > ', req.file.path);
 
-		res.send({data:req.file,id:tokenId});
+		res.send({ data: req.file, id: tokenId });
 	} catch (error) {
 		console.log(error);
 		res.send('Internal Server Error!');
 	}
-	
+
 }
 
-exports.upload_patch=async (req,res)=>{
+exports.upload_patch = async (req, res) => {
 	try {
 		// const path = req.file.path;
-		console.log('req.body > ',req.body);
-		const delUser = await User.findOne({where:{u_id:req.body.id}})
-		if(delUser.u_profile){
+		console.log('req.body > ', req.body);
+		const delUser = await User.findOne({ where: { u_id: req.body.id } })
+		if (delUser.u_profile) {
 			fs.unlinkSync(delUser.u_profile)
 		}
 		const uploadProfile = await User.update({
-			u_profile:req.body.path,
-		},{
-			where:{u_id:req.body.id,}
+			u_profile: req.body.path,
+		}, {
+			where: { u_id: req.body.id, }
 		})
 		res.send(uploadProfile);
 	} catch (error) {
@@ -259,12 +317,34 @@ exports.upload_patch=async (req,res)=>{
 exports.delete_user = async (req, res) => {
 	try {
 		const tokenId = await tokenCheck(req);
-		const delUser = await User.findOne({where:{u_id:tokenId}})
-		if(delUser.u_profile){
+		const delUser = await User.findOne({ where: { u_id: tokenId } })
+		if (delUser.u_profile) {
 			fs.unlinkSync(delUser.u_profile)
 		}
 		await User.destroy({where: {u_id : tokenId}})
+		await OtherUser.destroy({where: {u_id : tokenId}})
+		await Follower.destroy({where: {u_id : tokenId}})
+		await Following.destroy({where: {u_id : tokenId}})
 		res.send({result : true});
+	} catch (error) {
+		res.send('Internal Server Error! : ', error);
+	}
+}
+
+exports.get_my_comments = async (req, res) => {
+	try {
+		console.log('loadComment req ', req.body);
+		const userIDphrase=req.body.c_userID.split('@')[1];
+		console.log('loadComment serch ',userIDphrase)
+		const comments = await Comment.findAll({
+			where: {
+				u_id: userIDphrase,
+			}
+		})
+
+		res.send({ comments });
+		console.log('loadComment send ', comments);
+
 	} catch (error) {
 		res.send('Internal Server Error! : ', error);
 	}
@@ -345,6 +425,7 @@ exports.searchDetail = async (req, res) => {
 		console.log(err)
 	}
 };
+
 
 // 메인 페이지에 좋아요 많은 책 렌더
 exports.mostLike = async (req, res) => {

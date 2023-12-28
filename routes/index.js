@@ -38,6 +38,11 @@ router.delete('/deleteUser', controller.delete_user);
 router.get('/follow_number_get', followController.follow_number_get);
 router.get('/follow_list_get', followController.follow_list_get);
 
+// 다른사람 페이지(otherpage)
+router.get('/otherpage/:other_id', controller.otherpage);
+
+router.post('/getMyComments', controller.get_my_comments);
+
 //팔로잉 전체보기
 router.get('/following', controller.following);
 
@@ -45,6 +50,9 @@ router.get('/following', controller.following);
 router.get('/follower', controller.follower);
 
 //팔로워 전체보기
+
+//읽은 책 전체 받아오기
+router.get('/getViewAllData', controller.getViewAllData);
 
 // 읽은 책 전체보기
 router.get('/viewAll/:u_id', controller.viewAll);
