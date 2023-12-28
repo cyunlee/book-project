@@ -35,11 +35,14 @@ async function follow_list_set(otherId){
 		followingObj.forEach(user => {
 				followingListHTML += 	`		<div class="following-account">
 			<div class="account-image">
-				<img src="/${user.u_profile}" alt="프사"></img>
+				<img src="/${user.u_profile}" alt="프로필 사진 없음"></img>
 			</div>
 			<div class="account-info">
 				<div class="account-name">${user.u_name}</div>
-				<div class="account-id">@${user.u_id}</div>
+				<div class="account-id">
+				<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
+
+				</div>
 			</div>
 		</div>
 		`
@@ -51,7 +54,9 @@ async function follow_list_set(otherId){
 		</div>
 		<div class="account-info">
 			<div class="account-name">${user.u_name}</div>
-			<div class="account-id">@${user.u_id}</div>
+			<div class="account-id">
+			<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
+			</div>
 		</div>
 	</div>
 	`
