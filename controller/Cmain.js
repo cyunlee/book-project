@@ -157,7 +157,7 @@ exports.otherpage = async (req, res) => {
 		const OtherUserInfo = await User.findOne({
 			where: { u_id : otherId}
 		})
-		console.log('profile check?>>>>>>',OtherUserInfo.u_profile);
+		console.log('>>>>>>',OtherUserInfo);
 		res.render('otherpage', {userInfo : OtherUserInfo});
 	} catch (error) {
 		console.log('interval error : ',error);
