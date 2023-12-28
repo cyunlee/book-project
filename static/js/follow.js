@@ -1,5 +1,7 @@
 async function follow() {
-	const otherUser = document.querySelector('#follow').value;
+	const otherUser = document.querySelector('#id').value;
+	otherUser = otherUser.substr(1)
+	console.log('idCheck>>>>>', otherUser);
 	try {
 		await axios({
 			method: "POST",
@@ -27,13 +29,16 @@ async function unfollow() {
 	}
 }
 
-async function follow_set(){
+async function follow_set(otherId){
     const follower = document.querySelector('.follower-container .number')
     const following = document.querySelector('.following-container .number')
 	try {
 		const response = await axios({
 			method: "GET",
 			url: "/follow_number_get",
+			params: {
+				otherId : otherId,
+			},
 		})
 		follower.innerHTML = response.data.followerNum;
 		following.innerHTML = response.data.followingNum;
@@ -42,7 +47,7 @@ async function follow_set(){
 	}
 }
 
-async function follow_list_set(){
+async function follow_list_set(otherId){
 	const following = document.querySelector('.following-list .followings-container');
 	const follower = document.querySelector('.follower-list .followers-container');
 	
@@ -51,14 +56,17 @@ async function follow_list_set(){
 	try {
 		const response = await axios({
 			method : "GET",
-			url: "/follow_list_get"
+			url: "/follow_list_get",
+			params: {
+				otherId : otherId,
+			},
 		})
 		const followingObj = response.data.followingObj;
 		const followerObj = response.data.followerObj;
 		followingObj.forEach(user => {
 				followingListHTML += 	`		<div class="following-account">
 			<div class="account-image">
-				<img src="${user.u_profile}" alt=""></img>
+				<img src="/${user.u_profile}" alt="프사"></img>
 			</div>
 			<div class="account-info">
 				<div class="account-name">${user.u_name}</div>
@@ -70,7 +78,7 @@ async function follow_list_set(){
 		followerObj.forEach(user => {
 			followerListHTML += 	`		<div class="following-account">
 		<div class="account-image">
-			<img src="${user.u_profile}" alt=""></img>
+			<img src="/${user.u_profile}" alt=""></img>
 		</div>
 		<div class="account-info">
 			<div class="account-name">${user.u_name}</div>
