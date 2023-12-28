@@ -167,7 +167,7 @@
         font-family: 'Noto Sans KR';
         font-size: 15pt;
         min-width: 216px;
-        min-height: 216px;
+        /* min-height: 216px; */
         overflow: hidden;
     }
 
@@ -199,24 +199,50 @@
         display: none;
     }
 
+    .listBox {
+        background-color: white;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100vw;
+        font-family: 'Noto Sans KR'
+        /* padding-bottom: 5vh; */
+        /* margin-bottom: 5vh; */
+    }
+
+    .listText {
+        width: 70vw;
+        font-weight: 600;
+        font-size: 20px;
+        /* border: 1px solid; */
+    }
+    .itemListSet{
+        display: flex;
+        justify-content: center;
+        /* flex-wrap: wrap; */
+        padding-bottom: 5vh;
+    }
     .itemList {
         display: flex;
+        width: 70vw;
+        /* border: 1px solid; */
     }
 
     .item {
-        width: 17vw;
+        width: 13vw;
+        margin: 0 15px;
     }
 
     .coverBox {
-        width: 17vw;
-        height: 25vw;
+        width: 13vw;
+        height: 19.5vw;
         background-color: white;
         display: flex;
         align-items: center;
     }
 
     .coverBox img {
-        width: 17vw;
+        width: 13vw;
     }
 
     a {
