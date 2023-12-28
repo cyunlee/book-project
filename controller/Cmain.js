@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { Op } = require('sequelize');
-const { User, Book, Comment, OtherUser } = require('../models/index');
+const { User, Book, Comment, OtherUser, LifeBook,sequelize} = require('../models/index');
 const model = require('../models/index');
 const axios = require('axios')
 const bcrypt = require('bcrypt');
@@ -171,6 +171,51 @@ exports.follower = (req, res) => {
 	res.render('follower');
 }
 
+//나의 위시리스트
+exports.myWish = async (req, res) => {
+    const {u_id, b_wish} = req.query
+    try{
+        const myWish = await Book.findAll({
+            attributes: ['b_isbn'],
+            where: {
+                u_id, b_wish
+            }
+        })
+        // console.log('———내 위시리스트————',myWish);
+        if(myWish=='') {
+            res.send('위시리스트에 추가한 책이 없습니다.')
+        } else {
+            const myWishIsbn = myWish.map(wish => wish.b_isbn);
+            // console.log('여기!!!!!!!!!!!!!!!!!', myWishIsbn);
+            const myWishData = myWishIsbn.map(isbn => {
+                return axios({
+                    method: 'get',
+                    url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+                    params: {
+                        ttbkey: 'ttbclue91204001',
+                        ItemId: isbn,
+                        ItemIdType: 'ISBN',
+                        Output: 'JS',
+                        Cover: 'Big',
+                        Version: 20131101
+                    }
+                });
+            });
+            const myWishResponse = await Promise.all(myWishData);
+            // console.log('@@@@@@@@@@@@@@@@', myWishResponse);
+            // 각각의 응답에서 데이터 추출 및 처리
+            const wishBooks = myWishResponse.map(res => res.data.item);
+            // console.log('$$$$$$$$$$',wishBooks);
+            const myWishList = wishBooks.map(innerArray => innerArray[0]);
+            // console.log('!@#%^&^%$#@#$%^&*&^%$#', myWishList);
+            res.send(myWishList);
+        }
+    } catch(err) {
+        console.error(err);
+    }
+
+}
+
 exports.getViewAllData = async(req, res) => {
 	const u_id = req.query.u_id;
 try{
@@ -262,6 +307,25 @@ exports.viewAll = async (req, res) => {
 	console.error(err);
 }
 };
+
+exports.get_my_comments = async (req, res) => {
+	try {
+		console.log('loadComment req ', req.body);
+		const userIDphrase=req.body.c_userID.split('@')[1];
+		console.log('loadComment serch ',userIDphrase)
+		const comments = await Comment.findAll({
+			where: {
+				u_id: userIDphrase,
+			}
+		})
+
+		res.send({ comments });
+		console.log('loadComment send ', comments);
+
+	} catch (error) {
+		res.send('Internal Server Error! : ', error);
+	}
+}
 
 exports.viewLikes = (req, res) => {
 	res.render('viewLikes');
@@ -474,7 +538,147 @@ exports.mostLike = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
-};
+  };
+
+
+  // 댓글 많은 순 api
+exports.get_mostComments = async (req,res)=>{
+	try {
+	  const mostComment = await Comment.findAll({
+		attributes: ['c_isbn', [model.sequelize.fn('COUNT', model.sequelize.literal('c_isbn')), 'counting']],
+		group: ['c_isbn'],
+		order: [[model.sequelize.literal('counting'), 'DESC']],
+		limit: 5,
+	  });
+  
+	  if(!mostComment) {
+		  res.send('댓글을 단 책이 없음')
+	  }
+	  else{
+		  const mostCommentIsbn = mostComment.map(Comment => Comment.c_isbn);
+	  // console.log('---------메인좋아요!!!', mostLikeIsbn);
+	  
+	  const mostCommentData = mostCommentIsbn.map(isbn => {
+		  return axios({
+			  method: 'get',
+			  url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+			  params: {
+				  ttbkey: 'ttbclue91204001',
+				  ItemId: isbn,
+				  ItemIdType: 'ISBN',
+				  Output: 'JS',
+				  Cover: 'Big',
+				  Version: 20131101
+			  }
+		  });
+	  });
+	  // 모든 요청이 완료될 때까지 기다리기
+	  const mostCommentDataResponse = await Promise.all(mostCommentData);
+  
+	  // 각각의 응답에서 데이터 추출 및 처리
+	  const CommentListData = mostCommentDataResponse.map(res => res.data.item);
+  
+	  const mainComments = CommentListData.map(innerArray => innerArray[0]);
+  
+	  // console.log('————메인페이지 좋아요 책 리스트————', mainLikes);
+  
+	  res.send(mainComments);
+  
+	  }
+	} catch (error) {
+	  console.error(error);
+	  res.status(500).send('Internal Server Error');
+	}
+  }
+
+  exports.get_lifeBooks=async (req, res) => {
+    try {
+        const title = req.query.title;
+        console.log(title);
+        const response = await axios.get('https://www.aladin.co.kr/ttb/api/ItemSearch.aspx', {
+        params: {
+          ttbkey: 'ttbwonluvv0940001',
+          Query: title,
+          version: '20131101',
+          SearchTarget:'Book',
+          MaxResults:'50',
+          Output:'JS',
+          Cover:'Big',
+          itemsPerPage:'5',
+          totalResults:'5'
+        },
+      });
+      // console.log('Cbook getBooks response > ',response.data.item);
+      const items = response.data.item;
+      res.json(items);
+    
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+}
+
+exports.post_lifeBook= async (req,res)=>{
+	try {
+		console.log(req.body);
+		const tokenId = await tokenCheck(req);
+		const{l_isbn,l_cover,l_ranking}=req.body;
+		const newLifeBook = await LifeBook.create({
+			l_isbn,
+			l_cover,
+			u_id:tokenId,
+			l_ranking,
+		})
+		res.send({newLifeBook,id:tokenId});
+		// res.send('hi');
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Internal Server Error');
+	}
+}
+
+exports.get_top = async (req,res)=>{
+	try {
+		const tokenId = await tokenCheck(req);
+		const getTop1 = await LifeBook.findAll({
+			attributes: ['l_no','l_cover'],
+			where: {
+				u_id: tokenId,
+				l_ranking: 1,
+			},
+			order: [[model.sequelize.literal('l_no'), 'DESC']],
+			limit:1
+		});
+		const getTop2 = await LifeBook.findAll({
+			attributes: ['l_no','l_cover'],
+			where: {
+				u_id: tokenId,
+				l_ranking: 2,
+			},
+			order: [[model.sequelize.literal('l_no'), 'DESC']],
+			limit:1
+			
+		});
+		const getTop3 = await LifeBook.findAll({
+			attributes: ['l_no','l_cover'],
+			where: {
+				u_id: tokenId,
+				l_ranking: 3,
+			},
+			order: [[model.sequelize.literal('l_no'), 'DESC']],
+			limit:1
+		});
+	
+	
+		res.send({getTop1,getTop2,getTop3});
+	
+		
+	} catch (error) {
+		console.error(error);
+		res.status(500).send('Internal Server Error');
+	}
+}
+
 
 //mywish테스트
 exports.myWish = async (req, res) => {
