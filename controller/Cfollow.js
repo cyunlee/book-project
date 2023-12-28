@@ -37,6 +37,7 @@ exports.follow = async (req, res) => {
 		await Following.create({u_id : myId, following : followingId});
 		await Follower.create({u_id : followingId, follower : myId});
 	}
+	res.send({result : true});
 }
 
 exports.unfollow = async (req, res) => {
@@ -89,10 +90,13 @@ exports.follow_list_get = async (req, res) => {
 }
 
 exports.followBtnCheck = async (req, res) => {
-	const otherId = req.body.otherId;
-	console.log('check>>>>>>>>>>>>>>>>>>>>>>>>>>',otherId);
 	const myId = await tokenCheck(req);
-	const check = Follower.findOne({where:{u_id : myId, follower: otherId}})
+	const otherId = req.query.otherId;
+	if (!myId || (myId == otherId)) {
+		res.send({result: false, case: 'guest'})
+		return ;
+	}
+	const check = await Following.findOne({where:{u_id : myId, following: otherId}})
 	if (check) {
 		res.send({result : true})
 	} else {
