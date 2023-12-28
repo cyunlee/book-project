@@ -172,6 +172,55 @@ exports.follower = (req, res) => {
 	res.render('follower');
 }
 
+exports.otherpage = (req, res) => {
+	res.render('otherpage');
+}
+
+exports.getViewAllData = async(req, res) => {
+	const u_id = req.query.u_id;
+try{
+    const myBooks = await Book.findAll({
+		attributes: ['b_isbn'],
+		where: {
+			u_id
+		}
+	})
+	// console.log('------내가읽은책~---------',myBooks);
+	if(myBooks=='') {
+		res.send({viewAllData: []})
+	} else {
+		const myBooksIsbn = myBooks.map(book => book.b_isbn);
+		// console.log('여기!!!!!!!!!!!!!!!!!', myBooksIsbn);
+		const mybooksData = myBooksIsbn.map(isbn => {
+			return axios({
+				method: 'get',
+				url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+				params: {
+					ttbkey: 'ttbclue91204001',
+					ItemId: isbn,
+					ItemIdType: 'ISBN',
+					Output: 'JS',
+					Cover: 'Big',
+					Version: 20131101
+				}
+			});
+		});
+		const myBooksResponse = await Promise.all(mybooksData);
+		// console.log('@@@@@@@@@@@@@@@@', myBooksResponse);
+		// 각각의 응답에서 데이터 추출 및 처리
+
+		const booksViewall = myBooksResponse.map(res => res.data.item);
+		// console.log('$$$$$$$$$$',booksViewall);
+		const viewAllData = booksViewall.map(innerArray => innerArray[0]);
+		console.log(viewAllData)
+
+		// [{},{}]
+		res.send({viewAllData});
+	}
+} catch(err) {
+	console.error(err);
+}
+};
 // 내가 읽은 책(좋아요 싫어요 전부)
 exports.viewAll = async (req, res) => {
 	//console.log('token 유무', req.cookies.jwtCookie);
