@@ -405,6 +405,7 @@ h3{
     flex-direction: row-reverse;
 }
 .all{
+    margin: 15%;
     border-radius: 16px;
     background-color: black;
     color: white;
@@ -581,8 +582,8 @@ h3{
 }
 
 .delete_user_btn{
-    position: absolute;
-    bottom: -130vh;
+    margin-top: 10px;
+    bottom: -26vh;
     right: 15vw;
     background-color: transparent;
     border: none;
