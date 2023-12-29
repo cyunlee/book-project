@@ -190,27 +190,27 @@ exports.otherpage = async (req, res) => {
 		});
 		console.log(getTop1);
 		// console.log(getTop1);
-		let img1 ='';
-		let img2 ='';
-		let img3 ='';
+		let otherBook1 ='';
+		let otherBook2 ='';
+		let otherBook3 ='';
 		if(getTop1.length==0){
-			img1 ='../static/img/no-data.jpg';
+			otherBook1 ='../static/img/no-data.jpg';
 		}else{
-			img1 =`${getTop1[0].l_cover}`;
+			otherBook1 =`${getTop1[0].l_cover}`;
 		}
 		if(getTop2.length==0){
-			img2 ='../static/img/no-data.jpg';
+			otherBook2 ='../static/img/no-data.jpg';
 		}else{
-			img2 = `${getTop2[0].l_cover}`;
+			otherBook2 = `${getTop2[0].l_cover}`;
 		}
 		if(getTop3.length==0){
-			img3 ='../static/img/no-data.jpg';
+			otherBook3 ='../static/img/no-data.jpg';
 		}else{
-			img3 = `${getTop3[0].l_cover}`;
+			otherBook3 = `${getTop3[0].l_cover}`;
 		}
 
 		
-		res.render('otherpage', {userInfo : OtherUserInfo,img1,img2,img3});
+		res.render('otherpage', {userInfo : OtherUserInfo,otherBook1,otherBook2,otherBook3});
 	} catch (error) {
 		console.log('interval error : ',error);
 	}
