@@ -71,13 +71,19 @@
     }
 
     .bookContent{
-        width: 100%;
-        overflow: hidden;
+        width: 29vw;
+        /* overflow: hidden; */
         font-size: 1.3vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 3vw;
     }
 
-    .bookContent#Ddescription{
-        height:20vw;
+    #Ddescription{
+        width: 100%;
+        /* overflow: hidden; */
+        font-size: 1.3vw;
     }
 
     .bookImage {
@@ -104,18 +110,19 @@
     }
 
     .bookImage>img {
-        width: 21vw;
-        height: 28vw;
+        width: 22vw;
+        height: 29vw;
         object-fit: fill;
         overflow: clip;
-        border: black 4px solid;
+        /* border: black 4px solid; */
     }
 
     .bookTitle {
         font-size: 1.7vw;
-        overflow: hidden;
-        margin-bottom: 2vw;
-        height: 7vw;
+        /* overflow: hidden; */
+        margin-bottom: 1vw;
+        height: fit-content;
+        font-weight: 700;
     }
 
     .bookTitle>p {
@@ -136,6 +143,8 @@
         /* margin: 30px; */
         /* justify-content: center; */
         margin-left: 2vw;
+        height: 29vw;
+        overflow: hidden;
 }
 
 
@@ -199,18 +208,38 @@
     } */
 
     .thumbButton>button>img {
-        max-width: 50px;
-        max-height: 50px;
+        max-width: 3vw;
+        max-height: 3vw;
+        padding: 0 5vw;
+        /* border: 1px solid; */
+        /* box-shadow: 1px 1px 1px 1px #808080ad; */
+    }
+
+    button#like{
+        box-shadow: 1px 1px 1px 1px #808080ad;
+    }
+    button.bad{
+        box-shadow: 1px 1px 1px 1px #808080ad;
+    }
+    button#like:hover{
+        box-shadow: inset 1px 1px 1px 1px #808080ad;
+    }
+    button.bad:hover{
+        box-shadow: inset 1px 1px 1px 1px #808080ad;
+    }
+    .likeA,.badA{
+        box-shadow: inset 1px 1px 1px 1px #808080ad;
     }
 
     .thumbButton {
         display: flex;
         justify-content: center;
-        width: 20.5vw;
-        border-top: solid 4px;
-        position: absolute;
+        width: 96%;
+        /* border-top: solid 4px; */
+        /* position: absolute; */
         bottom: -1.7vw;
         height: 5vw;
+        margin-top: 1vw;
     }
 
     .thumbButton>button {
@@ -472,7 +501,7 @@
         width: calc(100% - 26px);
         position: absolute;
         height: 1vh;
-        background-color: #f1f3f8;
+        background-color: transparent;
         text-align: left;
         /* font-size: 18px; */
         z-index: 100;
@@ -555,140 +584,56 @@
         display: none;
     }
 
-    @media screen and (max-width : 1024px) {
-        #dTitle{
-            font-size: 18pt;
-            /* margin-top: 10px;
-            margin-right: 0px;
-            margin-bottom: 10px;
-            font-weight: 600; */
-        }
-
-        table,
-        th,
-        td {
-            /* border: 0px solid black;
-            border-collapse: collapse; */
-            font-size: 13pt;
-            /* text-align: left; */
-        }
-
-        .bookDes {
-            margin: 10px;
-            font-size: 13pt;
-            /* min-width: 216px; */
-            /* min-height: 216px; */
-            /* overflow: hidden; */
-        }
-    }
+    
 
     @media screen and (max-width : 768px) {
-        #dTitle{
-            font-size: 12pt;
-            /* margin-top: 10px;
-            margin-right: 0px;
-            margin-bottom: 10px;
-            font-weight: 600; */
+        #top a img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-left: 0;
+            height: 50px;
         }
-
-        table,
-        th,
-        td {
-            /* border: 0px solid black;
-            border-collapse: collapse; */
-            font-size: 9pt;
-            /* text-align: left; */
+        #comment-box{
+            font-size:12px;
         }
-
-        .bookDes {
-            /* margin: 10px; */
-            font-size: 9pt;
-            /* min-width: 216px; */
-            /* min-height: 216px; */
-            /* overflow: hidden; */
+        .comment {
+            width: 44vw;
+            display: inline-block;
+            min-height: 20px;
+            max-height: fit-content;
+            margin-left: 50px;
+            line-height: 20px;
+            word-break: break-all;
         }
-        hr {
-            margin: 0;
+        #commentForm {
+            height: 18vh;
         }
-        .thumbButton>button>img {
-            width: 20px;
-            height: 20px;
+        #comment_id{
+            font-size:12px
         }
-        .bMarkSet > button > img {
-            width: 20px;
-            height: 20px;
+        #comment_content{
+            height: 8vh;
         }
-    }
-
-    @media screen and (max-width : 666px) {
-        #dTitle{
-            font-size: 9pt;
-            /* margin-top: 10px;
-            margin-right: 0px;
-            margin-bottom: 10px;
-            font-weight: 600; */
+        .editBox-content {
+            padding: 0px 20px 0 20px;
         }
-
-        table,
-        th,
-        td {
-            /* border: 0px solid black;
-            border-collapse: collapse; */
-            font-size: 6pt;
-            /* text-align: left; */
+        .edit-btn {
+            margin-bottom: 5vh;
+            margin-right: 2vh;
+            width: 6vh;
         }
-
-        .bookDes {
-            /* margin: 10px; */
-            font-size: 6pt;
-            /* min-width: 216px; */
-            /* min-height: 216px; */
-            /* overflow: hidden; */
+        .inputBox {
+            height: 14vh;
         }
-
-        th,
-        td {
-        padding: 8px 15px;
-        }
-
-    }
-
-    @media screen and (max-width : 430px ) {
-        #dTitle{
-            font-size: 6pt;
-            /* margin-top: 10px;
-            margin-right: 0px;
-            margin-bottom: 10px;
-            font-weight: 600; */
-        }
-
-        table,
-        th,
-        td {
-            /* border: 0px solid black;
-            border-collapse: collapse; */
-            font-size: 4pt;
-            /* text-align: left; */
-        }
-
-        .bookDes {
-            /* margin: 10px; */
-            font-size: 4pt;
-            /* min-width: 216px; */
-            /* min-height: 216px; */
-            /* overflow: hidden; */
-        }
-        .thumbButton>button>img {
-            width: 10px;
-            height: 10px;
-        }
-        .bMarkSet > button > img {
-            width: 10px;
-            height: 10px;
-        }
-        th,
-        td {
-        padding: 5px 15px;
+        .default-message {
+            text-align: center;
+            height: 250px;
+            line-height: 250px;
+            font-size:12px;
         }
     }
+
+  
     
