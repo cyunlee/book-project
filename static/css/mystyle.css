@@ -311,7 +311,7 @@ li > img {
 		font-size: 26px;
 	}
 	.content_box .index {
-		margin: 30px calc((100vw - ((16vw * 5) + (10px * 10))) / 2);
+		margin: 1vw calc((100vw - ((16vw * 5) + (10px * 10))) / 2) 1vw calc((100vw - ((16vw * 5) + (10px * 10))) / 2);
 		/* font-size: 18px;
 		font-weight: 600; */
 	}
@@ -354,35 +354,50 @@ li > img {
 		left: 50%;
 		transform: translate(-50%, -50%);
 		margin-left: 0;
+		height: 50px;
+	}
+	#title{
+		width: 30vw;
+		height: 5vh;
+		border: none;
+		padding: 0 5vh;
+	}
+	#searchBtn {
+		width: 10vw;
+		height: 5vh;
+		border: none;
+		background-color: #d7d7d7;
+		cursor: pointer;
+		margin-left: -8px;
 	}
 	.ul-category, #search{
-		margin-right: calc((100vw - ((16vw * 5) + (10px * 10))) / 2);
+		margin-right: calc((100vw - ((16vw * 5) + (5px * 12))) / 2);
 		display: none;
 	}
 	.box-section {
 		display: flex;
 		/* justify-content: center; */
-		margin-right: calc((100vw - ((16vw * 5) + (10px * 12))) / 2);
-		margin-left: calc((100vw - ((16vw * 5) + (10px * 12))) / 2);
+		margin-right: calc((100vw - ((16vw * 5) + (5px * 12))) / 2);
+		margin-left: calc((100vw - ((16vw * 5) + (5px * 12))) / 2);
 	}
 	.top_explain{
-		margin: 1vh auto 8vh auto;
+		margin: 1vh auto 5vh auto;
+		font-size: 12px;
+		width: 49vw;
 	}
 	.top_h2{
-		margin: 10vh auto 3vh auto;
-		font-size: 26px;
+		margin: 6vh auto 1vh auto;
+		font-size: 20px;
+		width: 50vw;
 	}
 	.content_box .index {
-		margin: 30px calc((100vw - ((16vw * 5) + (10px * 10))) / 2);
-		/* font-size: 18px;
-		font-weight: 600; */
+		margin: 3vw calc((100vw - ((16vw * 5) + (5px * 10))) / 2) 1vw calc((100vw - ((16vw * 5) + (5px * 10))) / 2);
+		font-size: 16px;
 	}
-	.each-selection button{
-		/* width: 200px;
-		height: 290px; */
+	.each-selection button {
 		width: 16vw;
-		height: 25vw;
-		margin: 0 10px;
+		height: 22vw;
+		margin: 0 5px;
 		border: none;
 		background-color: white;
 		cursor: pointer;
@@ -394,14 +409,7 @@ li > img {
 		height: 22vw;
 	}
 	.each-selection button div{
-		width: 16vw;
-		background-color: white;
-		height: 3vw;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		padding: 0;
-		font-size: 12px;
+		display: none;
 	}
 	
 }
