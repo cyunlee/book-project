@@ -597,7 +597,6 @@ h3{
     background-color:#000000;
 }
 
-=======
 /* 모바일 세로 (해상도 ~ 479px)*/ 
 @media all and (max-width:767px) {
     .line {
