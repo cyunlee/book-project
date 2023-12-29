@@ -23,11 +23,6 @@ const tokenCheck = async (req) => {
 	}
 }
 
-exports.main = async (req,res)=>{
-  const tokenId = await tokenCheck(req);
-    res.render('mainpage',{id:tokenId});
-}
-
 // 알라딘 검색 api
 exports.get_books=async (req, res) => {
     try {
