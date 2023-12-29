@@ -254,18 +254,20 @@ exports.ratingData = async (req, res) => {
 		const result = await Book.findOne({
 			attributes: ['b_rating'],
 			where: {
-				b_isbn: b_isbn, u_id: u_id
+				b_isbn: b_isbn,
+				u_id: u_id,
+				b_wish: null,
 			},
 			raw: true
 		})
-		// console.log('Cmain ratingData>', result.b_rating);
-		if (!result) {
+		console.log('~~~~~Cmain ratingData~~~~>', result);
+		if (result == null) {
 			res.send('평가하지 않음')
 		} else {
 			console.log('------이 책에 남긴 평가------', result.b_rating)
 			res.send(result.b_rating)
 		}
-		// console.log(result)
+		console.log(result)
 	} catch (error) {
 		// 오류 처리
 		console.log('--------------')
@@ -400,7 +402,7 @@ exports.otherLikes = async (req, res) => {
 
 			// 각각의 응답에서 데이터 추출 및 처리
 			const bookDetails = isbnDetailResponses.map(response => response.data.item);
-			console.log('----bookDetails----',bookDetails); // [[{}], [{}], ...]
+			// console.log('----bookDetails----',bookDetails); // [[{}], [{}], ...]
 			const newData = bookDetails.map(innerArray => innerArray[0]);
 			// const newData = bookDetails[0];
 			// console.log('--------각각의 알라딘 데이터--------', newData);
@@ -427,7 +429,7 @@ exports.wishData = async (req, res) => {
 			raw: true
 		})
 		console.log('Cmain wishData>', wishResult);
-		if (!wishResult) {
+		if (wishResult == null) {
 			res.send('평가하지 않음')
 		} else {
 			console.log('------이 책에 위시를 했니??????------', wishResult.b_wish)
