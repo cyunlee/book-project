@@ -31,43 +31,23 @@ const closeFollowerBtn = document.querySelector('.close5');
 const followBtn = document.querySelector('.follow');
 const unfollowBtn = document.querySelector('.unfollow');
 
-async function follow() {
-	followBtn.addEventListener('click', () => {
-        followBtn.classList.add('hidden');
-        unfollowBtn.classList.remove('hidden');
-    });
-	const otherUser = document.querySelector('#id').value;
-	otherUser = otherUser.substr(1)
-	console.log('idCheck>>>@@@@>>', otherUser);
-	try {
-		await axios({
-			method: "POST",
-			url: "/follow",
-			data: {
-				followingId: otherUser
-			}
-		});	} catch (error) {
-		console.log('interval error : ',error);
-	}
+
+function following() {
+    followingList.classList.remove('hidden4');
+    followerList.classList.add('hidden5');
 }
 
-async function unfollow() {
-	unfollowBtn.addEventListener('click', () => {
-        followBtn.classList.remove('hidden');
-        unfollowBtn.classList.add('hidden');
-    });
-	const otherUser = document.querySelector('#follow').value;
-	try {
-		await axios({
-			method: "POST",
-			url: "/unfollow",
-			data: {
-				followingId: otherUser
-			}
-		});
-	} catch (error) {
-		console.log('interval error : ',error);
-	}
+function follower() {
+    followingList.classList.add('hidden4');
+    followerList.classList.remove('hidden5');
+}
+
+function closeFollowing() {
+    followingList.classList.add('hidden4');
+}
+
+function closeFollower() {
+    followerList.classList.add('hidden5');
 }
 
 // 읽은 책 개수
@@ -111,3 +91,4 @@ async function unfollow() {
     }
 
 })();
+
