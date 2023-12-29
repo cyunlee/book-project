@@ -381,8 +381,10 @@ exports.delete_user = async (req, res) => {
 		}
 		await User.destroy({where: {u_id : tokenId}})
 		await OtherUser.destroy({where: {u_id : tokenId}})
-		await Follower.destroy({where: {u_id : tokenId}})
-		await Following.destroy({where: {u_id : tokenId}})
+		// await Following.destroy({where: {following : tokenId}})
+		// await Following.destroy({where: {u_id : tokenId}})
+		// await Follower.destroy({where: {follower : tokenId}})
+		// await Follower.destroy({where: {u_id : tokenId}})
 		res.send({result : true});
 	} catch (error) {
 		res.send('Internal Server Error! : ', error);

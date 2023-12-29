@@ -3,6 +3,7 @@ const { User, Book, Comment, OtherUser, Following, Follower } = require('../mode
 const model = require('../models/index');
 const axios = require('axios')
 const jwt = require('jsonwebtoken');
+const { response } = require('express');
 
 const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
 
@@ -46,9 +47,10 @@ exports.unfollow = async (req, res) => {
 	console.log(`myId: ${myId}, followingId: ${followingId}`)
 	const check = await Following.findOne({where:{u_id : myId, following : followingId}})
 	if(check){
-	await Following.destroy({where:{u_id : myId, following : followingId}});
-	await Follower.destroy({where:{u_id : followingId, follower : myId}});
+		await Following.destroy({where:{u_id : myId, following : followingId}});
+		await Follower.destroy({where:{u_id : followingId, follower : myId}});
 	}
+	res.send({result : true});
 }
 
 exports.follow_number_get = async (req, res) => {
