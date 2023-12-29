@@ -142,9 +142,7 @@
         <!-- Additional required wrapper -->
         <div class="swiper-wrapper" id="otherReview">
           <!-- Slides -->
-          <div class="swiper-slide review">
-            <div class="text">너무 재미있게 읽었던 책이예요</div>
-          </div>
+          <div class="swiper-slide review"></div>
           <div class="swiper-slide review"></div>
           <div class="swiper-slide review"></div>
           <div class="swiper-slide review"></div>
@@ -227,8 +225,13 @@
         console.log('스와이퍼 어레이 ', swiperSlideQuery);
         console.log('스와이퍼 어레이 length ', swiperSlideQuery.length);
         console.log(res.data.comments.length);
-
-        if (res.data.comments.length <= 4) {
+        if(res.data.comments.length == 0) {
+          swiperSlideQuery[0].insertAdjacentHTML(
+              "beforeend",
+              `<div class="text">"이 유저는 아직 등록한 리뷰가 없습니다"</div>`
+            )
+        }
+        else if (res.data.comments.length <= 8) {
           for (i = 0; i < res.data.comments.length; i++) {
             const swiperSlide = swiperSlideQuery[i];
             swiperSlide.insertAdjacentHTML(
@@ -291,7 +294,7 @@
         if(otherWish.data == "위시리스트에 추가한 책이 없습니다.") {
           swiperSlideQuery[0].insertAdjacentHTML(
               "beforeend",
-              `<div class="text">"이 유저는 읽은 책이 없습니다"</div>`
+              `<div class="text">"이 유저는 아직 등록한 책이 없습니다"</div>`
             )
         }
         else if (otherWish.data.length <= 8) {
