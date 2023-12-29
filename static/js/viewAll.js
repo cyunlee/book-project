@@ -36,8 +36,14 @@ async function get_data_and_stack(u_id) {
         stack[i].appendChild(title[i]);
     }
 
-    for(let i=data.length-1; i>=0; i--){
+    if(data.length<=10){
+      for(let i=data.length-1; i>=0; i--){
+          bookStackList.appendChild(stack[i]);
+      }
+    }else if(data.length>10){
+      for(let i=data.length-1; i>=data.length-10; i--){
         bookStackList.appendChild(stack[i]);
+      }
     }
 
 

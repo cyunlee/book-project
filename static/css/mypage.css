@@ -365,12 +365,18 @@ h3{
 }
 .bookstack{
     width: 360px;
-    height: fit-content;
+    height: 60px;
     border: 1px solid lightgrey;
     background-size: cover;
+    border-radius: 16px;
     display: flex;
     justify-content: center;
-    border-radius: 16px;
+}
+.bookstack:nth-child(odd){
+    transform: translateX(-15px);
+}
+.bookstack:nth-child(even){
+    transform: translateX(15px);
 }
 .bookstack:hover{
     cursor: pointer;
@@ -378,7 +384,7 @@ h3{
 .bookstack-title{
     font-size: 18px;
     color: rgb(106, 106, 106);
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.7);
     width: fit-content;
     height: fit-content;
     margin: auto;
