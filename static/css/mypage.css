@@ -583,3 +583,21 @@ h3{
   font-size: 1.1rem !important;
   font-weight: 600 !important;
 }
+
+.delete_user_btn{
+    position: absolute;
+    bottom: -130vh;
+    right: 13vw;
+    background-color: transparent;
+    border: none;
+    font-weight: 700;
+    color: #9c9c9c;
+    width: 8vh;
+    z-index: 100;
+
+}
+
+.delete_user_btn:hover{
+    background-color:#000000;
+}
+
