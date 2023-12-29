@@ -13,7 +13,7 @@
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-@media screen and (min-width: 100px) {
+
     body {
         padding: 0;
         margin: 0;
@@ -39,33 +39,42 @@
     }
 
     .bookshelf {
-        min-width: 480px;
-        height: 600px;
-        margin: 0 auto;
-        padding: 100px 200px;
-        font-family: 'Noto Sans KR';
+        /* min-width: 480px; */
+        /* height: 600px; */
+        /* margin: 0 auto; */
+        /* padding: 100px 200px; */
         background-color: white;
-        align-items: center;
+        /* align-items: center; */
         justify-content: center;
         /*border: 1px solid lightgray;*/
-        display: flex;
+        display: flex ;
+        box-sizing: border-box;
+        padding-top: 3vw;
     }
-
-    .bookCard {
-        max-width: 1280px;
+    .bookSet{
         display: flex;
         justify-content: space-between;
+        box-sizing: border-box;
+        width: 70vw;
+    }
+    .bookCard {
+        /* width: 70vw; */
+        display: flex;
+        /* justify-content: space-between; */
+        box-sizing: border-box;
     }
 
     .bookImage {
-        min-height: 210px;
+        /* min-height: 210px;
         max-width: 400px;
-        max-height: 600px;
-        width: 25vw;
-        height: 34vw;
-        margin-top: 45px;
+        max-height: 600px; */
+        width: 22vw;
+        height: 28vw;
+
+        /* margin-top: 45px;
         margin-left: 20px;
-        margin-right: 20px;
+        margin-right: 20px; */
+
         /*top: 200px+30vw;
         left: 100px+30vw;*/
         border: 1px solid grey;
@@ -73,54 +82,62 @@
         display: inline-block;
         object-fit: cover;
         /*position: absolute;*/
+        /* border: 1px solid red; */
+        margin-right: 2vw;
     }
 
     .bookImage>img {
         /*object-fit: cover;*/
-        min-width: 150px;
+        /* min-width: 150px;
         min-height: 210px;
         max-width: 400px;
-        max-height: 600px;
-        width: 25vw;
-        height: 34vw;
+        max-height: 600px; */
+        width: 22vw;
+        height: 28vw;
         object-fit: fill;
         overflow: clip;
     }
 
     .bookTitle {
-        max-width: 440px;
-        max-height: 80px;
-        margin-left: 15px;
-        margin-right: 15px;
+        /* max-width: 600px; */
+        /* max-height: 80px; */
+
+        /* margin-left: 15px;
+        margin-right: 15px; */
+
         display: flex;
-        overflow: hidden;
+        /* overflow: hidden; */
     }
 
     .bookTitle>p {
-        font-family: 'Noto Sans KR';
-        font-size: 36pt;
+        font-size: 20pt;
         margin-top: 10px;
         margin-right: 0px;
         margin-bottom: 10px;
         font-weight: 600;
     }
-    .bookTitle>img {
+    /* .bookTitle>img {
         width: 60px;
         height: 60px;
         margin-top: 20px;
-    }
+        border: 5px orange;
+    } */
 
     .bookBlock {
         display: flex;
         flex-direction: column;
-        margin: 30px;
+        /* margin: 30px; */
+        /* justify-content: center; */
     }
 
     .bookSide {
         /*display: block;*/
-        max-width: 600px;
-        max-height: 540px;
-        padding: 30px 60px;
+        /* max-width: 600px; */
+        /* max-height: 540px; */
+
+        /* padding: 30px 60px; */
+
+
     }
 
     table,
@@ -128,7 +145,6 @@
     td {
         border: 0px solid black;
         border-collapse: collapse;
-        font-family: 'Noto Sans KR';
         font-size: 15pt;
         text-align: left;
     }
@@ -164,9 +180,8 @@
 
     .bookDes {
         margin: 10px;
-        font-family: 'Noto Sans KR';
         font-size: 15pt;
-        min-width: 216px;
+        /* min-width: 216px; */
         /* min-height: 216px; */
         overflow: hidden;
     }
@@ -208,32 +223,37 @@
         flex-wrap: wrap;
         justify-content: center;
         /* width: 100vh; */
-        font-family: 'Noto Sans KR'
         /* padding-bottom: 5vh; */
         /* margin-bottom: 5vh; */
+
     }
 
     .listText {
         width: 70vw;
         font-weight: 600;
         font-size: 20px;
-        /* border: 1px solid; */
+        padding-top: 3vw;
+
     }
     .itemListSet{
         display: flex;
-        justify-content: center;
+        /* justify-content: space-between; */
         /* flex-wrap: wrap; */
         padding-bottom: 5vh;
+
     }
     .itemList {
         display: flex;
         width: 70vw;
         /* border: 1px solid; */
+
+
     }
 
     .item {
         width: 13vw;
-        margin: 0 15px;
+        margin-right: 2vw;
+        box-sizing: border-box;
     }
 
     .coverBox {
@@ -243,6 +263,7 @@
         display: flex;
         align-items:end;
         /* border: #b2b4b7 solid; */
+
     }
 
     .coverBox img {
@@ -283,7 +304,7 @@
         display: block;
         margin-left: 20px;
     }*/
-   
+
     .comment {
         width: 44vw;
         display: inline-block;
@@ -509,11 +530,148 @@
     }
     
     .bMarkSet > button > img {
-        max-width: 50px;
-        max-height: 50px;
+        width: 40px;
+        height: 40px;
     }
 
     .bMarkA {
         display: none;
     }
-}
+
+    @media screen and (max-width : 1024px) {
+        #dTitle{
+            font-size: 18pt;
+            /* margin-top: 10px;
+            margin-right: 0px;
+            margin-bottom: 10px;
+            font-weight: 600; */
+        }
+
+        table,
+        th,
+        td {
+            /* border: 0px solid black;
+            border-collapse: collapse; */
+            font-size: 13pt;
+            /* text-align: left; */
+        }
+
+        .bookDes {
+            margin: 10px;
+            font-size: 13pt;
+            /* min-width: 216px; */
+            /* min-height: 216px; */
+            /* overflow: hidden; */
+        }
+    }
+
+    @media screen and (max-width : 768px) {
+        #dTitle{
+            font-size: 12pt;
+            /* margin-top: 10px;
+            margin-right: 0px;
+            margin-bottom: 10px;
+            font-weight: 600; */
+        }
+
+        table,
+        th,
+        td {
+            /* border: 0px solid black;
+            border-collapse: collapse; */
+            font-size: 9pt;
+            /* text-align: left; */
+        }
+
+        .bookDes {
+            /* margin: 10px; */
+            font-size: 9pt;
+            /* min-width: 216px; */
+            /* min-height: 216px; */
+            /* overflow: hidden; */
+        }
+        hr {
+            margin: 0;
+        }
+        .thumbButton>button>img {
+            width: 20px;
+            height: 20px;
+        }
+        .bMarkSet > button > img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    @media screen and (max-width : 666px) {
+        #dTitle{
+            font-size: 9pt;
+            /* margin-top: 10px;
+            margin-right: 0px;
+            margin-bottom: 10px;
+            font-weight: 600; */
+        }
+
+        table,
+        th,
+        td {
+            /* border: 0px solid black;
+            border-collapse: collapse; */
+            font-size: 6pt;
+            /* text-align: left; */
+        }
+
+        .bookDes {
+            /* margin: 10px; */
+            font-size: 6pt;
+            /* min-width: 216px; */
+            /* min-height: 216px; */
+            /* overflow: hidden; */
+        }
+
+        th,
+        td {
+        padding: 8px 15px;
+        }
+
+    }
+
+    @media screen and (max-width : 430px ) {
+        #dTitle{
+            font-size: 6pt;
+            /* margin-top: 10px;
+            margin-right: 0px;
+            margin-bottom: 10px;
+            font-weight: 600; */
+        }
+
+        table,
+        th,
+        td {
+            /* border: 0px solid black;
+            border-collapse: collapse; */
+            font-size: 4pt;
+            /* text-align: left; */
+        }
+
+        .bookDes {
+            /* margin: 10px; */
+            font-size: 4pt;
+            /* min-width: 216px; */
+            /* min-height: 216px; */
+            /* overflow: hidden; */
+        }
+        .thumbButton>button>img {
+            width: 10px;
+            height: 10px;
+        }
+        .bMarkSet > button > img {
+            width: 10px;
+            height: 10px;
+        }
+        th,
+        td {
+        padding: 5px 15px;
+        }
+    }
+    
