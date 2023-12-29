@@ -68,7 +68,8 @@ async function follow() {
 	followBtn.addEventListener('click', () => {
         followBtn.classList.add('hidden');
         unfollowBtn.classList.remove('hidden');
-
+	})
+}
 
 
 function removeAllChildren(element) {
@@ -131,6 +132,3 @@ function showSearch1() {
     }
 
 })();
-
-
-
