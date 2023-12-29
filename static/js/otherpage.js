@@ -28,77 +28,48 @@ const followerList = document.querySelector('.follower-list');
 const closeFollowingBtn = document.querySelector('.close4');
 const closeFollowerBtn = document.querySelector('.close5');
 
+const followBtn = document.querySelector('.follow');
+const unfollowBtn = document.querySelector('.unfollow');
 
-function lifeSearch(no) {
-    // const title = document.getElementById('title').value;
-    const resultBox = document.getElementById(`lifelist-result${no}`);
 
-    $.ajax({
-    method: 'get',
-    url: '/lifeSearch', // 서버에 요청을 보내는 주소로 변경
-    data:{
-        title:document.getElementById(`lifelist${no}`).value,
-    }
-    }).done((res) => {
-        console.log('res >' , res);
-        // console.log('object >', JSON.parse(res));
-        res.forEach(a => {
-            // console.log('알라딘 bestseller a.isbn > ',a.isbn);
-                let html = `
-                <div>
-                    <button type="button" class="life-btn" onclick="addLifeBook('${a.isbn}','${a.cover}',${no})">
-                        <div>${a.title}</div>
-                    </button>
-                </div>
-                `;
-                resultBox.insertAdjacentHTML('beforeend',html);
-        });
+function close4() {
+    closeFollowingBtn.addEventListener('click', () => {
+        followingList.classList.add('hidden1');
     });
-    removeAllChildren(resultBox);
-    // console.log('title> ',title)
-    // document.getElementById('result').value=title;
 }
 
-function addLifeBook(isbn,cover,no){
-    axios({
-        method:'post',
-        url:'/regLifeBook',
-        data:{
-            l_isbn:isbn,
-            l_cover:cover,
-            l_ranking:no,
-        }
-    }).then((res)=>{
-        alert('인생작이 선택되었어요!');
-        const cover=res.data.newLifeBook.l_cover;
-        const changeCover = document.querySelector(`#top${no}`);
-        const input = document.querySelector(`#lifelist${no}`);
-        input.textContent="";
-        changeCover.innerHTML=`<img class="lifeBook-cover" src="${cover}">`;
-
-    })
-    console.log(isbn);
+function close5() {
+    closeFollowerBtn.addEventListener('click', () => {
+        followerList.classList.add('hidden1');
+    });
 }
 
-//여기 에러나네요??
-// document.addEventListener("DOMContentLoaded", ()=>{
-//     getLifeBook();
-// });
 
-function getLifeBook(){
-    axios({
-        method:'get',
-        url:'/getTop',
-    }).then((res)=>{
-        const lifeBookCover1 =  res.data.getTop1[0].l_cover;
-        const lifeBookCover2 =  res.data.getTop2[0].l_cover;
-        const lifeBookCover3 =  res.data.getTop3[0].l_cover;
-        top1.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover1}">`;
-        top2.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover2}">`;
-        top3.innerHTML=`<img class="lifeBook-cover" src="${lifeBookCover3}">`;
-        console.log(lifeBookCover1);
-    })
+function following() {
+    followingList.classList.remove('hidden4');
+    followerList.classList.add('hidden5');
 }
+
+function follower() {
+    followingList.classList.add('hidden4');
+    followerList.classList.remove('hidden5');
+}
+
+function closeFollowing() {
+    followingList.classList.add('hidden4');
+}
+
+function closeFollower() {
+    followerList.classList.add('hidden5');
+}
+
+
+async function follow() {
+	followBtn.addEventListener('click', () => {
+        followBtn.classList.add('hidden');
+        unfollowBtn.classList.remove('hidden');
+
+
 
 function removeAllChildren(element) {
     while (element.firstChild) {
