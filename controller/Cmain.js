@@ -590,7 +590,7 @@ exports.searchDetail = async (req, res) => {
 				Version: 20131101
 			}
 		})
-		console.log('Cmain searchDetail 알라딘 요청 결과 >', searchDetail.data.item)
+		// console.log('Cmain searchDetail 알라딘 요청 결과 >', searchDetail.data.item)
 		const detailData = searchDetail.data.item[0];
 
 		const tokenId = await tokenCheck(req);
@@ -618,14 +618,14 @@ exports.mostLike = async (req, res) => {
         order: [[model.sequelize.literal('like_count'), 'DESC']],
         limit: 5,
       });
-    //   console.log('---------메인좋아요!!!', mostLike);
+    // console.log('---------메인좋아요!!!', mostLike);
 
     if(mostLike.length == 0) {
         res.send('좋아요한 책이 없음')
     }
     else{
         const mostLikeIsbn = mostLike.map(liked => liked.b_isbn);
-    console.log('---------메인좋아요!!!', mostLikeIsbn);
+    // console.log('---------메인좋아요!!!', mostLikeIsbn);
     
     const mostLikeData = mostLikeIsbn.map(isbn => {
         return axios({
@@ -647,10 +647,10 @@ exports.mostLike = async (req, res) => {
     // 각각의 응답에서 데이터 추출 및 처리
     const likeListData = mostLikeDataResponse.map(res => res.data.item);
 
-	console.log(mostLikeDataResponse);
+	// console.log(mostLikeDataResponse);
     const mainLikes = likeListData.map(innerArray => innerArray[0]);
 
-    console.log('————메인페이지 좋아요 책 리스트————', mainLikes);
+    // console.log('————메인페이지 좋아요 책 리스트————', mainLikes);
 
     res.send(mainLikes);
 

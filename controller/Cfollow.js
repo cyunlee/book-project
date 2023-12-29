@@ -5,7 +5,7 @@ const axios = require('axios')
 const jwt = require('jsonwebtoken');
 const { response } = require('express');
 
-const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
+const jwtSecret = process.env.JWT_SECRET;
 
 const cookieConfig = {
 	httpOnly: true,
