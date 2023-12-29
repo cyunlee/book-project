@@ -245,7 +245,7 @@ exports.myWish = async (req, res) => {
                     method: 'get',
                     url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
                     params: {
-                        ttbkey: 'ttbclue91204001',
+                        ttbkey: 'ttbwonluvv0940001',
                         ItemId: isbn,
                         ItemIdType: 'ISBN',
                         Output: 'JS',
@@ -335,7 +335,7 @@ try{
 				method: 'get',
 				url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
 				params: {
-					ttbkey: 'ttbclue91204001',
+					ttbkey: 'ttbwonluvv0940001',
 					ItemId: isbn,
 					ItemIdType: 'ISBN',
 					Output: 'JS',
@@ -384,7 +384,7 @@ exports.viewAll = async (req, res) => {
 					method: 'get',
 					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
 					params: {
-						ttbkey: 'ttbclue91204001',
+						ttbkey: 'ttbwonluvv0940001',
 						ItemId: isbn,
 						ItemIdType: 'ISBN',
 						Output: 'JS',
@@ -621,19 +621,19 @@ exports.mostLike = async (req, res) => {
       });
     //   console.log('---------메인좋아요!!!', mostLike);
 
-    if(!mostLike) {
+    if(mostLike.length == 0) {
         res.send('좋아요한 책이 없음')
     }
     else{
         const mostLikeIsbn = mostLike.map(liked => liked.b_isbn);
-    // console.log('---------메인좋아요!!!', mostLikeIsbn);
+    console.log('---------메인좋아요!!!', mostLikeIsbn);
     
     const mostLikeData = mostLikeIsbn.map(isbn => {
         return axios({
             method: 'get',
             url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
             params: {
-                ttbkey: 'ttbclue91204001',
+                ttbkey: 'ttbwonluvv0940001',
                 ItemId: isbn,
                 ItemIdType: 'ISBN',
                 Output: 'JS',
@@ -648,9 +648,10 @@ exports.mostLike = async (req, res) => {
     // 각각의 응답에서 데이터 추출 및 처리
     const likeListData = mostLikeDataResponse.map(res => res.data.item);
 
+	console.log(mostLikeDataResponse);
     const mainLikes = likeListData.map(innerArray => innerArray[0]);
 
-    // console.log('————메인페이지 좋아요 책 리스트————', mainLikes);
+    console.log('————메인페이지 좋아요 책 리스트————', mainLikes);
 
     res.send(mainLikes);
 
@@ -684,7 +685,7 @@ exports.get_mostComments = async (req,res)=>{
 			  method: 'get',
 			  url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
 			  params: {
-				  ttbkey: 'ttbclue91204001',
+				  ttbkey: 'ttbwonluvv0940001',
 				  ItemId: isbn,
 				  ItemIdType: 'ISBN',
 				  Output: 'JS',
@@ -822,7 +823,7 @@ exports.myWish = async (req, res) => {
 					method: 'get',
 					url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
 					params: {
-						ttbkey: 'ttbclue91204001',
+						ttbkey: 'ttbwonluvv0940001',
 						ItemId: isbn,
 						ItemIdType: 'ISBN',
 						Output: 'JS',
