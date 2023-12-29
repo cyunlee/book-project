@@ -13,21 +13,15 @@
 </head>
 <body>
 		<div id="top">
-            <a href='/main'><img src="../static/img/logo.png"></a>
+            <a href='/'><img src="../static/img/logo.png"></a>
 
         </div>
     <!-- <h1>상세페이지</h1> -->
     <div class="bookshelf">
         <div class="bookSet">
-            <div class="bookCard" id="bookResult">
                 <div class="bookImage" id="bookCover">
                     <img src="${detailItem.cover}" id="bookCoverImg">
-                </div>
-            </div>
-            <div class="bookBlock" id="block">
-                <div class="bookTitle" id="title">
-                    <p id="dTitle">${detailItem.title}</p>
-                    <div class="bMarkSet">
+                     <div class="bMarkSet">
                         <button class="bMark">
                             <img src="/static/img/bookmark-white.png" id="bookMarkImg" class="bookMarkPng">
                         </button>
@@ -36,50 +30,38 @@
                         </button>
                     </div>
                 </div>
-                <div class="bookSide" id=sideResult>
-                    <table style="width:100%" class="bookTable" id=resultTable>
-                        <tr>
-                            <td>지은이</td>
-                            <td class="bar">|</td>
-                            <td id="dAuthor">${detailItem.author}</td>
-                        </tr>
-                        <tr>
-                            <td>출판사</td>
-                            <td class="bar">|</td>
-                            <td id="dPub">${detailItem.publisher}</td>
-                        </tr>
-                        <tr>
-                            <td>ISBN</td>
-    
-                                <td class="bar">|</td>
-                                <td id="dIsbn">${detailItem.isbn}</td>
-                            </tr>
-                        </table>
-                        <hr>
-                        <div class="bookDes" id="description">
-                            <p id="Ddescription">${detailItem.description}</p>
-                        </div>
-                        <div class="thumbButton">
-                            <button class="like" id="like">
-                                <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
-                            </button>
-                            <button class="likeA">
-                                <img src="/static/img/free-icon-thumb-up-fill.png" class="thumbUp" id="good">
-                            </button>
-                        
-                            <button class="bad">
-                                <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
-                            </button>
-                            <button class="badA">
-                                <img src="/static/img/free-icon-thumb-down-fill.png" class="thumbDown" id="bad">
-                            </button>
-                        </div>
-                    </div>
+            <div class="bookBlock" id="block">
+                <div class="bookTitle" id="dTitle">${detailItem.title}</div>
+                <div id="dAuthor" class ="bookContent">지은이 | ${detailItem.author}</div>
+                <div id="dPub" class ="bookContent">출판사 | ${detailItem.publisher}</div>
+                <div id="dIsbn" class ="bookContent">ISBN | ${detailItem.isbn}</div>
+                    
+
+                <div class="hr"></div>
+                <!-- <hr> -->
+                <div class="bookDes" id="description">
+                    <div id="Ddescription" class ="bookContent">${detailItem.description}</div>
                 </div>
-            
+                <div class="thumbButton">
+                    <button class="like" id="like">
+                        <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
+                    </button>
+                    <button class="likeA">
+                        <img src="/static/img/free-icon-thumb-up-fill.png" class="thumbUp" id="good">
+                    </button>
+                
+                    <button class="bad">
+                        <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown" id="bad">
+                    </button>
+                    <button class="badA">
+                        <img src="/static/img/free-icon-thumb-down-fill.png" class="thumbDown" id="bad">
+                    </button>
+                </div>
             </div>
+            
         </div>
     </div>
+</div>
 
     <div class="listBox">
         <div class="listText">

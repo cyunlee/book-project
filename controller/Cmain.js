@@ -37,12 +37,11 @@ const tokenCheck = async (req) => {
 exports.main = async (req, res) => {
 	const tokenId = await tokenCheck(req);
 	if (!tokenId) {
-		res.render('index', { isLogin: false })
+		res.render('index', { isLogin: false, id: tokenId })
 	} else {
 		res.render('index', { isLogin: true, id: tokenId });
 	}
 }
-
 exports.signin = (req, res) => {
 	res.render('login');
 }

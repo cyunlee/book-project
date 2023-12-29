@@ -18,6 +18,7 @@
         padding: 0;
         margin: 0;
         background-color: #F1F3F8;
+        font-family: 'Noto Sans KR';
     }
 
     #top {
@@ -55,13 +56,28 @@
         display: flex;
         justify-content: space-between;
         box-sizing: border-box;
-        width: 70vw;
+        width: 54vw;
+        height: 29vw;
+        position: relative;
     }
     .bookCard {
         /* width: 70vw; */
         display: flex;
         /* justify-content: space-between; */
         box-sizing: border-box;
+        width: 22vw;
+        padding: 0;
+        margin: 0;
+    }
+
+    .bookContent{
+        width: 100%;
+        overflow: hidden;
+        font-size: 1.3vw;
+    }
+
+    .bookContent#Ddescription{
+        height:20vw;
     }
 
     .bookImage {
@@ -77,44 +93,35 @@
 
         /*top: 200px+30vw;
         left: 100px+30vw;*/
-        border: 1px solid grey;
+        /* border: 1px solid grey; */
         background-color: white;
         display: inline-block;
         object-fit: cover;
         /*position: absolute;*/
         /* border: 1px solid red; */
         margin-right: 2vw;
+        position: relative;
     }
 
     .bookImage>img {
-        /*object-fit: cover;*/
-        /* min-width: 150px;
-        min-height: 210px;
-        max-width: 400px;
-        max-height: 600px; */
-        width: 22vw;
+        width: 21vw;
         height: 28vw;
         object-fit: fill;
         overflow: clip;
+        border: black 4px solid;
     }
 
     .bookTitle {
-        /* max-width: 600px; */
-        /* max-height: 80px; */
-
-        /* margin-left: 15px;
-        margin-right: 15px; */
-
-        display: flex;
-        /* overflow: hidden; */
+        font-size: 1.7vw;
+        overflow: hidden;
+        margin-bottom: 2vw;
+        height: 7vw;
     }
 
     .bookTitle>p {
-        font-size: 20pt;
-        margin-top: 10px;
-        margin-right: 0px;
-        margin-bottom: 10px;
         font-weight: 600;
+        margin: 0;
+        width: 27vw;
     }
     /* .bookTitle>img {
         width: 60px;
@@ -128,19 +135,12 @@
         flex-direction: column;
         /* margin: 30px; */
         /* justify-content: center; */
-    }
-
-    .bookSide {
-        /*display: block;*/
-        /* max-width: 600px; */
-        /* max-height: 540px; */
-
-        /* padding: 30px 60px; */
+        margin-left: 2vw;
+}
 
 
-    }
 
-    table,
+    /* table,
     th,
     td {
         border: 0px solid black;
@@ -152,16 +152,16 @@
     th,
     td {
         padding: 10px 15px;
-    }
+    } */
 
     .subTitle {
         min-width: 90px;
     }
 
-    tr {
+    /* tr {
         max-height: 50px;
         overflow: hidden;
-    }
+    } */
 
     .subDes {
         max-height: 50px;
@@ -172,24 +172,31 @@
         padding: 50px;
     }
 
-    hr {
+    /* hr {
         margin-top: 15px;
         margin-bottom: 15px;
         z-index: 2;
+    } */
+    .hr{
+        height: 1px;
+        width: 100%;
+        /* margin: auto; */
+        margin: 1vw 0;
+        background-color: gray;
     }
 
     .bookDes {
-        margin: 10px;
-        font-size: 15pt;
+        /* margin: 10px; */
+        /* font-size: 15pt; */
         /* min-width: 216px; */
         /* min-height: 216px; */
         overflow: hidden;
     }
 
-    .thumbButton {
+    /* .thumbButton {
         z-index: 10;
         position: relative;
-    }
+    } */
 
     .thumbButton>button>img {
         max-width: 50px;
@@ -198,6 +205,12 @@
 
     .thumbButton {
         display: flex;
+        justify-content: center;
+        width: 20.5vw;
+        border-top: solid 4px;
+        position: absolute;
+        bottom: -1.7vw;
+        height: 5vw;
     }
 
     .thumbButton>button {
@@ -530,8 +543,12 @@
     }
     
     .bMarkSet > button > img {
-        width: 40px;
-        height: 40px;
+        /* width: 40px; */
+        /* height: 40px; */
+        position: absolute;
+        top: 0;
+        right: 2vw;
+        width: 3.2vw;
     }
 
     .bMarkA {

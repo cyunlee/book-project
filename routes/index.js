@@ -9,7 +9,7 @@ router.use(cookieParser());
 
 
 
-// 임시 링크
+// 메인페이지
 router.get('/', controller.main);
 
 // 로그인 페이지
@@ -87,9 +87,6 @@ router.get('/otherpage', controller.otherpage);
 
 // 회원가입하기
 router.post('/signup_post', controller.signup_post);
-
-// 메인 페이지
-router.get('/main',bookController.main);
 
 // 검색 결과 가져오기
 router.get('/search',bookController.get_books);

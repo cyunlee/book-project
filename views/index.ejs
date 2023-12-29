@@ -1,53 +1,297 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="static/js/login.js"></script>
-	<script src="static/js/follow.js"></script>
+	<meta charset='utf-8'>
+	<link href="static\css\mystyle.css" rel="stylesheet" />
+	<!-- jQuery CDN -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+	<!-- axios CDN -->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<title>index</title>
+
 </head>
-<body>
-	<h1>임시 index페이지</h1>
-	<a href="/main">메인</a>
-	<% if (!isLogin) { %>
-		<a href="/login">로그인</a>
-		<a href="/signup">회원가입</a>
-	<% } %>
-	<% if (isLogin) { %>
-		<a href="/mypage">마이페이지</a>
-		<p><%=id%>님 환영합니다!</p><br><br><br>
+<div>
+	<div>
+		<div id="top">
+				<a href='/'><img src="../static/img/logo.png"></a>
+				<div id="search"></div>
+				<ul class="ul-category">
+					<li><a href="#best_sellers_section">베스트셀러</a></li>
+					<!-- <li>|</li> -->
+					<li><a href="#new_books_section">신간 추천</a></li>
+					<!-- <li>|</li> -->
+					<li><a href="#review_ranking_section">리뷰 순위</a></li>
+					<!-- <li>|</li> -->
+					<li><a href="#liked_best_section">좋아요 순위</a></li>
+				</ul>
 
-		<br>
+			</div>
+			
+		</div>
+		<div class="top_h2">내가 세계를 알게 된 것은 책에 의해서였다.<br>-장 폴 사르트르</div>
+		<div id="top_ad">
+			<form action="/searchList" method="get">
+				<input type="text" id="title" name="title" placeholder="책 제목을 입력해주세요">
+				<!-- <button type="button" id="searchBtn" onclick="search();">검색</button> -->
+				<button id="searchBtn">검색</button>
+			</form>
+		</div>
+		<div id="result"></div>
+		<div class="top_explain">책 이름이 기억나지 않아도 괜찮아요! 관련된 키워드를 입력해보세요.</div>
 
+	</div>
 
-		<br><br><br>
-		<button type='button' onclick='logout()'>
-		로그아웃</button>
+	<!-- 메인 페이지 -->
+	<section class="content_box" id="best_sellers_section">
+		<div class="box">
+			<div class ="index">베스트셀러</div>
+			<div id="best-result" class="box-section"></div>
+		</div>
 
-		<button type='button' onclick="location.href='/makeRoom';">
-			소통방생성</button>
-	<% } %>
-	<input type="text" id="otherId" placeholder="다른사람id">
-	<button onclick="otherset()">다른사람세팅</button>
-	<a id="otherPage" href="">다른사람 페이지</a>
-	
-	<h2>임시 검색창</h2>
-	<form action="/searchList" method="get">
-		<input type="text" name="title" id="" placeholder="책 제목으로 검색">
-		<button>검색</button>
-	</form>
-	<!-- 그런데 검색 기능 책 제목으로만 할 건지, 제목+저자로 할 건지 정하기
-	/ 일단 제목으로만 검색되게 설정해둠-->
+	</section>
+	<div id="content">
+		<section class="content_box" id="new_books_section">
+			<div class="box">
+				<div class ="index">신간 추천</div>
+				<div id="new-result" class="box-section"></div>
+			</div>
+			
+		</section>
+		
+		<section class="content_box" id="review_ranking_section">
+			<div class="box">
+				<div class ="index">리뷰 순위</div>
+				<div id="review-result" class="box-section"></div>
+			</div>
+			
+		</section>
+
+		<section class="content_box" id="liked_best_section">
+			<div class="box">
+				<div class ="index">좋아요 베스트</div>	
+				<div id="like-result" class="box-section"></div>
+			</div>
+
+		</section>
+
+	</div>
+	<footer>
+		<div class="box">
+			<div class="footers">
+				<img src="../static/img/logo.png"
+					style="margin-bottom: 20px" /> <!-- 로고 -->
+				<h3>교보문고(주)</h3>
+				<ul>
+					<li>대표이사 : 곽찬혁 | 인천광역시 부평구 열우물로 90 더샵부평센트럴시티 | 사업자등록번호 : 102-81-11670</li>
+					<li>대표전화 : 1544-1900(발신자 부담전화) | FAX : 0502-987-5711(지역번호 공통) | 인천광역시 통신판매업신고번호 : 제 653호 </li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	</body>
 	<script>
-		follow_set();
-		function otherset() {
-			const doc = document.querySelector('#otherId');
-			const otherhref = document.querySelector('#otherPage');
-			otherhref.setAttribute('href', `/otherpage/:${doc.value}`)
-		}
-	</script>
+		const eventTitle = document.getElementById('title');
+        
+        // 메인페이지 로드 시, 책 정보들 불러오기
+        document.addEventListener("DOMContentLoaded", ()=>{
+            const resultBox = document.getElementById('result');
+            const bestResultBox = document.getElementById('best-result');
+            const newResultBox = document.getElementById('new-result');
+            const reviewResultBox = document.getElementById('review-result');
+            const likeResultBox = document.getElementById('like-result');
+			const searchBox = document.getElementById('search');
 
-</body>
+			
+			if(`<%= id%>`=='false'){
+				const html1 =`<button class="buttonlog" onclick="location.href='/login'">SIGN IN</button>
+				<button class="buttonlog" onclick="location.href='/signup'">SIGN UP</button>`;
+				searchBox.insertAdjacentHTML("beforeend",html1);
+				
+			}else{
+				const html2= `<button class="buttonlog" onclick="location.href='/mypage'">MY PAGE</button>
+				<button class="buttonlog" onclick="location.href='/logout'">LOGOUT</button>`;
+				searchBox.insertAdjacentHTML("beforeend",html2);
+			}
+        
+            // 베스트셀러 api
+            $.ajax({
+                method:'get',
+                url:'/bestSeller',
+            }).done((res) => {
+                    // console.log('알라딘 bestseller >' , res);
+                    res.forEach(a => {
+                        // console.log('알라딘 bestseller a.isbn > ',a.isbn);
+
+                        let html = `
+                        <div class="each-selection">
+                            <button type="button" onclick="detail('${a.isbn}')">
+                                <img src="${a.cover}">
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        bestResultBox.insertAdjacentHTML('beforeend',html);
+                    });
+            });
+        
+            // 신간 api
+            $.ajax({
+            method:'get',
+            url:'/brendNew',
+            }).done((res) => {
+				// console.log('알라딘 brendnew res >' , res);
+				res.forEach(a => {
+					// console.log('알라딘 brendnew a.isbn > ',a.isbn);
+					let html = `
+					<div class="each-selection">
+						<button type="button" onclick="detail('${a.isbn}')">
+							<img src="${a.cover}">
+							<div>${a.title}</div>
+						</button>
+					</div>
+					`;
+					newResultBox.insertAdjacentHTML('beforeend',html);
+				});
+			});
+
+			$.ajax({
+				method:'get',
+				url:'/mostComments',
+			}).done((res)=>{
+				console.log(res);
+				if(res.length==0){
+					let html =`
+						<div style="text-align:center; width:100%; height:30vh; line-height:30vh;">
+							댓글을 단 책이 없어요!
+						</div>`
+					reviewResultBox.insertAdjacentHTML('beforeend',html);
+				}else{
+					// console.log('댓글 res >' , res);
+					res.forEach(a => {
+						// console.log('댓글 a.isbn > ',a.isbn);
+						let html = `
+						<div class="each-selection">
+							<button type="button" onclick="detail('${a.isbn}')">
+								<img src="${a.cover}">
+								<div>${a.title}</div>
+							</button>
+						</div>
+						`;
+						reviewResultBox.insertAdjacentHTML('beforeend',html);
+					});
+				}
+			})
+
+			// 프론트에서 받기
+			$.ajax({
+			method:'get',
+			url:'/mostLike',
+			}).done((res) => {
+				if(res.length==0){
+					let html =`
+						<div style="text-align:center; width:100%; height:30vh; line-height:30vh;">
+							좋아요한 책이 없어요!
+						</div>`
+					likeResultBox.insertAdjacentHTML('beforeend',html);
+				}else{
+					// console.log('좋아요 res >' , res);
+					res.forEach(a => {
+						// console.log('좋아요 a.isbn > ',a.isbn);
+						let html = `
+						<div class="each-selection">
+							<button type="button" onclick="detail('${a.isbn}')">
+								<img src="${a.cover}">
+								<div>${a.title}</div>
+							</button>
+						</div>
+						`;
+						likeResultBox.insertAdjacentHTML('beforeend',html);
+					});
+				}					
+        });
+
+	});
+
+		// eventTitle.addEventListener("focus",()=>{
+		// 	const resultBox = document.getElementById('result');
+		// 	resultBox.innerHTML = '';
+		// 	if (eventTitle =''){
+		// 		resultBox.style.height='0px'
+		// 	}else{
+		// 		resultBox.style.height='40vh'
+		// 	}
+		// })
+        
+        // keyup 이벤트 발생시 내용들이 화면에 보이게
+        eventTitle.addEventListener("keyup", () => {
+            search();
+			const resultBox = document.getElementById('result');
+			resultBox.innerHTML = '';
+			if (eventTitle =''){
+				resultBox.style.height='0px'
+			}else{
+				resultBox.style.height='40vh'
+			}
+        });
+        
+		
+        // 책 검색 함수(알라딘 책 검색 api)
+        function search() {
+            // const title = document.getElementById('title').value;
+            const resultBox = document.getElementById('result');
+        
+            $.ajax({
+            method: 'get',
+            url: '/search', // 서버에 요청을 보내는 주소로 변경
+            data:{
+                title:document.getElementById('title').value,
+            }
+            }).done((res) => {
+                // console.log('res >' , res);
+                // console.log('object >', JSON.parse(res));
+                res.forEach(a => {
+                    // console.log('알라딘 bestseller a.isbn > ',a.isbn);
+                        let html = `
+                        <div>
+                            <button type="button" onclick="detail('${a.isbn}')">
+                                
+                                <div>${a.title}</div>
+                            </button>
+                        </div>
+                        `;
+                        resultBox.insertAdjacentHTML('beforeend',html);
+                });
+            });
+            removeAllChildren(resultBox);
+            // console.log('title> ',title)
+            // document.getElementById('result').value=title;
+        }
+        
+        
+        
+        function removeAllChildren(element) {
+            while (element.firstChild) {
+                removeAllChildren(element.firstChild);
+                element.removeChild(element.firstChild);
+            }
+        }
+        
+        function detail(isbn){
+            const detailBox = document.getElementById('detail-result');
+			// console.log(isbn);
+            $.ajax({
+                method:'get',
+                url:'/getDetail',
+                data:{
+                    ItemId:`${isbn}`,
+                }
+            }).done((res)=>{
+				// console.log(isbn);
+                // console.log(res);
+                // console.log('res detail aaaaaaaaaaa > ',res.items[0].isbn);
+                location.href=`/detailGo?isbn=${isbn}`;
+            })
+        }
+	</script>
 </html>
