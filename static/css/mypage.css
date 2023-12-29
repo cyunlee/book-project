@@ -425,7 +425,7 @@ h3{
 .following-list{
     position: absolute;
     top: 540px;
-    left: 330px;
+    left: 22vw;
     width: 300px;
     height: 420px;
     background-color: #F1F3F8;
@@ -448,7 +448,7 @@ h3{
 .follower-list{
     position: absolute;
     top: 540px;
-    left: 520px;
+    left: 34vw;
     width: 300px;
     height: 420px;
     background-color: #F1F3F8;
