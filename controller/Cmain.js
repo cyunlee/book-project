@@ -196,17 +196,17 @@ exports.otherpage = async (req, res) => {
 		if(getTop1.length==0){
 			img1 ='../static/img/no-data.jpg';
 		}else{
-			img1 = getTop1.l_cover;
+			img1 =`${getTop1[0].l_cover}`;
 		}
 		if(getTop2.length==0){
 			img2 ='../static/img/no-data.jpg';
 		}else{
-			img2 = getTop2.l_cover;
+			img2 = `${getTop2[0].l_cover}`;
 		}
 		if(getTop3.length==0){
 			img3 ='../static/img/no-data.jpg';
 		}else{
-			img3 = getTop3.l_cover;
+			img3 = `${getTop3[0].l_cover}`;
 		}
 
 		

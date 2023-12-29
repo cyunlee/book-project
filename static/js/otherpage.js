@@ -31,64 +31,43 @@ const closeFollowerBtn = document.querySelector('.close5');
 const followBtn = document.querySelector('.follow');
 const unfollowBtn = document.querySelector('.unfollow');
 
-
-function close4() {
-    closeFollowingBtn.addEventListener('click', () => {
-        followingList.classList.add('hidden1');
-    });
-}
-
-function close5() {
-    closeFollowerBtn.addEventListener('click', () => {
-        followerList.classList.add('hidden1');
-    });
-}
-
-
-function following() {
-    followingList.classList.remove('hidden4');
-    followerList.classList.add('hidden5');
-}
-
-function follower() {
-    followingList.classList.add('hidden4');
-    followerList.classList.remove('hidden5');
-}
-
-function closeFollowing() {
-    followingList.classList.add('hidden4');
-}
-
-function closeFollower() {
-    followerList.classList.add('hidden5');
-}
-
-
 async function follow() {
 	followBtn.addEventListener('click', () => {
         followBtn.classList.add('hidden');
         unfollowBtn.classList.remove('hidden');
-	})
-}
-
-
-function removeAllChildren(element) {
-    while (element.firstChild) {
-        removeAllChildren(element.firstChild);
-        element.removeChild(element.firstChild);
-    }
-}
-
-function showSearch1() {
-    top1.addEventListener('click', () => {
-        search1.classList.remove('hidden1');
-        search2.classList.add('hidden2');
-        search3.classList.add('hidden3');
     });
-    // setTimeout(()=> {
-    //     console.log('top1 검색창 닫음');
-    //     search1.classList.add('hidden1');
-    // }, 10000);
+	const otherUser = document.querySelector('#id').value;
+	otherUser = otherUser.substr(1)
+	console.log('idCheck>>>@@@@>>', otherUser);
+	try {
+		await axios({
+			method: "POST",
+			url: "/follow",
+			data: {
+				followingId: otherUser
+			}
+		});	} catch (error) {
+		console.log('interval error : ',error);
+	}
+}
+
+async function unfollow() {
+	unfollowBtn.addEventListener('click', () => {
+        followBtn.classList.remove('hidden');
+        unfollowBtn.classList.add('hidden');
+    });
+	const otherUser = document.querySelector('#follow').value;
+	try {
+		await axios({
+			method: "POST",
+			url: "/unfollow",
+			data: {
+				followingId: otherUser
+			}
+		});
+	} catch (error) {
+		console.log('interval error : ',error);
+	}
 }
 
 // 읽은 책 개수
