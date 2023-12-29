@@ -166,4 +166,10 @@ router.get('/readNum', controller.readNum);
 // 위시리스트 개수
 router.get('/wishNum', controller.wishNum);
 
+//다른사람 댓글
+router.post('/getOtherComments', controller.get_other_comments);
+
+//다른사람 위시
+router.get('/otherWish', controller.otherWish);
+
 module.exports = router;
