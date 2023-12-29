@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const PORT = 8000;
+const dotenv = require('dotenv');
+dotenv.config();
+const PORT = process.env.PORT;
 const db = require('./models/index');
 const multer = require('multer');
 const path = require('path');
@@ -9,7 +11,7 @@ const path = require('path');
 // });
 const jwt = require('jsonwebtoken');
 
-const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
+const jwtSecret = process.env.JWT_SECRET;
 
 const tokenCheck = async (req) => {
 	const token = req.cookies.jwtCookie;

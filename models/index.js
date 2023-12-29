@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
-const config = require(__dirname+'/../config/config.json')['development'];
+const config = require(__dirname+'/../config/config.json')[process.env.NODE_ENV || 'development'];
 const db ={};
+
+config.username = process.env.DB_USERNAME || config.username;
+config.password = process.env.DB_PASSWORD || config.password;
+config.database = process.env.DB_DATABASE || config.database;
+config.host = process.env.DB_HOST || config.host;
 
 const sequelize = new Sequelize(
     config.database,

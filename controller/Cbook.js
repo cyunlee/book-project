@@ -4,7 +4,7 @@ const axios = require('axios');
 const model = require('../models/index');
 const jwt = require('jsonwebtoken');
 
-const jwtSecret = 'kskdajfsalkfj3209243jkwef' // env
+const jwtSecret = process.env.JWT_SECRET;
 
 const tokenCheck = async (req) => {
 	const token = req.cookies.jwtCookie;
@@ -434,8 +434,6 @@ exports.wishData = async (req, res) => {
 			console.log('------이 책에 위시를 했니??????------', wishResult.b_wish)
 			res.send(wishResult.b_wish)
 		}
-
-		// console.log(wishResult)
 	} catch (error) {
 		// 오류 처리
 		console.log('--------------')
