@@ -21,14 +21,16 @@ async function unfollow() {
 	let otherUser = document.querySelector('.id').innerText;
 	otherUser = otherUser.substr(1)
 	try {
-		await axios({
+		const response = await axios({
 			method: "POST",
 			url: "/unfollow",
 			data: {
 				followingId: otherUser
 			}
 		});
-		location.reload();
+		if (response.data.result) {
+			location.reload();
+		}
 	} catch (error) {
 		console.log('interval error : ',error);
 	}
@@ -68,35 +70,72 @@ async function follow_list_set(otherId){
 		})
 		const followingObj = response.data.followingObj;
 		const followerObj = response.data.followerObj;
-		followingObj.forEach(user => {
-				followingListHTML += 	`		<div class="following-account">
-			<div class="account-image">
-				<img src="/${user.u_profile}" alt=""></img>
-			</div>
-			<div class="account-info">
-				<div class="account-name">${user.u_name}</div>
-				<div class="account-id">
-				<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
-
+		if (followingObj) {
+			followingObj.forEach(user => {
+				if(user.u_profile === null || user.u_profile === undefined) {
+					followingListHTML += 	`		<div class="following-account">
+					<div class="account-image">
+						<img src="/static/img/default-profile.png" alt=""></img>
+					</div>
+					<div class="account-info">
+						<div class="account-name">${user.u_name}</div>
+						<div class="account-id">
+						<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
+		
+						</div>
+					</div>
+				</div>
+				`
+				} else {
+					followingListHTML += 	`		<div class="following-account">
+				<div class="account-image">
+					<img src="/${user.u_profile}" alt=""></img>
+				</div>
+				<div class="account-info">
+					<div class="account-name">${user.u_name}</div>
+					<div class="account-id">
+					<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
+	
+					</div>
 				</div>
 			</div>
-		</div>
-		`
-		})
-		followerObj.forEach(user => {
-			followerListHTML += 	`		<div class="following-account">
-		<div class="account-image">
-			<img src="/${user.u_profile}" alt=""></img>
-		</div>
-		<div class="account-info">
-			<div class="account-name">${user.u_name}</div>
-			<div class="account-id">
-			<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
+			`
+				}	
+			})
+		}
+		if (followerObj) {
+			followerObj.forEach(user => {
+				if(user.u_profile === null || user.u_profile === undefined) {
+					followerListHTML += 	`		<div class="following-account">
+					<div class="account-image">
+						<img src="/static/img/default-profile.png" alt=""></img>
+					</div>
+					<div class="account-info">
+						<div class="account-name">${user.u_name}</div>
+						<div class="account-id">
+						<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
+		
+						</div>
+					</div>
+				</div>
+				`
+				} else {
+					followerListHTML += 	`		<div class="following-account">
+				<div class="account-image">
+					<img src="/${user.u_profile}" alt=""></img>
+				</div>
+				<div class="account-info">
+					<div class="account-name">${user.u_name}</div>
+					<div class="account-id">
+					<a href="/otherpage/:${user.u_id}">@${user.u_id}</a>
+	
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-	`
-	})
+			`
+				}	
+		})
+		}
 	} catch (error) {
 		console.log('interval error : ',error);
 	}

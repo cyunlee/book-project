@@ -19,15 +19,13 @@ const FollowerModel = (sequelize,DataTypes)=>{
         },
         u_id: {
             type: DataTypes.STRING(30),
-            foriegnKey:true,
             reference: {
 				model: User,
 				key: 'u_id',
-			}
+			},
         },
 		follower : {
             type: DataTypes.STRING(30),
-            foriegnKey:true,
             reference: {
 				model: OtherUser,
 				key: 'u_id'

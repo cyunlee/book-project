@@ -19,20 +19,16 @@ const FollowingModel = (sequelize,DataTypes)=>{
         },
         u_id: {
             type: DataTypes.STRING(30),
-            foriegnKey:true,
             reference: {
 				model: User,
 				key: 'u_id',
-                onDelete:'CASCADE',
-			}
+			},
         },
 		following : {
             type: DataTypes.STRING(30),
-            foriegnKey:true,
             reference: {
 				model: OtherUser,
 				key: 'u_id',
-                onDelete:'CASCADE',
 			}
 		}
     },{
