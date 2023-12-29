@@ -79,22 +79,8 @@
 	</div>
 	<footer>
 		<div class="box">
-			<!-- <ul id="footer_menu">
-				<li style="margin-right: 5px;">회사소개</li>
-				<li style="margin-right: 5px;">채용안내</li>
-				<li style="margin-right: 5px;">이용약관</li>
-				<li style="margin-right: 5px;">개인정보처리방침</li>
-				<li style="margin-right: 5px;">청소년 보호정책</li>
-				<li style="margin-right: 5px;">중고매장</li>
-				<li style="margin-right: 5px;">제휴·마케팅 안내</li>
-				<li style="margin-right: 5px;">판매자 매니저</li>
-				<li style="margin-right: 5px;">출판사·공급사 안내</li>
-				<li style="margin-right: 5px;">광고 안내</li>
-				<li style="margin-right: 5px;">학교·기업·기관 대량구매</li>
-			</ul> -->
-
 			<div class="footers">
-				<img src="C:\Users\82105\Desktop\github\book-project\static\img\kyobo_footer.png"
+				<img src="../static/img/logo.png"
 					style="margin-bottom: 20px" /> <!-- 로고 -->
 				<h3>교보문고(주)</h3>
 				<ul>
@@ -117,7 +103,6 @@
             const likeResultBox = document.getElementById('like-result');
 			const searchBox = document.getElementById('search');
 
-			console.log(`버튼 토큰 아이디 > <%= id%>`);
 			
 			if(`<%= id%>`=='false'){
 				const html1 =`<button class="buttonlog" onclick="location.href='/login'">SIGN IN</button>
@@ -135,9 +120,9 @@
                 method:'get',
                 url:'/bestSeller',
             }).done((res) => {
-                    console.log('알라딘 bestseller >' , res);
+                    // console.log('알라딘 bestseller >' , res);
                     res.forEach(a => {
-                        console.log('알라딘 bestseller a.isbn > ',a.isbn);
+                        // console.log('알라딘 bestseller a.isbn > ',a.isbn);
 
                         let html = `
                         <div class="each-selection">
@@ -156,9 +141,9 @@
             method:'get',
             url:'/brendNew',
             }).done((res) => {
-				console.log('알라딘 brendnew res >' , res);
+				// console.log('알라딘 brendnew res >' , res);
 				res.forEach(a => {
-					console.log('알라딘 brendnew a.isbn > ',a.isbn);
+					// console.log('알라딘 brendnew a.isbn > ',a.isbn);
 					let html = `
 					<div class="each-selection">
 						<button type="button" onclick="detail('${a.isbn}')">
@@ -182,9 +167,9 @@
 						</div>`
 					reviewResultBox.insertAdjacentHTML('beforeend',html);
 				}else{
-					console.log('댓글 res >' , res);
+					// console.log('댓글 res >' , res);
 					res.forEach(a => {
-						console.log('댓글 a.isbn > ',a.isbn);
+						// console.log('댓글 a.isbn > ',a.isbn);
 						let html = `
 						<div class="each-selection">
 							<button type="button" onclick="detail('${a.isbn}')">
@@ -210,9 +195,9 @@
 						</div>`
 					likeResultBox.insertAdjacentHTML('beforeend',html);
 				}else{
-					console.log('좋아요 res >' , res);
+					// console.log('좋아요 res >' , res);
 					res.forEach(a => {
-						console.log('좋아요 a.isbn > ',a.isbn);
+						// console.log('좋아요 a.isbn > ',a.isbn);
 						let html = `
 						<div class="each-selection">
 							<button type="button" onclick="detail('${a.isbn}')">
@@ -263,10 +248,10 @@
                 title:document.getElementById('title').value,
             }
             }).done((res) => {
-                console.log('res >' , res);
+                // console.log('res >' , res);
                 // console.log('object >', JSON.parse(res));
                 res.forEach(a => {
-                    console.log('알라딘 bestseller a.isbn > ',a.isbn);
+                    // console.log('알라딘 bestseller a.isbn > ',a.isbn);
                         let html = `
                         <div>
                             <button type="button" onclick="detail('${a.isbn}')">
@@ -294,7 +279,7 @@
         
         function detail(isbn){
             const detailBox = document.getElementById('detail-result');
-			console.log(isbn);
+			// console.log(isbn);
             $.ajax({
                 method:'get',
                 url:'/getDetail',
@@ -303,8 +288,8 @@
                 }
             }).done((res)=>{
 				// console.log(isbn);
-                console.log(res);
-                console.log('res detail aaaaaaaaaaa > ',res.items[0].isbn);
+                // console.log(res);
+                // console.log('res detail aaaaaaaaaaa > ',res.items[0].isbn);
                 location.href=`/detailGo?isbn=${isbn}`;
             })
         }
