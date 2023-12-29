@@ -26,6 +26,7 @@
 }
 
 .profile{
+    margin-top: 50px;
     width: fit-content;
     display: flex;
     flex-direction: column;
@@ -302,6 +303,7 @@ body{
     margin: 0;
     padding: 0;
     background-color: #F1F3F8;
+    width: 100%;
 }
 
 .profile-container{
@@ -317,7 +319,7 @@ body{
 .categories{
     width: 70%;
     height: fit-content;
-    padding: 20px;
+    padding-top: 20px;
     background-color: #ffffff;
     flex-direction: column;
     align-items: center;
@@ -331,7 +333,7 @@ body{
 }
 .lifelist{
     display: flex;
-    width: 590px;
+    width: 100%;
     justify-content: space-between;
 }
 .swiper{
@@ -398,11 +400,12 @@ h3{
     flex-direction: column;
 }
 .all-container{
-    width: 600px;
+    width: 100%;
     display: flex;
     flex-direction: row-reverse;
 }
 .all{
+    margin: 15%;
     border-radius: 16px;
     background-color: black;
     color: white;
@@ -425,7 +428,7 @@ h3{
 .following-list{
     position: absolute;
     top: 540px;
-    left: 22vw;
+    left: 330px;
     width: 300px;
     height: 420px;
     background-color: #F1F3F8;
@@ -448,7 +451,7 @@ h3{
 .follower-list{
     position: absolute;
     top: 540px;
-    left: 34vw;
+    left: 520px;
     width: 300px;
     height: 420px;
     background-color: #F1F3F8;
@@ -470,15 +473,16 @@ h3{
 
 .followings-container{
     padding-top: 15px;
+    padding-bottom: 15px;
     width: 300px;
     height: 370px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .followers-container{
     width: 300px;
     height: 370px;
-    overflow: scroll;
+    overflow: auto;
     padding-top: 15px;
 }
 
@@ -569,17 +573,84 @@ h3{
     width:100%;
     height:100%;
 }
-.swiper-button-prev,
-.swiper-button-next {
-  background-color: lightgrey;
-  opacity: 0.5;
-  padding: 15px 5px;
-  border-radius: 20px;
-  color: black !important;
-}
+
 
 .swiper-button-prev:after,
 .swiper-button-next:after {
   font-size: 1.1rem !important;
   font-weight: 600 !important;
+}
+
+.delete_user_btn{
+    margin-top: 10px;
+    bottom: -26vh;
+    right: 15vw;
+    background-color: transparent;
+    border: none;
+    font-weight: 700;
+    color: #9c9c9c;
+    width: 8vh;
+    z-index: 100;
+
+}
+
+.delete_user_btn:hover{
+    background-color:#000000;
+}
+
+/* 모바일 세로 (해상도 ~ 479px)*/ 
+@media all and (max-width:767px) {
+    .line {
+        display: none;
+    }
+    .info {
+        width: 200px;
+        height: 200px;
+        display: flex;
+        flex-flow: wrap;
+        margin-top: 0;
+    }
+    .lifelist {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .book {
+        margin-bottom: 20px;
+    }
+    .all-container {
+        flex-direction: inherit;
+        align-items: center;
+        display: flex;
+    }
+    .categories {
+        width: 100%;
+    }
+    .out {
+        display: none;
+    }
+    .profile-container {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .bookstack-list {
+        margin-left: 30px;
+        align-items: center;
+    }
+}
+
+@media all and (min-width:1024px) {
+    .lifelist {
+        justify-content: center;
+    }
+    #top1 {
+        margin-left: 50px;
+    margin-right: 50px;
+   }
+   #top2 {
+    margin-right: 50px;
+   }
+   #top3 {
+    margin-right: 50px;
+   }
 }

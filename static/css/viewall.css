@@ -60,7 +60,7 @@ button{
 .container{
     position: absolute;
     top: 180px;
-    left: 140px;
+    left: 10vw;
     display: flex;
     flex-direction: column;
     width: fit-content;

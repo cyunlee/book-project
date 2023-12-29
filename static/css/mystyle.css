@@ -106,7 +106,6 @@ li {
     border: none;
     background-color: #d7d7d7;
 	cursor: pointer;
-	margin-left: -8px;
 }
 
 #searchBtn:hover{
@@ -188,7 +187,7 @@ li {
 	/* width: 200px;
     height: 290px; */
 	width: 17vw;
-    height: 26vw;
+    height: 25vw;
 	margin: 0 10px;
     border: none;
 	background-color: white;
@@ -198,15 +197,11 @@ li {
     /* width: 200px;
     height: 240px; */
 	width: 17vw;
-    height: 23vw;
+    height: 22vw;
 }
 .each-selection button div{
-	width: 16vw;
-	height:2vw;
-	white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-	padding: 1vh 1vh 0 1vh;
+	width: 17vw;
+	height:3vw;
 }
 
 
@@ -251,7 +246,7 @@ li {
 
 
 footer {
-	height: 250px;
+	height: 300px;
 	border-top: solid 1px #cccccc;
 	margin-top: 70px;
 }
@@ -411,5 +406,4 @@ li > img {
 	.each-selection button div{
 		display: none;
 	}
-	
 }

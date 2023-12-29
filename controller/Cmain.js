@@ -269,6 +269,51 @@ exports.myWish = async (req, res) => {
 
 }
 
+//남의 위시리스트
+exports.otherWish = async (req, res) => {
+    const {u_id, b_wish} = req.query
+    try{
+        const otherWish = await Book.findAll({
+            attributes: ['b_isbn'],
+            where: {
+                u_id, b_wish
+            }
+        })
+        // console.log('———내 위시리스트————',myWish);
+        if(otherWish=='') {
+            res.send('위시리스트에 추가한 책이 없습니다.')
+        } else {
+            const otherWishIsbn = otherWish.map(wish => wish.b_isbn);
+            // console.log('여기!!!!!!!!!!!!!!!!!', myWishIsbn);
+            const otherWishData = otherWishIsbn.map(isbn => {
+                return axios({
+                    method: 'get',
+                    url: 'http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx',
+                    params: {
+                        ttbkey: 'ttbclue91204001',
+                        ItemId: isbn,
+                        ItemIdType: 'ISBN',
+                        Output: 'JS',
+                        Cover: 'Big',
+                        Version: 20131101
+                    }
+                });
+            });
+            const otherWishResponse = await Promise.all(otherWishData);
+            // console.log('@@@@@@@@@@@@@@@@', myWishResponse);
+            // 각각의 응답에서 데이터 추출 및 처리
+            const wishBooks = otherWishResponse.map(res => res.data.item);
+            // console.log('$$$$$$$$$$',wishBooks);
+            const otherWishList = wishBooks.map(innerArray => innerArray[0]);
+            // console.log('!@#%^&^%$#@#$%^&*&^%$#', myWishList);
+            res.send(otherWishList);
+        }
+    } catch(err) {
+        console.error(err);
+    }
+
+}
+
 exports.getViewAllData = async(req, res) => {
 	const u_id = req.query.u_id;
 try{
@@ -382,6 +427,25 @@ exports.get_my_comments = async (req, res) => {
 	}
 }
 
+exports.get_other_comments = async (req, res) => {
+	try {
+		console.log('loadComment req ', req.body);
+		const userIDphrase=req.body.c_userID.split('@')[1];
+		console.log('loadComment serch ',userIDphrase)
+		const comments = await Comment.findAll({
+			where: {
+				u_id: userIDphrase,
+			}
+		})
+
+		res.send({ comments });
+		console.log('loadComment send ', comments);
+
+	} catch (error) {
+		res.send('Internal Server Error! : ', error);
+	}
+}
+
 exports.viewLikes = (req, res) => {
 	res.render('viewLikes');
 }
@@ -437,8 +501,10 @@ exports.delete_user = async (req, res) => {
 		}
 		await User.destroy({where: {u_id : tokenId}})
 		await OtherUser.destroy({where: {u_id : tokenId}})
-		await Follower.destroy({where: {u_id : tokenId}})
-		await Following.destroy({where: {u_id : tokenId}})
+		// await Following.destroy({where: {following : tokenId}})
+		// await Following.destroy({where: {u_id : tokenId}})
+		// await Follower.destroy({where: {follower : tokenId}})
+		// await Follower.destroy({where: {u_id : tokenId}})
 		res.send({result : true});
 	} catch (error) {
 		res.send('Internal Server Error! : ', error);

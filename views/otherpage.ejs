@@ -1,91 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/otherpage.css" />
-    <script defer src="/static/js/otherpage.js"></script>
-    <script src="/static/js/follow.js"></script>
-    <script src="/static/js/viewAll.js"></script>
 
-    <!-- in HEAD -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/static/css/otherpage.css" />
+  <script defer src="/static/js/otherpage.js"></script>
+  <script src="/static/js/follow.js"></script>
+  <script src="/static/js/viewAll.js"></script>
 
-    <!-- axios cdn -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- in HEAD -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
-    <title>OtherPage</title>
-  </head>
+  <!-- axios cdn -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-  <body>
-    <div id="top">
-      <a href="/main"><img src="../static/img/logo.png" /></a>
-    </div>
-    <div class="out" onclick="location.href='/main'"></div>
-    <div class="profile-container">
-      <div class="profile">
-        <div class="profile-image">
-          <% if (!userInfo.u_profile) { %>
-          <img
-            class="image-setting"
-            src="/static/img/default-profile.png"
-            alt="프로필 사진"
-          />
+  <title>OtherPage</title>
+</head>
+
+<body>
+  <div id="top">
+    <a href="/main"><img src="../static/img/logo.png" /></a>
+  </div>
+  <div class="out" onclick="location.href='/main'"></div>
+  <div class="profile-container">
+    <div class="profile">
+      <div class="profile-image">
+        <% if (!userInfo.u_profile) { %>
+          <img class="image-setting" src="/static/img/default-profile.png" alt="프로필 사진" />
           <% } else { %>
-          <img
-            class="image-setting"
-            src="<%= '/' + userInfo.u_profile %>"
-            alt="프로필 사진"
-          />
-          <% } %>
-        </div>
+            <img class="image-setting" src="<%= '/' + userInfo.u_profile %>" alt="프로필 사진" />
+            <% } %>
+      </div>
 
-        <div class="name"><%= userInfo.u_name %></div>
-        <div class="id"><%= '@' + userInfo.u_id %></div>
-        <button id="followButton" onclick="follow()">follow</button>
-        <button id="unfollowButton" onclick="unfollow()">unfollow</button>
+      <div class="name">
+        <%= userInfo.u_name %>
       </div>
-      <br />
-      <div class="info">
-        <div class="following-container" onclick="following()">
-          <div class="info-text">팔로잉</div>
-          <div class="number"></div>
-        </div>
-        <div class="line"></div>
-        <div class="follower-container" onclick="follower()">
-          <div class="info-text">팔로워</div>
-          <div class="number"></div>
-        </div>
-        <div class="line"></div>
-        <div class="wish-container">
-          <div class="info-text">위시리스트</div>
-          <div class="number wish">100</div>
-        </div>
-        <div class="line"></div>
-        <div class="read-container">
-          <div class="info-text">읽은 책</div>
-          <a href=""></a>
-          <div class="number read">100</div>
-        </div>
+      <div class="id">
+        <%= '@' + userInfo.u_id %>
       </div>
-      <br />
-      <div class="following-list hidden4">
-        <div class="following-title">Following list</div>
-        <div class="close4" onclick="closeFollowing()">&times;</div>
-        <div class="followings-container"></div>
+      <button id="followButton" onclick="follow()">follow</button>
+      <button id="unfollowButton" onclick="unfollow()">unfollow</button>
+    </div>
+    <br />
+    <div class="info">
+      <div class="following-container" onclick="following()">
+        <div class="info-text">팔로잉</div>
+        <div class="number"></div>
       </div>
-      <div class="follower-list hidden5">
-        <div class="follower-title">Follower list</div>
-        <div class="close5" onclick="closeFollower()">&times;</div>
-        <div class="followers-container"></div>
+      <div class="line"></div>
+      <div class="follower-container" onclick="follower()">
+        <div class="info-text">팔로워</div>
+        <div class="number"></div>
+      </div>
+      <div class="line"></div>
+      <div class="wish-container">
+        <div class="info-text">위시리스트</div>
+        <div class="number wish">100</div>
+      </div>
+      <div class="line"></div>
+      <div class="read-container">
+        <div class="info-text">읽은 책</div>
+        <a href=""></a>
+        <div class="number read">100</div>
       </div>
     </div>
     <br />
+
+    <div class="following-list hidden4">
+      <div class="following-title">Following list</div>
+      <div class="close4" onclick="closeFollowing()">&times;</div>
+      <div class="followings-container"></div>
+    </div>
+    <div class="follower-list hidden5">
+      <div class="follower-title">Follower list</div>
+      <div class="close5" onclick="closeFollower()">&times;</div>
+      <div class="followers-container"></div>
+    </div>
+  </div>
+  <br />
     <div class="categories">
       <div class="category" id="category1">
         <h3>OO의 인생작</h3>
@@ -101,132 +96,246 @@
           </div>
         </div>
       </div>
-      <br />
-      <div class="category">
-        <h3>읽고 싶은 책</h3>
-        <!-- Slider container -->
-        <div class="swiper">
-          <!-- Additional required wrapper -->
-          <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide book"></div>
-            <div class="swiper-slide book"></div>
-            <div class="swiper-slide book"></div>
-            <div class="swiper-slide book"></div>
-            <div class="swiper-slide book"></div>
-            <div class="swiper-slide book"></div>
-            <div class="swiper-slide book"></div>
-            <div class="swiper-slide book"></div>
-          </div>
-
-          <!-- 페이징 필요시 추가 -->
-          <div class="swiper-pagination"></div>
-          <!-- 이전, 다음 버튼 필요시 추가 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+    </div>
+    <br />
+    <div class="category">
+      <h3>읽고 싶은 책</h3>
+      <!-- Slider container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper" id="otherLifeBook">
+          <!-- Slides -->
+          <div class="swiper-slide book"></div>
+          <div class="swiper-slide book"></div>
+          <div class="swiper-slide book"></div>
+          <div class="swiper-slide book"></div>
+          <div class="swiper-slide book"></div>
+          <div class="swiper-slide book"></div>
+          <div class="swiper-slide book"></div>
+          <div class="swiper-slide book"></div>
         </div>
-      </div>
 
-      <br />
-      <div class="category">
-        <h3>읽은 책</h3>
-        <div class="bookstack-list"></div>
-        <br />
-        <div class="all-container">
-          <button
-            class="all"
-            onclick="location.href='/viewAll/<%=userInfo.u_id%>'"
-          >
-            전체보기
-          </button>
-        </div>
-      </div>
-      <br />
-      <div class="category">
-        <h3>내가 작성한 리뷰</h3>
-        <!-- Slider container -->
-        <div class="swiper">
-          <!-- Additional required wrapper -->
-          <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide review">
-              <div class="text">너무 재미있게 읽었던 책이예요</div>
-            </div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-            <div class="swiper-slide review"></div>
-          </div>
-
-          <!-- 페이징 필요시 추가 -->
-          <div class="swiper-pagination"></div>
-          <!-- 이전, 다음 버튼 필요시 추가 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <!-- 페이징 필요시 추가 -->
+        <div class="swiper-pagination"></div>
+        <!-- 이전, 다음 버튼 필요시 추가 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
       </div>
     </div>
 
-    <script>
-      const otherId = "<%= userInfo.u_id%>";
-      follow_set(otherId);
-      follow_list_set(otherId);
-      followBtnSet(otherId);
-      get_data_and_stack(otherId);
-      // const followBtn = document.querySelector('.follow');
-      // const unfollowBtn = document.querySelector('.unfollow');
+    <br />
+    <div class="category">
+      <h3>읽은 책</h3>
+      <div class="bookstack-list"></div>
+      <br />
+      <div class="all-container">
+        <button class="all" onclick="location.href='/viewAll/<%=userInfo.u_id%>'">
+          전체보기
+        </button>
+      </div>
+    </div>
+    <br />
+    <div class="category">
+      <h3>내가 작성한 리뷰</h3>
+      <!-- Slider container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper" id="otherReview">
+          <!-- Slides -->
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+          <div class="swiper-slide review"></div>
+        </div>
 
-      // async function follow() {
-      //   followBtn.addEventListener('click', () => {
-      //         followBtn.classList.add('hidden');
-      //         unfollowBtn.classList.remove('hidden');
-      //     });
-      //   try {
-      //     const response = await axios({
-      //       method: "POST",
-      //       url: "/follow",
-      //       data: {
-      //         followingId: otherId
-      //       }
-      //     })
-      //     location.href = `/otherpage/:${otherId}`;
-      //   } catch (error) {
-      //       console.log('interval error : ',error);
-      //     }
-      // }
+        <!-- 페이징 필요시 추가 -->
+        <div class="swiper-pagination"></div>
+        <!-- 이전, 다음 버튼 필요시 추가 -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+      </div>
+    </div>
+  </div>
 
-      // async function unfollow() {
-      //   unfollowBtn.addEventListener('click', () => {
-      //         followBtn.classList.remove('hidden');
-      //         unfollowBtn.classList.add('hidden');
-      //     });
-      //   try {
-      //     const response = await axios({
-      //       method: "POST",
-      //       url: "/unfollow",
-      //       data: {
-      //         followingId: otherId
-      //       }
-      //     })
-      //     location.href = `/otherpage/:${otherId}`;
-      //   } catch (error) {
-      //     console.log('interval error : ',error);
-      //   }
-      // }
+  <script>
+    const otherId = "<%= userInfo.u_id%>";
+    follow_set(otherId);
+    follow_list_set(otherId);
+    followBtnSet(otherId);
+    get_data_and_stack(otherId);
+    // const followBtn = document.querySelector('.follow');
+    // const unfollowBtn = document.querySelector('.unfollow');
 
-      new Swiper(".swiper", {
-        // 다양한 옵션 설정,
-        // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
-        slidesPerView: 3,
-        spaceBetween: 20,
-        navigation: {
-          prevEl: ".swiper-button-prev",
-          nextEl: ".swiper-button-next",
+    // async function follow() {
+    //   followBtn.addEventListener('click', () => {
+    //         followBtn.classList.add('hidden');
+    //         unfollowBtn.classList.remove('hidden');
+    //     });
+    //   try {
+    //     const response = await axios({
+    //       method: "POST",
+    //       url: "/follow",
+    //       data: {
+    //         followingId: otherId
+    //       }
+    //     })
+    //     location.href = `/otherpage/:${otherId}`;
+    //   } catch (error) {
+    //       console.log('interval error : ',error);
+    //     }
+    // }
+
+    // async function unfollow() {
+    //   unfollowBtn.addEventListener('click', () => {
+    //         followBtn.classList.remove('hidden');
+    //         unfollowBtn.classList.add('hidden');
+    //     });
+    //   try {
+    //     const response = await axios({
+    //       method: "POST",
+    //       url: "/unfollow",
+    //       data: {
+    //         followingId: otherId
+    //       }
+    //     })
+    //     location.href = `/otherpage/:${otherId}`;
+    //   } catch (error) {
+    //     console.log('interval error : ',error);
+    //   }
+    // }
+    //<div class="id">
+    const userInfo_id = document.querySelector(".id").innerHTML;
+    
+    function loadOtherComments() {
+      axios({
+        method: 'post',
+        url: '/getOtherComments',
+        data: {
+          c_userID: userInfo_id
         },
-      });
-    </script>
-  </body>
+      }).then((res) => {
+        console.log('loadComment res ', res.data);
+        const swiperWrapper = document.querySelector('#otherReview');
+        const swiperSlideQuery = document.querySelectorAll('.swiper-slide.review');
+        console.log('리뷰 컨테이너 ', swiperWrapper);
+        console.log('스와이퍼 어레이 ', swiperSlideQuery);
+        console.log('스와이퍼 어레이 length ', swiperSlideQuery.length);
+        console.log(res.data.comments.length);
+        if(res.data.comments.length == 0) {
+          swiperSlideQuery[0].insertAdjacentHTML(
+              "beforeend",
+              `<div class="text">"이 유저는 아직 등록한 리뷰가 없습니다"</div>`
+            )
+        }
+        else if (res.data.comments.length <= 8) {
+          for (i = 0; i < res.data.comments.length; i++) {
+            const swiperSlide = swiperSlideQuery[i];
+            swiperSlide.insertAdjacentHTML(
+              "beforeend",
+              `<div class="text">${res.data.comments[i].c_content}</div>`
+            )
+          }
+        } else {
+          for (i = 0; i < res.data.comments.length; i++) {
+            swiperSlideQuery.forEach(element => {
+              element.remove()
+            });
+            const lastSwiperSlide = swiperSlideQuery[swiperSlideQuery.length - 1]
+            swiperWrapper.insertAdjacentHTML(
+              "beforeend",
+              `<div class="swiper-slide review" role="group" aria-label="${i + 1} / ${res.data.comments.length}" style="width: 168.667px; margin-right: 20px;">
+                    <div class="text">${res.data.comments[i].c_content}</div>
+                  </div>`
+            )
+
+          }
+        }
+      })
+    }
+
+    loadOtherComments();
+
+    async function delete_user() {
+      const response = await axios({
+        method: 'delete',
+        url: '/deleteUser',
+      })
+      if (response.data.result) {
+        location.href = '/';
+        alert('회원이 탈퇴 되셨습니다');
+      } else {
+        console.log('Interval error');
+      }
+    }
+
+    const userIDphrase = userInfo_id.split('@')[1];
+    // 위시리스트 책 데이터
+    (async () => {
+      try {
+        const otherWish = await axios({
+          url: '/otherWish',
+          method: 'get',
+          params: {
+            u_id: userIDphrase, // 이건 예시고 요청 페이지에서 선언해둔 id 변수 이름으로 대체해주세요!
+            b_wish: 'wish'
+          }
+        })
+        console.log('아더 위시리스트>', otherWish.data);
+        const swiperWrapper = document.querySelector('#otherLifeBook');
+        const swiperSlideQuery = document.querySelectorAll('.swiper-slide.book');
+        console.log('아더위시 컨테이너 ', swiperWrapper);
+        console.log('스와이퍼 어레이 ', swiperSlideQuery);
+        console.log('스와이퍼 어레이 length ', swiperSlideQuery.length);
+        console.log('아더위시.데이타 ', otherWish.data);
+        if(otherWish.data == "위시리스트에 추가한 책이 없습니다.") {
+          swiperSlideQuery[0].insertAdjacentHTML(
+              "beforeend",
+              `<div class="text">"이 유저는 아직 등록한 책이 없습니다"</div>`
+            )
+        }
+        else if (otherWish.data.length <= 8) {
+          for (i = 0; i < otherWish.data.length; i++) {
+            const swiperSlide = swiperSlideQuery[i];
+            swiperSlide.insertAdjacentHTML(
+              "beforeend",
+              `<img src = '${otherWish.data[i].cover}'>`
+            )
+          }
+        } 
+        else {
+          for (i = 0; i < otherWish.data.length; i++) {
+            swiperSlideQuery.forEach(element => {
+              element.remove()
+            });
+            swiperWrapper.insertAdjacentHTML(
+              "beforeend",
+              `<div class="swiper-slide review" role="group" aria-label="${i + 1} / ${res.data.comments.length}" style="width: 168.667px; margin-right: 20px;">
+                    <div class="text">${res.data.comments[i].c_content}</div>
+                  </div>`
+            )
+
+          }
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    })();
+
+    new Swiper(".swiper", {
+      // 다양한 옵션 설정,
+      // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
+      slidesPerView: 3,
+      spaceBetween: 20,
+      navigation: {
+        prevEl: ".swiper-button-prev",
+        nextEl: ".swiper-button-next",
+      },
+    });
+  </script>
+</body>
+
 </html>
