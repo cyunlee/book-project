@@ -22,32 +22,59 @@ const LifeBook = require('./LifeBook')(sequelize,Sequelize);
 const OtherUser = require('./OtherUser')(sequelize, Sequelize);
 const Follower = require('./Follower')(sequelize,Sequelize)
 const Following = require('./Following')(sequelize,Sequelize)
-
 // 유저자신과 상대의 다:다 설정(팔로우)
+Follower.belongsTo(User, {
+    foreignKey: 'u_id', // Follower의 u_id 외래키를 생성한다.
+    targetKey: 'u_id' // User의 u_id를 참조하는.
+})
+
+Follower.belongsTo(OtherUser, {
+    foreignKey: 'follower',
+    targetKey: 'u_id'
+})
+
 User.belongsToMany(OtherUser, {
     through: Follower,
-    as: 'UsersFollowers',
-    foreignKey: 'u_id',
+    as: 'UsersFollwer',
+    foreignKey: 'u_id', // Follower의 외래키 u_id는 
+    sourceKey: 'u_id', // User의 u_id를 source로 참조한다.
     onDelete:'CASCADE',
+    onUpdate:'CASCADE', 
 });
 
 OtherUser.belongsToMany(User, {
     through: Follower,
-    foreignKey: 'follower'
+    foreignKey: 'follower',
+    sourceKey: 'u_id',
 });
 
 // 유저자신과 상대의 다:다 설정(팔로잉)
+Following.belongsTo(User, {
+    foreignKey: 'u_id', // Following의 u_id 외래키를 생성한다.
+    targetKey: 'u_id' // User의 u_id를 참조하는.
+})
+
+Following.belongsTo(OtherUser, {
+    foreignKey: 'following',
+    targetKey: 'u_id'
+})
+
 User.belongsToMany(OtherUser, {
     through: Following,
     as: 'UsersFollwings',
-    foreignKey: 'u_id',
+    foreignKey: 'u_id', // Following의 외래키 u_id는 
+    sourceKey: 'u_id', // User의 u_id를 source로 참조한다.
     onDelete:'CASCADE',
+    onUpdate:'CASCADE', 
 });
+
 
 OtherUser.belongsToMany(User, {
     through: Following,
-    foreignKey: 'following'
+    foreignKey: 'following',
+    sourceKey: 'u_id',
 });
+
 
 // 유저와 댓글 1:다 설정
 User.hasMany(Comment, {
