@@ -35,13 +35,6 @@
                 <div id="dAuthor" class ="bookContent">지은이 | ${detailItem.author}</div>
                 <div id="dPub" class ="bookContent">출판사 | ${detailItem.publisher}</div>
                 <div id="dIsbn" class ="bookContent">ISBN | ${detailItem.isbn}</div>
-                    
-
-                <div class="hr"></div>
-                <!-- <hr> -->
-                <div class="bookDes" id="description">
-                    <div id="Ddescription" class ="bookContent">${detailItem.description}</div>
-                </div>
                 <div class="thumbButton">
                     <button class="like" id="like">
                         <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp" id="good">
@@ -56,7 +49,14 @@
                     <button class="badA">
                         <img src="/static/img/free-icon-thumb-down-fill.png" class="thumbDown" id="bad">
                     </button>
+                </div>    
+
+                <div class="hr"></div>
+                <!-- <hr> -->
+                <div class="bookDes" id="description">
+                    <div id="Ddescription">${detailItem.description}</div>
                 </div>
+                
             </div>
             
         </div>
@@ -91,7 +91,11 @@
         console.log(isbn); // 출력: 9788954699075
         document.addEventListener("DOMContentLoaded", () => {
             loadView();
-                
+            const buttons = document.querySelectorAll('.bookContent#Ddescription');
+            // const div = button.querySelector('div');
+            if (buttons.scrollHeight > buttons.clientHeight) {
+                buttons.classList.add('ellipsis');
+             }
         });
 
 
@@ -113,53 +117,6 @@
                 const resultBox = document.getElementById('bookResult');
 
                 console.log(detailItem);
-                //let contentDiv = document.createElement('div');
-                //let img = document.createElement('img');
-
-                //contentDiv.textContent=detailItem.title;
-                //img.src=detailItem.cover;
-
-                //resultBox.appendChild(contentDiv);
-                //resultBox.appendChild(img);
-                /* const html = 
-                `<div class="bookImage" id="bookCover">
-                        <img src="${detailItem.cover}" id="bookCoverImg">
-                    </div>
-                <div class="bookBlock" id="block">
-                    <div class="bookTitle" id="title">
-                        <p>${detailItem.title}</p>
-                    </div>
-                    <div class="bookSide" id=sideResult>
-                        <table style="width:100%" class="bookTable" id=resultTable>
-                            <tr>
-                                <td>지은이</td>
-                                <td>|</td>
-                                <td>${detailItem.author}</td>
-                            </tr>
-                            <tr>
-                                <td>출판사</td>
-                                <td>|</td>
-                                <td>${detailItem.publisher}</td>
-                            </tr>
-                            <tr>
-                                <td>ISBN</td>
-
-                                <td>|</td>
-                                <td>${detailItem.isbn}</td>
-                            </tr>
-                        </table>
-                        <hr>
-                        <div class="bookDes" id="description">
-                            <p>${detailItem.description}</p>
-                        </div>
-                        <div class="thumbButton">
-                            <img src="/static/img/free-icon-thumb-up-7542641.png" class="thumbUp">
-                            <img src="/static/img/free-icon-thumb-down-8113313.png" class="thumbDown">
-                        </div>
-                    </div>
-                </div>
-                `
-                resultBox.insertAdjacentHTML('beforeend', html); */
                 
                 const bookCoverImg = document.getElementById('bookCoverImg');
                 bookCoverImg.src = `${detailItem.cover}`;
@@ -168,13 +125,13 @@
                 dTitle.textContent = `${detailItem.title}`;
 
                 const dAuthor = document.getElementById('dAuthor');
-                dAuthor.textContent = `${detailItem.author}`;
+                dAuthor.textContent = `지은이 | ${detailItem.author}`;
 
                 const dPub = document.getElementById('dPub');
-                dPub.textContent = `${detailItem.publisher}`;
+                dPub.textContent = `출판사 | ${detailItem.publisher}`;
 
                 const dIsbn = document.getElementById('dIsbn');
-                dIsbn.textContent = `${detailItem.isbn}`;
+                dIsbn.textContent = `isbn | ${detailItem.isbn}`;
 
                 const Ddescription = document.getElementById('Ddescription');
                 Ddescription.textContent = `${detailItem.description}`;
@@ -268,7 +225,7 @@
                                 <div class="comment_inner_wrapper">
                                     <a href="${childCheckUser}"><img class="comment-profile" src="${childUserProfile}"></a>
                                         <a href="${childCheckUser}"><div class="comment_id comment">${childComment.u_id}</div></a>
-                                        <div class="comment_content rcomment"><span>${i.u_id}</span>  ${childComment.c_content}</div>
+                                        <div class="comment_content rcomment"><span style="font-weight:bold;">${i.u_id}</span>  ${childComment.c_content}</div>
                                         <div class="comment_date comment">${childComment.c_date}
                                           <button type="button" class="applyBtn" id="replyBtn" onclick="replyToggle(${i.c_no},${childComment.c_no},'${childComment.u_id}','${id}');">답글쓰기</button>
                                         </div>
