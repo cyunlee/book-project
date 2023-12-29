@@ -573,6 +573,31 @@ h3{
     height:100%;
 }
 
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+}
+
+.delete_user_btn{
+    position: absolute;
+    bottom: -130vh;
+    right: 13vw;
+    background-color: transparent;
+    border: none;
+    font-weight: 700;
+    color: #9c9c9c;
+    width: 8vh;
+    z-index: 100;
+
+}
+
+.delete_user_btn:hover{
+    background-color:#000000;
+}
+
+=======
 /* 모바일 세로 (해상도 ~ 479px)*/ 
 @media all and (max-width:767px) {
     .line {
