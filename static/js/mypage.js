@@ -82,7 +82,7 @@ function addLifeBook(isbn,cover,no){
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    // getLifeBook();
+    getLifeBook();
 });
 
 function getLifeBook(){
