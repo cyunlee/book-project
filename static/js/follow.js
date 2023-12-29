@@ -1,3 +1,39 @@
+async function follow() {
+	let otherUser = document.querySelector('.id').innerText;
+	otherUser = otherUser.substr(1)
+	try {
+		const response = await axios({
+			method: "POST",
+			url: "/follow",
+			data: {
+				followingId: otherUser
+			}
+		});
+		if (response.data.result) {
+			location.reload();
+		}
+	} catch (error) {
+		console.log('interval error : ',error);
+	}
+}
+
+async function unfollow() {
+	let otherUser = document.querySelector('.id').innerText;
+	otherUser = otherUser.substr(1)
+	try {
+		await axios({
+			method: "POST",
+			url: "/unfollow",
+			data: {
+				followingId: otherUser
+			}
+		});
+		location.reload();
+	} catch (error) {
+		console.log('interval error : ',error);
+	}
+}
+
 async function follow_set(otherId){
     const follower = document.querySelector('.follower-container .number')
     const following = document.querySelector('.following-container .number')
@@ -35,7 +71,7 @@ async function follow_list_set(otherId){
 		followingObj.forEach(user => {
 				followingListHTML += 	`		<div class="following-account">
 			<div class="account-image">
-				<img src="/${user.u_profile}" alt="프로필 사진 없음"></img>
+				<img src="/${user.u_profile}" alt=""></img>
 			</div>
 			<div class="account-info">
 				<div class="account-name">${user.u_name}</div>
@@ -67,9 +103,30 @@ async function follow_list_set(otherId){
 	
 	following.innerHTML = followingListHTML;
 	follower.innerHTML = followerListHTML;
-	
-	
-	
+}
 
 
+async function followBtnSet(otherId) {
+	const followBtn = document.querySelector('#followButton');
+	const unfollowBtn = document.querySelector('#unfollowButton');
+
+	try {
+		const response = await axios({
+			method: "GET",
+			url: "/followBtnCheck",
+			params: {
+				otherId : otherId
+			}
+		})
+		if (!response.data.result && response.data.case == 'guest') {
+			followBtn.style.display = "none"
+			unfollowBtn.style.display = "none"
+		} else if (response.data.result) {
+			followBtn.style.display = "none"
+		} else {
+			unfollowBtn.style.display = "none"
+		}
+	} catch (error) {
+		console.log('interval error : ',error);
+	}
 }

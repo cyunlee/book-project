@@ -273,4 +273,46 @@ function closeFollower() {
 selectPhoto();
 uploadPhoto();
 
+// 읽은 책 개수
+(async () => {
+    try {
+        const readNum = await axios({
+            url: '/readNum',
+            method: 'get',
+            params: {
+                u_id : uID,
+                b_wish : null
+            }
+        })
+        console.log('내가 읽은 책 개수>',readNum.data);
+        const rNums = readNum.data.rNumResult;
+        document.querySelector('.number.read').innerHTML = rNums;
+        // console.log('!!!!!',rNums);
+    } catch(err) {
+        console.log(err)
+    }
+
+})();
+
+// 위시리스트 개수
+(async () => {
+    try {
+        const wishNum = await axios({
+            url: '/wishNum',
+            method: 'get',
+            params: {
+                u_id : uID,
+                b_wish : null
+            }
+        })
+        console.log('내가 읽은 책 개수>',wishNum.data);
+        const wNums = wishNum.data.wNumResult;
+        document.querySelector('.number.wish').innerHTML = wNums;
+        // console.log('!!!!!',rNums);
+    } catch(err) {
+        console.log(err)
+    }
+
+})();
+
 

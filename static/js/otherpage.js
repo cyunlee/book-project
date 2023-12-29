@@ -68,38 +68,69 @@ async function follow() {
 	followBtn.addEventListener('click', () => {
         followBtn.classList.add('hidden');
         unfollowBtn.classList.remove('hidden');
-    });
-	const otherUser = document.querySelector('#id').value;
-	otherUser = otherUser.substr(1)
-	console.log('idCheck>>>@@@@>>', otherUser);
-	try {
-		await axios({
-			method: "POST",
-			url: "/follow",
-			data: {
-				followingId: otherUser
-			}
-		});	} catch (error) {
-		console.log('interval error : ',error);
-	}
+
+
+
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        removeAllChildren(element.firstChild);
+        element.removeChild(element.firstChild);
+    }
 }
 
-async function unfollow() {
-	unfollowBtn.addEventListener('click', () => {
-        followBtn.classList.remove('hidden');
-        unfollowBtn.classList.add('hidden');
+function showSearch1() {
+    top1.addEventListener('click', () => {
+        search1.classList.remove('hidden1');
+        search2.classList.add('hidden2');
+        search3.classList.add('hidden3');
     });
-	const otherUser = document.querySelector('#follow').value;
-	try {
-		await axios({
-			method: "POST",
-			url: "/unfollow",
-			data: {
-				followingId: otherUser
-			}
-		});
-	} catch (error) {
-		console.log('interval error : ',error);
-	}
+    // setTimeout(()=> {
+    //     console.log('top1 검색창 닫음');
+    //     search1.classList.add('hidden1');
+    // }, 10000);
 }
+
+// 읽은 책 개수
+(async () => {
+    try {
+        const readNum = await axios({
+            url: '/readNum',
+            method: 'get',
+            params: {
+                u_id : otherId,
+                b_wish : null
+            }
+        })
+        console.log('내가 읽은 책 개수>',readNum.data);
+        const rNums = readNum.data.rNumResult;
+        document.querySelector('.number.read').innerHTML = rNums;
+        // console.log('!!!!!',rNums);
+    } catch(err) {
+        console.log(err)
+    }
+
+})();
+
+// 위시리스트 개수
+(async () => {
+    try {
+        const wishNum = await axios({
+            url: '/wishNum',
+            method: 'get',
+            params: {
+                u_id : otherId,
+                b_wish : null
+            }
+        })
+        console.log('내가 읽은 책 개수>',wishNum.data);
+        const wNums = wishNum.data.wNumResult;
+        document.querySelector('.number.wish').innerHTML = wNums;
+        // console.log('!!!!!',rNums);
+    } catch(err) {
+        console.log(err)
+    }
+
+})();
+
+
 

@@ -160,4 +160,10 @@ router.delete('/deleteWish', bookController.deleteWish);
 // 나의 위시리스트
 router.get('/myWish', controller.myWish);
 
+// 읽은 책 개수
+router.get('/readNum', controller.readNum);
+
+// 위시리스트 개수
+router.get('/wishNum', controller.wishNum);
+
 module.exports = router;

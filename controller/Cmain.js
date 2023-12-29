@@ -109,7 +109,6 @@ exports.login_post = async (req, res) => {
 	}
 }
 
-
 exports.signup_post = async (req, res) => {
 	try {
 		const { u_name, u_email, u_id, u_pw } = req.body;
@@ -119,15 +118,15 @@ exports.signup_post = async (req, res) => {
 		const newid = await User.findOne({
 			where: { u_id: u_id }
 		})
-		if (newname) res.send({ result: false, msg: 'name duplicated' })
-		else if (newid) res.send({ result: false, msg: 'id duplicated' })
-		else {
+		if (newname) {
+			res.send({ result: false, msg: 'name duplicated' })
+		} else if (newid) {
+			res.send({ result: false, msg: 'id duplicated' })
+		} else {
 			// const hash = bcrypt.hashSync(u_pw, saltRounds);
 			await User.create({u_name : u_name, u_id : u_id, u_pw: u_pw, u_email : u_email});
 			await OtherUser.create({u_id : u_id});
 			res.send({result : true});
-
-
 		}
 	} catch (error) {
 		res.send(error);
@@ -307,7 +306,7 @@ try{
 		const booksViewall = myBooksResponse.map(res => res.data.item);
 		// console.log('$$$$$$$$$$',booksViewall);
 		const viewAllData = booksViewall.map(innerArray => innerArray[0]);
-		console.log(viewAllData)
+		// console.log(viewAllData)
 
 		// [{},{}]
 		res.send({viewAllData});
@@ -736,7 +735,7 @@ exports.get_top = async (req,res)=>{
 }
 
 
-//mywish테스트
+// 위시리스트 책 데이터
 exports.myWish = async (req, res) => {
 	const {u_id, b_wish} = req.query
 	try{
@@ -779,4 +778,47 @@ exports.myWish = async (req, res) => {
 		console.error(err);
 	}
 
-}
+};
+
+
+// 읽은 책 개수
+exports.readNum = async (req, res) => {
+	// console.log('~~~~~~~~~~~~읽은책 개수 쿼리',req.query);
+	const {u_id} = req.query;
+	try {
+		const readNum = await Book.findAll({
+			where: {
+				u_id,
+				b_wish: null
+			},
+			raw: true
+		});
+		console.log('~~~~~~~~~~~개수', readNum.length);
+		const rNumResult = readNum.length;
+		res.send({rNumResult})
+	} catch(err) {
+		console.error(error);
+		res.status(500).send('Internal Server Error');
+	}
+};
+
+// 위시리스트 개수
+exports.wishNum = async (req, res) => {
+	// console.log('~~~~~~~~~~~~위시리스트 개수 쿼리',req.query);
+	const {u_id} = req.query;
+	try {
+		const wishNum = await Book.findAll({
+			where: {
+				u_id,
+				b_rating: null
+			},
+			raw: true
+		});
+		console.log('~~~~~~~~~~~개수', wishNum.length);
+		const wNumResult = wishNum.length;
+		res.send({wNumResult})
+	} catch(err) {
+		console.error(error);
+		res.status(500).send('Internal Server Error');
+	}
+};

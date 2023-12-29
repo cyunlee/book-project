@@ -367,17 +367,24 @@ h3{
     width: 360px;
     height: 60px;
     border: 1px solid lightgrey;
-    background-color: white;
+    background-size: cover;
+    border-radius: 16px;
     display: flex;
     justify-content: center;
+}
+.bookstack:nth-child(odd){
+    transform: translateX(-15px);
+}
+.bookstack:nth-child(even){
+    transform: translateX(15px);
 }
 .bookstack:hover{
     cursor: pointer;
 }
 .bookstack-title{
-    font-size: 18px;
+    font-size: 16px;
     color: rgb(106, 106, 106);
-    background-color: rgb(233, 233, 233);
+    background-color: rgb(255, 255, 255, 0.7);
     width: fit-content;
     height: fit-content;
     margin: auto;

@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/otherpage.css" />
-    <!-- <script defer src="/static/js/mypage.js"></script> -->
+    <script defer src="/static/js/otherpage.js"></script>
     <script src="/static/js/follow.js"></script>
-    <!-- <script src="/static/js/otherpage.js"></script> -->
+    <script src="/static/js/viewAll.js"></script>
 
     <!-- in HEAD -->
     <link
@@ -14,7 +14,6 @@
       href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-    
 
     <!-- axios cdn -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -32,24 +31,24 @@
       <div class="profile">
         <div class="profile-image">
           <% if (!userInfo.u_profile) { %>
-            <img
-              class="image-setting"
-              src="/static/img/default-profile.png"
-              alt="프로필 사진"
-            />
-            <% } else { %>
-            <img
-              class="image-setting"
-              src="<%= '/' + userInfo.u_profile %>"
-              alt="프로필 사진"
-            />
-            <% } %>
+          <img
+            class="image-setting"
+            src="/static/img/default-profile.png"
+            alt="프로필 사진"
+          />
+          <% } else { %>
+          <img
+            class="image-setting"
+            src="<%= '/' + userInfo.u_profile %>"
+            alt="프로필 사진"
+          />
+          <% } %>
         </div>
-        
+
         <div class="name"><%= userInfo.u_name %></div>
         <div class="id"><%= '@' + userInfo.u_id %></div>
-        <button class="follow" onclick="follow()">follow</button>
-        <button class="unfollow hidden" onclick="unfollow()">unfollow</button>
+        <button id="followButton" onclick="follow()">follow</button>
+        <button id="unfollowButton" onclick="unfollow()">unfollow</button>
       </div>
       <br />
       <div class="info">
@@ -65,27 +64,25 @@
         <div class="line"></div>
         <div class="wish-container">
           <div class="info-text">위시리스트</div>
-          <div class="number">100</div>
+          <div class="number wish">100</div>
         </div>
         <div class="line"></div>
         <div class="read-container">
           <div class="info-text">읽은 책</div>
           <a href=""></a>
-          <div class="number">100</div>
+          <div class="number read">100</div>
         </div>
       </div>
       <br />
       <div class="following-list hidden4">
         <div class="following-title">Following list</div>
         <div class="close4" onclick="closeFollowing()">&times;</div>
-        <div class="followings-container">
-        </div>
+        <div class="followings-container"></div>
       </div>
       <div class="follower-list hidden5">
         <div class="follower-title">Follower list</div>
         <div class="close5" onclick="closeFollower()">&times;</div>
-        <div class="followers-container">
-        </div>
+        <div class="followers-container"></div>
       </div>
     </div>
     <br />
@@ -93,9 +90,15 @@
       <div class="category" id="category1">
         <h3>OO의 인생작</h3>
         <div class="lifelist">
-          <div class="book" id="top1"><img class="lifeBook-cover" src="<%= img1%>"></div>
-          <div class="book" id="top2"><img class="lifeBook-cover" src="<%= img2%>"></div>
-          <div class="book" id="top3"><img class="lifeBook-cover" src="<%= img3%>"></div>
+          <div class="book" id="top1">
+            <img class="lifeBook-cover" src="<%= img1%>" />
+          </div>
+          <div class="book" id="top2">
+            <img class="lifeBook-cover" src="<%= img2%>" />
+          </div>
+          <div class="book" id="top3">
+            <img class="lifeBook-cover" src="<%= img3%>" />
+          </div>
         </div>
       </div>
       <br />
@@ -127,41 +130,13 @@
       <br />
       <div class="category">
         <h3>읽은 책</h3>
-        <div class="bookstack-list">
-          <div class="bookstack ten">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack nine">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack eight">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack seven">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack six">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack five">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack four">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack three">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack two">
-            <div class="bookstack-title"></div>
-          </div>
-          <div class="bookstack one">
-            <div class="bookstack-title">소비의 심리학</div>
-          </div>
-        </div>
+        <div class="bookstack-list"></div>
         <br />
         <div class="all-container">
-          <button class="all" onclick="location.href='/viewAll'">
+          <button
+            class="all"
+            onclick="location.href='/viewAll/<%=userInfo.u_id%>'"
+          >
             전체보기
           </button>
         </div>
@@ -196,30 +171,13 @@
     </div>
 
     <script>
-      const otherId = '<%= userInfo.u_id%>';
+      const otherId = "<%= userInfo.u_id%>";
       follow_set(otherId);
       follow_list_set(otherId);
-      // followBtnSet(otherId);
-      const followBtn = document.querySelector('.follow');
-      const unfollowBtn = document.querySelector('.unfollow');
-
-      // async function followBtnSet(otherId) {
-      //   try {
-      //     const response = await axios({
-      //       method: "GET",
-      //       url: "/followBtnCheck",
-      //       data: {
-      //         otherId : otherId
-      //       }
-      //     })
-      //     if (response.data.result) {
-      //       followBtn.classList.remove('hidden');
-      //       unfollowBtn.classList.add('hidden');
-      //     }
-      //   } catch (error) {
-      //     console.log('interval error : ',error);
-      //   }
-      // }
+      followBtnSet(otherId);
+      get_data_and_stack(otherId);
+      // const followBtn = document.querySelector('.follow');
+      // const unfollowBtn = document.querySelector('.unfollow');
 
       // async function follow() {
       //   followBtn.addEventListener('click', () => {
@@ -259,7 +217,6 @@
       //   }
       // }
 
-
       new Swiper(".swiper", {
         // 다양한 옵션 설정,
         // 아래에서 설명하는 옵션들은 해당 위치에 들어갑니다!!
@@ -270,8 +227,6 @@
           nextEl: ".swiper-button-next",
         },
       });
-
-
     </script>
   </body>
 </html>
