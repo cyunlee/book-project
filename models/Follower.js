@@ -1,13 +1,16 @@
-const Sequelize = require('sequelize');
-const config = require(__dirname+'/../config/config.json')['development'];
-const sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config,
-    )
-const User = require('./User')(sequelize, Sequelize);
-const OtherUser = require('./OtherUser')(sequelize, Sequelize);
+// const Sequelize = require('sequelize');
+// const config = require('../config/config')['development'];
+// const sequelize = new Sequelize(
+//     config.database,
+//     config.username,
+//     config.password,
+//     config,
+//     )
+
+const model = require('./index');
+const User = model.User;
+const OtherUser = model.OtherUser;
+
 
 const FollowerModel = (sequelize,DataTypes)=>{
     const Follower = sequelize.define('Follower',{
